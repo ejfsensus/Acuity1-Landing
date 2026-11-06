@@ -1,21 +1,46 @@
-# Acuity.One landing page
+# Acuity.One — membership presentation
 
-Static page. Open `standalone-experience/index.html` through any static server (e.g. `python3 -m http.server` in that folder). ES modules don't load from `file://`.
+An editorial redesign of the supplied 6 November 2026 landing-page draft. The Horizon Portal hero and Milky Way Lake closing sequence retain their original assets, 360vh scroll tracks and scrub timings. The site footer is retained.
 
-## Page structure (`standalone-experience/index.html`)
-1. `#track-hero`: the original 360vh Horizon Portal scrub (96 frames, `assets/horizon-portal`). The overlay copy is in `#copy-hero`.
-2. `#intro`: what Acuity.One is (research, study, practice, continuity).
-3. `#tools`: five tool chapters (`#tool-agent`, `#tool-search`, `#tool-codex`, `#tool-lumennous`, `#tool-myaeon`), each with an HTML/CSS interface vignette.
-4. `#journey`: the unified path diagram and the consent model.
-5. `#vault`: WisdomVault (Membership).
-6. `#pricing`: Free (£0) and Membership (price TBC). Both are marked Coming soon.
-7. `#compare`: standalone bring-your-own-key tools vs One Free vs Membership.
-8. `#faq`: native `<details>` accordions.
-9. `#track-lake`: the original 360vh Milky Way Lake scrub. The overlay is in `#copy-lake` and contains the invitation form. `#invitation` is an anchor at the copy-hold point.
-10. `footer.site`: tool links, acuity.institute, Privacy, © 2026.
+## Run
 
-## Updating
-- Copy: edit the text directly in index.html. Prices and allowances appear in `#pricing`, `#compare`, `#faq` and the hero `.sub`. Keep them consistent.
-- Scrub timing: `setupScrubSection({... scrubRange, holdStart})` in the module script. Track height: `.track { height: 360vh }`.
-- Invitation: the form builds a `mailto:hello@acuity.institute` draft in the visitor's mail app. Nothing is sent by the page. To use a real sign-up endpoint, replace the submit handler at the end of the script.
-- Brand tokens: `shared/brand.css` (`:root`). Logo SVG: `HEX_LOGO` in `shared/scroll-clock.js`.
+Serve `dist/` with any static server. No build or package installation is needed. For the GitHub layout, serve `standalone-experience/` instead. ES modules need HTTP rather than opening the HTML as a local file.
+
+## Design
+
+The middle sections use Acuity's near-black `#09090f`, warm gold `#d4a843` / `#e8c96a`, faint violet atmosphere, fine geometry and restrained glass. Inter carries the main copy, Cormorant Garamond provides the editorial accent and IBM Plex Mono provides navigation and figure labels. The original cinematic overlays keep their type treatment.
+
+- `shared/membership.css`: responsive design system, scoped to the middle sections.
+- `shared/membership.js`: accessible tool tabs, search-scope concept, visual quiet moment, invitation-plan selection and decorative chart spokes.
+- `assets/membership/inquiry-book.webp`: custom generated book / portal artwork.
+- `assets/membership/wisdom-vault.webp`: custom generated cryptex artwork.
+- `shared/brand.css` and `shared/scroll-clock.js`: retained original foundations.
+
+The product interfaces are explicitly labelled illustrative concepts. They are HTML/CSS, not screenshots or connected member functionality. Source links open the public reading room.
+
+## Grounding and open decisions
+
+Reviewed the `ejfsensus/Acuity.One` `gitbot/platform-foundation` README and `docs/STATUS.md`, the live `acuity.institute` homepage, and the homepage/library source in `ejfsensus/acuity.institute-landing`.
+
+The page promotes the planned membership. It does not imply that integration is complete. The supplied draft's five free tasks and unlimited membership direction are retained as a proposed offer, with pending final terms.
+
+Before a public launch, confirm:
+
+1. Subscription price and billing frequency.
+2. Launch date and invitation process.
+3. What counts as a task, fair-use terms and specialist audio/media allowances.
+4. Final Free and Membership entitlements, and cross-tool parity.
+5. Production signup endpoint and consent/privacy copy.
+
+The invitation form remains an explicitly disclosed mailto draft. It does not send, store, subscribe or bill. The form's name-field access is corrected so it reads the input rather than the HTML form's own name property. Plan buttons preselect the requested tier.
+
+## Delivery checks
+
+- Browser review at desktop width and embedded 390px, 834px and 320px responsive viewports; no page-level horizontal overflow after correcting the tablet artwork.
+- All five tool tabs, arrow/Home keyboard navigation, search-scope control, quiet-moment start/reset, invitation-tier selection and empty-email validation checked.
+- Comparison accordion opened on mobile; table scroll remains within its container.
+- JavaScript syntax and static resource/anchor checks passed.
+- Original film frames retained byte-for-byte. Closing frames load as the visitor approaches, and failed individual frames retain their timeline positions.
+- Reduced-motion and no-JavaScript fallback paths retained and inspected in source. Real iPhone/iPad, assistive-technology and production signup testing remain outstanding.
+
+No application backend, Acuity production deployment, database or billing system was changed.

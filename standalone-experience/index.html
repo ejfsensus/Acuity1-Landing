@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Acuity.One — An open invite to wisdom | Acuity Institute</title>
-  <meta name="description" content="Acuity.One brings Acuity.Agent, Acuity.Search, Acuity.Codex, LumenNous and myAeon together under one login. Free and Membership tiers are coming soon." />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
+  <title>Acuity.One — A membership for the enquiring life</title>
+  <meta name="description" content="Follow a question. Study the sources. Bring understanding into practice. Discover the forthcoming Acuity.One membership and your personal WisdomVault." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="shared/brand.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,400;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#09090f">
   <style>
     /* Section Tracks & Stages */
     .track { position: relative; height: 360vh; }
@@ -58,8 +60,10 @@
     }
     .media.is-ready ~ .loading { display: none; }
     /* ============ Acuity.One content system ============ */
-    :root { --hair: rgba(250,219,95,.22); --hair-soft: rgba(255,255,255,.09); --panel: #070a12; --muted: rgba(255,255,255,.6); --wrap: 1180px; --pad: clamp(1.25rem, 5vw, 4rem); }
-    html { scroll-behavior: smooth; }
+    :root { --hair: rgba(250,219,95,.22); --hair-soft: rgba(255,255,255,.09); --panel: #070a12; --muted: rgba(255,255,255,.6); --wrap: 1180px; --pad: clamp(1.25rem, 5vw, 4rem); --ease-out: cubic-bezier(.16, 1, .3, 1); }
+    html { scroll-behavior: smooth; scrollbar-color: rgba(250,219,95,.35) var(--navy-deep); }
+    ::selection { background: rgba(250,219,95,.85); color: #030305; }
+    input, select { caret-color: var(--gold-bright); }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
     body { font-weight: 400; line-height: 1.65; }
     :focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; }
@@ -67,7 +71,7 @@
     .skip:focus { top: 1rem; }
     .hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; }
     .cta.primary { background: var(--gold-bright); color: #030305; border-color: var(--gold-bright); font-weight: 600; }
-    .cta.primary:hover, .cta.primary:focus-visible { background: #fff1a8; }
+    .cta.primary:hover, .cta.primary:focus-visible { background: #fff1a8; color: #030305; }
     .hero-copy .eyebrow { font-family: var(--font-display); font-weight: 600; }
     .hero-copy .sub { max-width: 46ch; }
     .cta { font-family: var(--font-display); font-weight: 600; transition: background .2s, border-color .2s, transform .15s; }
@@ -76,137 +80,8 @@
     .topnav a { font-family: var(--font-display); font-size: .72rem !important; letter-spacing: .14em !important; text-transform: uppercase; }
     @media (max-width: 720px) { .topnav a:not(.keep) { display: none; } }
 
-    .chapter { position: relative; background: var(--navy-deep); border-top: 1px solid var(--hair-soft); padding: clamp(5rem, 11vh, 8rem) 0; min-height: 100svh; display: flex; align-items: center; }
-    .wrap { width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 0 var(--pad); }
-    .kicker { font-family: var(--font-display); font-weight: 600; font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); margin: 0 0 1.1rem; }
-    h2 { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.9rem, 3.6vw, 3rem); line-height: 1.12; letter-spacing: -.01em; margin: 0 0 1.25rem; max-width: 22ch; }
-    h3 { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.25rem, 1.8vw, 1.55rem); line-height: 1.25; margin: 0 0 .8rem; }
-    h4 { font-family: var(--font-display); font-weight: 600; font-size: .95rem; margin: 0 0 .4rem; letter-spacing: .01em; }
-    .lede { font-weight: 300; font-size: clamp(1.05rem, 1.4vw, 1.22rem); color: var(--ink-soft); max-width: 60ch; margin: 0 0 1rem; }
+    .wrap { position: relative; z-index: 1; width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 0 var(--pad); }
     p { margin: 0 0 1rem; }
-    .muted { color: var(--muted); }
-    .gold { color: var(--gold-bright); }
-    a.link { color: var(--gold-bright); border-bottom: 1px solid rgba(250,219,95,.4); transition: border-color .2s; }
-    a.link:hover { border-color: var(--gold-bright); }
-    .split { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.1fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
-    ul.ticks { list-style: none; padding: 0; margin: 1.2rem 0 0; display: grid; gap: .7rem; }
-    ul.ticks li { position: relative; padding-left: 1.4rem; color: var(--ink-soft); }
-    ul.ticks li::before { content: ""; position: absolute; left: 0; top: .62em; width: .55rem; height: 1px; background: var(--gold-bright); }
-
-    /* Position */
-    .pillars { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); border-top: 1px solid var(--hair); margin-top: clamp(2.5rem, 6vh, 4rem); }
-    .pillars > div { padding: 1.6rem 1.4rem 0 0; }
-    .pillars > div + div { padding-left: 1.4rem; border-left: 1px solid var(--hair-soft); }
-    .pillars .n { font-family: var(--font-display); font-weight: 700; color: var(--gold-bright); font-size: .8rem; letter-spacing: .1em; }
-    .pillars p { color: var(--ink-soft); font-size: .95rem; margin: 0; }
-
-    /* Tools */
-    #tools { display: block; }
-    .toolnav { display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); margin: 2.2rem 0 0; }
-    .toolnav a { flex: 1 1 0; min-width: 9rem; display: flex; align-items: center; gap: .7rem; padding: 1rem 1.1rem; font-family: var(--font-display); font-weight: 600; font-size: .86rem; color: var(--ink-soft); transition: color .2s, background .2s; }
-    .toolnav a + a { border-left: 1px solid var(--hair-soft); }
-    .toolnav a:hover { color: #fff; background: rgba(250,219,95,.05); }
-    .toolnav svg, .tool-head svg { width: 1.6rem; height: 1.6rem; flex: none; color: var(--gold-bright); }
-    .tool { padding: clamp(4rem, 10vh, 6.5rem) 0; border-bottom: 1px solid var(--hair-soft); scroll-margin-top: 1rem; }
-    .tool:last-child { border-bottom: 0; padding-bottom: 0; }
-    .tool .split { grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); }
-    .tool:nth-child(even) .split > .copy { order: 2; }
-    .tool-head { display: flex; align-items: center; gap: .8rem; margin-bottom: 1rem; }
-    .tool-head span { font-family: var(--font-display); font-weight: 600; font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
-    .tool .open { display: inline-block; margin-top: 1.6rem; font-family: var(--font-display); font-weight: 600; font-size: .82rem; }
-
-    /* App frame vignettes */
-    .app { background: var(--panel); border: 1px solid var(--hair-soft); border-radius: 6px; overflow: hidden; font-size: .84rem; box-shadow: 0 30px 80px -40px rgba(250,219,95,.18); }
-    .app-bar { display: flex; align-items: center; gap: .6rem; padding: .7rem 1rem; border-bottom: 1px solid var(--hair-soft); font-family: var(--font-display); font-weight: 600; font-size: .74rem; letter-spacing: .06em; color: var(--muted); }
-    .app-bar svg { width: 1rem; height: 1rem; color: var(--gold-bright); }
-    .app-bar .r { margin-left: auto; font-weight: 400; }
-    .app-body { padding: 1.1rem; }
-    .q { margin-left: auto; max-width: 80%; background: #111827; border: 1px solid var(--hair-soft); padding: .65rem .85rem; border-radius: 4px; margin-bottom: .9rem; }
-    .a { border-left: 1px solid var(--gold-bright); padding: .1rem 0 .1rem .9rem; color: var(--ink-soft); }
-    sup.c { color: var(--gold-bright); font-family: var(--font-display); font-weight: 700; font-size: .66rem; }
-    .src { display: grid; gap: .45rem; margin-top: 1rem; }
-    .src div { display: flex; justify-content: space-between; gap: 1rem; border: 1px solid var(--hair-soft); padding: .5rem .7rem; border-radius: 3px; }
-    .src b { font-weight: 400; color: #fff; } .src i { font-style: normal; color: var(--muted); font-size: .76rem; white-space: nowrap; }
-    .limit { margin-top: .9rem; font-size: .76rem; color: var(--muted); border-top: 1px dashed var(--hair-soft); padding-top: .7rem; }
-    .seg { display: flex; border: 1px solid var(--hair-soft); border-radius: 3px; width: max-content; max-width: 100%; margin-bottom: .9rem; }
-    .seg span { padding: .35rem .8rem; font-size: .76rem; color: var(--muted); }
-    .seg span + span { border-left: 1px solid var(--hair-soft); }
-    .seg .on { color: #030305; background: var(--gold-bright); font-weight: 600; }
-    .field { border: 1px solid var(--hair); padding: .6rem .8rem; border-radius: 3px; margin-bottom: .9rem; color: #fff; }
-    .filters { display: flex; flex-wrap: wrap; gap: .4rem 1rem; font-size: .74rem; color: var(--muted); margin-bottom: .9rem; }
-    .filters span::before { content: "▪ "; color: var(--gold); }
-    .ledger { width: 100%; border-collapse: collapse; font-size: .76rem; }
-    .ledger th, .ledger td { text-align: left; padding: .45rem .3rem; border-top: 1px solid var(--hair-soft); font-weight: 400; }
-    .ledger th { color: var(--muted); font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; }
-    .ledger td:first-child { color: var(--gold-bright); font-family: var(--font-display); font-weight: 700; }
-    .app-foot { display: flex; justify-content: space-between; align-items: center; gap: 1rem; border-top: 1px solid var(--hair-soft); padding: .7rem 1rem; font-size: .74rem; color: var(--muted); }
-    .app-foot b { color: var(--gold-bright); font-weight: 600; font-family: var(--font-display); }
-    .codex { display: grid; grid-template-columns: 8.5rem minmax(0,1fr); }
-    .codex nav { border-right: 1px solid var(--hair-soft); padding: .8rem 0; font-size: .76rem; }
-    .codex nav span { display: block; padding: .38rem 1rem; color: var(--muted); }
-    .codex nav .on { color: #fff; border-left: 2px solid var(--gold-bright); padding-left: calc(1rem - 2px); }
-    .codex svg.const { width: 100%; height: auto; display: block; }
-    .wave { display: flex; align-items: center; gap: 2px; height: 1.6rem; flex: 1; }
-    .wave i { flex: 1; background: var(--gold); opacity: .55; height: var(--h); }
-    .breath { display: grid; place-items: center; padding: 1.2rem 0 .4rem; }
-    .breath svg { width: min(16rem, 70%); height: auto; }
-    .ring-pulse { transform-origin: 100px 100px; animation: breathe 8s ease-in-out infinite; }
-    @keyframes breathe { 0%,100% { transform: scale(.82); opacity: .55; } 45%,55% { transform: scale(1); opacity: 1; } }
-    .steps { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--hair-soft); }
-    .steps div { padding: .7rem .8rem; font-size: .74rem; color: var(--muted); }
-    .steps div + div { border-left: 1px solid var(--hair-soft); }
-    .steps b { display: block; color: #fff; font-weight: 600; font-family: var(--font-display); font-size: .8rem; }
-    .aeon { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 1rem; align-items: center; }
-    .aeon svg { width: 100%; height: auto; }
-    .aeon dl { margin: 0; display: grid; gap: .55rem; font-size: .78rem; }
-    .aeon dt { color: var(--gold-bright); font-family: var(--font-display); font-weight: 600; }
-    .aeon dd { margin: 0; color: var(--muted); }
-
-    /* Journey */
-    .journey svg { width: 100%; height: auto; display: block; margin: 1rem 0 2rem; }
-    .stations { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 0; border-top: 1px solid var(--hair); }
-    .stations > div { padding: 1.4rem 1.2rem 0 0; }
-    .stations > div + div { padding-left: 1.2rem; border-left: 1px solid var(--hair-soft); }
-    .stations p { color: var(--ink-soft); font-size: .92rem; margin: 0; }
-    .consent { margin-top: 2.5rem; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.6fr); gap: 2rem; border: 1px solid var(--hair); padding: 1.6rem; }
-
-    /* Vault */
-    #vault { background: radial-gradient(60% 70% at 75% 50%, rgba(26,34,53,.75), transparent 70%), var(--navy-deep); }
-    .vault-sky { width: 100%; height: auto; display: block; }
-    .vault-steps { counter-reset: s; list-style: none; padding: 0; margin: 1.8rem 0 0; display: grid; gap: 1.1rem; }
-    .vault-steps li { counter-increment: s; display: grid; grid-template-columns: 2.4rem 1fr; gap: .2rem 1rem; }
-    .vault-steps li::before { content: "0" counter(s); grid-row: span 2; font-family: var(--font-display); font-weight: 700; color: var(--gold-bright); font-size: .85rem; padding-top: .15rem; }
-    .vault-steps p { margin: 0; color: var(--ink-soft); font-size: .95rem; }
-    .tw { animation: tw 4s ease-in-out infinite; }
-    @keyframes tw { 50% { opacity: .35; } }
-
-    /* Pricing */
-    .tiers { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--hair); margin-top: 2.5rem; }
-    .tier { padding: clamp(1.6rem, 3vw, 2.6rem); display: flex; flex-direction: column; }
-    .tier + .tier { border-left: 1px solid var(--hair); background: linear-gradient(180deg, rgba(26,34,53,.55), transparent 60%); }
-    .status { font-family: var(--font-display); font-weight: 600; font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gold-bright); }
-    .price { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.2rem, 4vw, 3rem); margin: .6rem 0 .1rem; line-height: 1; }
-    .price small { font-size: .9rem; font-weight: 400; color: var(--muted); }
-    .tier .ticks { flex: 1; margin-bottom: 1.6rem; }
-    .tier .cta { align-self: flex-start; }
-
-    /* Compare */
-    .table-wrap { overflow-x: auto; margin-top: 2.2rem; border-top: 1px solid var(--hair); }
-    table.cmp { width: 100%; border-collapse: collapse; min-width: 620px; font-size: .93rem; }
-    table.cmp th, table.cmp td { text-align: left; vertical-align: top; padding: 1rem 1rem 1rem 0; border-bottom: 1px solid var(--hair-soft); }
-    table.cmp thead th { font-family: var(--font-display); font-weight: 600; color: var(--gold-bright); font-size: .82rem; letter-spacing: .04em; }
-    table.cmp tbody th { font-weight: 400; color: #fff; width: 22%; }
-    table.cmp td { color: var(--ink-soft); }
-
-    /* FAQ */
-    .faq { border-top: 1px solid var(--hair); margin-top: 2rem; }
-    .faq details { border-bottom: 1px solid var(--hair-soft); }
-    .faq summary { list-style: none; cursor: pointer; padding: 1.2rem 2.5rem 1.2rem 0; position: relative; font-family: var(--font-display); font-weight: 600; font-size: 1.02rem; }
-    .faq summary::-webkit-details-marker { display: none; }
-    .faq summary::after { content: "+"; position: absolute; right: .3rem; top: 1.05rem; color: var(--gold-bright); font-size: 1.3rem; font-weight: 400; transition: transform .2s; }
-    .faq details[open] summary::after { transform: rotate(45deg); }
-    .faq summary:hover { color: var(--gold-bright); }
-    .faq details p { color: var(--ink-soft); max-width: 70ch; margin: 0 0 1.3rem; }
 
     /* Invitation form (closing film) */
     .invite-anchor { position: absolute; left: 0; top: 240vh; height: 1px; width: 1px; }
@@ -231,20 +106,16 @@
     footer.site .base { margin-top: 2.5rem; padding-top: 1.2rem; border-top: 1px solid var(--hair-soft); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; font-size: .78rem; }
 
     @media (max-width: 960px) {
-      .split, .tool .split, .consent { grid-template-columns: 1fr; }
+      .split, .tool .split, .consent, .intro-split { grid-template-columns: 1fr; }
       .tool:nth-child(even) .split > .copy { order: 0; }
       .pillars, .stations { grid-template-columns: 1fr 1fr; }
-      .pillars > div:nth-child(3), .stations > div:nth-child(3) { border-left: 0; padding-left: 0; }
-      .pillars > div:nth-child(n+3), .stations > div:nth-child(n+3) { border-top: 1px solid var(--hair-soft); margin-top: 1.4rem; }
-      .tiers { grid-template-columns: 1fr; } .tier + .tier { border-left: 0; border-top: 1px solid var(--hair); }
+      .tiers { grid-template-columns: 1fr; }
       footer.site .cols { grid-template-columns: 1fr 1fr; }
       .chapter { min-height: 0; }
     }
     @media (max-width: 600px) {
       .pillars, .stations { grid-template-columns: 1fr; }
-      .pillars > div, .stations > div, .pillars > div + div, .stations > div + div { border-left: 0; padding-left: 0; }
-      .pillars > div + div, .stations > div + div { border-top: 1px solid var(--hair-soft); margin-top: 1.2rem; }
-      .toolnav a { flex: 1 1 50%; } .toolnav a + a { border-left: 0; }
+      .toolnav a { flex: 1 1 46%; }
       .codex { grid-template-columns: 1fr; } .codex nav { display: flex; overflow: hidden; border-right: 0; border-bottom: 1px solid var(--hair-soft); padding: 0; }
       .codex nav span { padding: .5rem .6rem; white-space: nowrap; } .codex nav .on { border-left: 0; border-bottom: 2px solid var(--gold-bright); padding-left: .6rem; }
       .aeon { grid-template-columns: 1fr; }
@@ -265,9 +136,16 @@
       .media img.still { opacity: 1 !important; }
     }
   </style>
+  <link rel="stylesheet" href="shared/membership.css">
   <noscript>
     <style>
       .hero-copy { opacity: 1 !important; }
+      #one-content [hidden] { display: grid !important; }
+      .one-product { margin-bottom: 50px; }
+      .one-tabs { display: none; }
+      .track { height: auto; }
+      .stage { position: relative; }
+      .invite-anchor { top: 0; }
       .loading { display: none; }
       .ring-pulse, .tw { animation: none !important; }
       .media img.poster { opacity: 0; }
@@ -317,340 +195,138 @@
       </div>
     </section>
 
-    <!-- 1. POSITION -->
-    <section class="chapter" id="intro" aria-labelledby="intro-h">
-      <div class="wrap">
-        <p class="kicker">One place for the whole inquiry</p>
-        <h2 id="intro-h">Research, reflection and practice, joined by the sources behind them</h2>
-        <p class="lede">Acuity.One is not a general chatbot with a spiritual theme. Each tool works from material you can inspect: curated sacred texts, literature you searched for, the sources you placed in a Codex sphere, your own calculated chart. When an answer is generated, the passages that informed it stay in view.</p>
-        <p class="lede">Today these tools live on separate addresses. Acuity.One gives them one account, so a passage found in Search can be studied in Codex, discussed with the Agent and carried into practice without starting again.</p>
-        <div class="pillars">
-          <div><p class="n">01 · Research</p><h3>Find the evidence</h3><p>Search the web, literature and chosen collections; keep the citations.</p></div>
-          <div><p class="n">02 · Study</p><h3>Understand it</h3><p>Ask the Agent or The Lens questions grounded in retrieved passages.</p></div>
-          <div><p class="n">03 · Practice</p><h3>Live with it</h3><p>Contemplative prayers and reflection in LumenNous; chart-based insight in myAeon.</p></div>
-          <div><p class="n">04 · Continuity</p><h3>Return to it</h3><p>Saved progress, bookmarks and, for Members, a WisdomVault you curate.</p></div>
+<div id="one-content">
+  <div class="one-index" aria-label="The Acuity.One offering">
+    <a class="one-wordmark" href="#intro">ACUITY<span>.ONE</span></a>
+    <span class="one-index-note">A membership for the enquiring life</span>
+    <a href="#pricing">Discover the membership <span aria-hidden="true">↗</span></a>
+  </div>
+
+  <section class="one-section one-intro" id="intro" aria-labelledby="intro-h">
+    <div class="one-wrap">
+      <div class="one-section-line"><span>01 / THE POSSIBILITY</span><span>EXPLORE. UNDERSTAND. BECOME.</span></div>
+      <div class="one-intro-grid">
+        <div class="one-copy">
+          <p class="one-eyebrow">THE ACUITY.ONE MEMBERSHIP</p>
+          <h2 id="intro-h">Let your inquiry<br>become <em>your path.</em></h2>
+          <p class="one-lead">Some questions deserve more than an answer.<br>They deserve a place to unfold.</p>
+          <p>Follow an idea through the world’s wisdom traditions. Study the sources, gather your own understanding, and carry what resonates into reflection and daily practice.</p>
+          <p>Acuity.One brings the Institute’s tools together around that journey. One membership. A personal thread through everything you explore.</p>
+          <a class="one-text-link" href="#tools">Meet your instruments <span aria-hidden="true">↗</span></a>
         </div>
+        <figure class="one-art one-book-art">
+          <img src="assets/membership/inquiry-book.webp" width="1536" height="1024" alt="An illuminated book opens into a golden arch, with fine threads connecting points of light." loading="lazy" decoding="async">
+          <figcaption><span class="one-figure-mark">✦</span> FROM KNOWLEDGE TO UNDERSTANDING</figcaption>
+        </figure>
       </div>
-    </section>
-
-    <!-- 2. TOOLS -->
-    <section class="chapter" id="tools" aria-labelledby="tools-h">
-      <div class="wrap">
-        <p class="kicker">The five tools</p>
-        <h2 id="tools-h">Five instruments, each built for one part of the path</h2>
-        <p class="lede">Every tool keeps its own character. Acuity.One adds the shared login, the shared allowance and the option to carry your chosen material between them.</p>
-        <nav class="toolnav" aria-label="Jump to a tool">
-          <a href="#tool-agent"><svg><use href="#i-agent"/></svg>Acuity.Agent</a>
-          <a href="#tool-search"><svg><use href="#i-search"/></svg>Acuity.Search</a>
-          <a href="#tool-codex"><svg><use href="#i-codex"/></svg>Acuity.Codex</a>
-          <a href="#tool-lumennous"><svg><use href="#i-lumen"/></svg>LumenNous</a>
-          <a href="#tool-myaeon"><svg><use href="#i-aeon"/></svg>myAeon</a>
-        </nav>
-
-        <div class="tools">
-          <article class="tool" id="tool-agent" aria-labelledby="agent-h">
-            <div class="split">
-              <div class="copy">
-                <div class="tool-head"><svg><use href="#i-agent"/></svg><span>The inquiry</span></div>
-                <h3 id="agent-h">Acuity.Agent — a conversation with a library in the room</h3>
-                <p class="muted">Ask about a teaching, a difficult passage or an idea that keeps returning. The Agent searches curated sacred texts and answers from the passages it retrieves, with references you can follow back to the edition.</p>
-                <ul class="ticks">
-                  <li>Answers grounded in retrieved passages, with source links</li>
-                  <li>Saved conversations you can return to and continue</li>
-                  <li>Attach your own material to a question</li>
-                  <li>Says plainly when the texts do not settle a question. It is a study companion, not an oracle or a therapist.</li>
-                </ul>
-                <a class="open link" href="https://acuity.institute/tools/agent">Read about Acuity.Agent</a>
-              </div>
-              <div class="app" role="img" aria-label="Acuity.Agent interface: a question about inner stillness, an answer with numbered citations and a list of sources.">
-                <div class="app-bar"><svg><use href="#i-agent"/></svg>Acuity.Agent<span class="r">Saved chat · Inner stillness</span></div>
-                <div class="app-body">
-                  <p class="q">How do different traditions approach inner stillness?</p>
-                  <div class="a">
-                    <p>The Taoist texts treat stillness as returning to the root, a receptive emptiness<sup class="c">1</sup>. Marcus Aurelius describes retreating into one's own mind as a place of quiet<sup class="c">2</sup>. The Dhammapada links a calm mind to disciplined attention<sup class="c">3</sup>.</p>
-                    <p style="margin:0">Would you like to compare the original wording of each passage?</p>
-                  </div>
-                  <div class="src">
-                    <div><b>¹ Tao Te Ching</b><i>Ch. 16 · Library edition</i></div>
-                    <div><b>² Meditations</b><i>Book IV · Library edition</i></div>
-                    <div><b>³ Dhammapada</b><i>Ch. III · Library edition</i></div>
-                  </div>
-                  <p class="limit">Based on 3 retrieved passages. Interpretations differ between translations.</p>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool" id="tool-search" aria-labelledby="search-h">
-            <div class="split">
-              <div class="copy">
-                <div class="tool-head"><svg><use href="#i-search"/></svg><span>The discovery</span></div>
-                <h3 id="search-h">Acuity.Search — a broader search with a deliberate scope</h3>
-                <p class="muted">Esoteric knowledge is scattered across archives, translations, specialist collections and the wider web. Search brings three routes of discovery into one place, then shows the evidence behind every answer.</p>
-                <ul class="ticks">
-                  <li><strong>General</strong>, <strong>Literature</strong> or <strong>Collections</strong> scope for each question</li>
-                  <li>Source cards, filters and a cited answer you can audit</li>
-                  <li>An evidence ledger linking each claim to its source</li>
-                  <li>Send what you found into a Codex sphere for deeper study</li>
-                </ul>
-                <a class="open link" href="https://acuity.institute/tools/search">Read about Acuity.Search</a>
-              </div>
-              <div class="app" role="img" aria-label="Acuity.Search interface: Literature scope selected, filters, and an evidence ledger with a Send to Codex action.">
-                <div class="app-bar"><svg><use href="#i-search"/></svg>Acuity.Search<span class="r">Research</span></div>
-                <div class="app-body">
-                  <div class="seg"><span>General</span><span class="on">Literature</span><span>Collections</span></div>
-                  <div class="field">Hermetic ideas of correspondence in Renaissance texts</div>
-                  <div class="filters"><span>Primary texts</span><span>Translations</span><span>Scholarly commentary</span></div>
-                  <table class="ledger">
-                    <thead><tr><th>Ref</th><th>Claim</th><th>Source type</th></tr></thead>
-                    <tbody>
-                      <tr><td>S1</td><td>Origin of the "as above, so below" maxim</td><td>Primary text</td></tr>
-                      <tr><td>S2</td><td>Reception in fifteenth-century Florence</td><td>Commentary</td></tr>
-                      <tr><td>S3</td><td>Comparison of English translations</td><td>Translation</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="app-foot"><span>3 sources cited · answer ready</span><b>Send to Codex →</b></div>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool" id="tool-codex" aria-labelledby="codex-h">
-            <div class="split">
-              <div class="copy">
-                <div class="tool-head"><svg><use href="#i-codex"/></svg><span>The instrument</span></div>
-                <h3 id="codex-h">Acuity.Codex — instruments of clarity</h3>
-                <p class="muted">Codex turns a collection of knowledge into a personal field of study. Gather sources into Context Spheres, each with its own purpose and boundary, and ask through The Lens with the evidence in view.</p>
-                <ul class="ticks">
-                  <li><strong>Archive</strong> — the curated text library, read in place</li>
-                  <li><strong>Context Spheres</strong> — choose exactly which sources a question may use, and inspect that context</li>
-                  <li><strong>The Lens</strong> — answers and synthesis bound to the chosen sphere</li>
-                  <li><strong>myVault</strong> — your own notes and uploaded material</li>
-                  <li><strong>Studio</strong> — study guides and audio created from your sources</li>
-                </ul>
-                <a class="open link" href="https://acuity.institute/tools/codex">Read about Acuity.Codex</a>
-              </div>
-              <div class="app" role="img" aria-label="Acuity.Codex interface: a Context Sphere shown as a constellation of connected sources, with a Studio audio row.">
-                <div class="app-bar"><svg><use href="#i-codex"/></svg>Acuity.Codex<span class="r">Sphere · The Inner Light</span></div>
-                <div class="codex">
-                  <nav aria-hidden="true"><span>Archive</span><span class="on">Context Spheres</span><span>The Lens</span><span>myVault</span><span>Studio</span></nav>
-                  <div class="app-body">
-                    <svg class="const" viewBox="0 0 400 230" aria-hidden="true">
-                      <g stroke="#FADB5F" stroke-opacity=".45" stroke-width=".8" fill="none">
-                        <path d="M200 115 L80 50 M200 115 L320 45 M200 115 L340 160 M200 115 L95 180 M200 115 L210 205 M80 50 L320 45 M95 180 L210 205"/>
-                      </g>
-                      <g fill="#fff" fill-opacity=".35"><circle cx="30" cy="20" r="1"/><circle cx="380" cy="100" r="1"/><circle cx="150" cy="25" r=".8"/><circle cx="260" cy="190" r=".8"/><circle cx="40" cy="120" r=".9"/><circle cx="370" cy="215" r="1"/></g>
-                      <circle cx="200" cy="115" r="9" fill="#FADB5F"/><circle cx="200" cy="115" r="18" fill="none" stroke="#FADB5F" stroke-opacity=".35"/>
-                      <g fill="#030305" stroke="#FADB5F" stroke-width="1.2"><circle cx="80" cy="50" r="5"/><circle cx="320" cy="45" r="5"/><circle cx="340" cy="160" r="5"/><circle cx="95" cy="180" r="5"/><circle cx="210" cy="205" r="5"/></g>
-                      <g font-family="Open Sans, sans-serif" font-size="11" fill="#fff" fill-opacity=".8">
-                        <text x="92" y="44">Gospel of Thomas</text><text x="250" y="30">Enneads</text><text x="276" y="182">My notes</text><text x="28" y="204">Cloud of Unknowing</text><text x="222" y="222" fill-opacity=".55">Upanishads</text>
-                      </g>
-                    </svg>
-                  </div>
-                </div>
-                <div class="app-foot"><span>Studio · Audio overview</span><span class="wave" aria-hidden="true"><i style="--h:30%"></i><i style="--h:70%"></i><i style="--h:45%"></i><i style="--h:90%"></i><i style="--h:55%"></i><i style="--h:35%"></i><i style="--h:80%"></i><i style="--h:50%"></i><i style="--h:65%"></i><i style="--h:25%"></i><i style="--h:75%"></i><i style="--h:40%"></i></span><b>5 sources</b></div>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool" id="tool-lumennous" aria-labelledby="lumen-h">
-            <div class="split">
-              <div class="copy">
-                <div class="tool-head"><svg><use href="#i-lumen"/></svg><span>The practice</span></div>
-                <h3 id="lumen-h">LumenNous — contemplative prayer and coherence</h3>
-                <p class="muted">A curated library of contemplative prayers, reflections and coherence practices: paced breathing with a settled focus. When you want something written for your situation, LumenNous can compose a custom practice from your intention.</p>
-                <ul class="ticks">
-                  <li>Unlimited access to the curated LumenNous Library on Free</li>
-                  <li>Custom AI-composed coherence practices (each one uses an AI task on Free)</li>
-                  <li>A guided path: settle, breathe, reflect</li>
-                </ul>
-                <a class="open link" href="https://lumennous.acuity.institute">Visit LumenNous</a>
-              </div>
-              <div class="app" role="img" aria-label="LumenNous interface: a breathing ring guiding a slow coherence rhythm, with three practice steps.">
-                <div class="app-bar"><svg><use href="#i-lumen"/></svg>LumenNous<span class="r">Library · Evening coherence</span></div>
-                <div class="breath">
-                  <svg viewBox="0 0 200 200" aria-hidden="true">
-                    <circle cx="100" cy="100" r="88" fill="none" stroke="#fff" stroke-opacity=".08"/>
-                    <circle cx="100" cy="100" r="88" fill="none" stroke="#FADB5F" stroke-width="1.5" stroke-dasharray="330 553" stroke-linecap="round" transform="rotate(-90 100 100)"/>
-                    <g class="ring-pulse"><circle cx="100" cy="100" r="60" fill="rgba(250,219,95,.06)" stroke="#FADB5F" stroke-opacity=".6"/></g>
-                    <text x="100" y="96" text-anchor="middle" font-family="Montserrat, sans-serif" font-weight="600" font-size="14" fill="#fff">Breathe in</text>
-                    <text x="100" y="116" text-anchor="middle" font-family="Open Sans, sans-serif" font-size="10" fill="#fff" fill-opacity=".6">a slow, even rhythm</text>
-                  </svg>
-                </div>
-                <div class="steps"><div><b>Settle</b>Arrive and soften</div><div><b>Breathe</b>Paced rhythm</div><div><b>Reflect</b>A short prayer</div></div>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool" id="tool-myaeon" aria-labelledby="aeon-h">
-            <div class="split">
-              <div class="copy">
-                <div class="tool-head"><svg><use href="#i-aeon"/></svg><span>The self</span></div>
-                <h3 id="aeon-h">myAeon — your chart, read with care</h3>
-                <p class="muted">myAeon calculates your natal chart from your birth details and writes a profile of fixed insights drawn from that calculated chart. Members can add optional celestial context and a daily reflection reading.</p>
-                <ul class="ticks">
-                  <li>Personal natal chart with placements and aspects</li>
-                  <li>A chart-based profile, generated once on Free</li>
-                  <li>Unlimited personal celestial and daily reflection readings for Members</li>
-                </ul>
-                <a class="open link" href="https://myaeon.acuity.institute">Visit myAeon</a>
-              </div>
-              <div class="app" role="img" aria-label="myAeon interface: a circular natal chart wheel beside profile insight headings.">
-                <div class="app-bar"><svg><use href="#i-aeon"/></svg>myAeon<span class="r">Natal profile</span></div>
-                <div class="app-body aeon">
-                  <svg viewBox="0 0 220 220" aria-hidden="true">
-                    <circle cx="110" cy="110" r="104" fill="none" stroke="#FADB5F" stroke-opacity=".7"/>
-                    <circle cx="110" cy="110" r="84" fill="none" stroke="#FADB5F" stroke-opacity=".35"/>
-                    <circle cx="110" cy="110" r="40" fill="none" stroke="#fff" stroke-opacity=".15"/>
-                    <g stroke="#FADB5F" stroke-opacity=".35" id="spokes"></g>
-                    <g stroke="#fff" stroke-opacity=".5" stroke-width=".8"><path d="M110 110 L66 52 M110 110 L170 74 M66 52 L170 74 M110 110 L150 168 M66 52 L150 168"/></g>
-                    <g fill="#FADB5F"><circle cx="66" cy="52" r="3.5"/><circle cx="170" cy="74" r="3.5"/><circle cx="150" cy="168" r="3.5"/><circle cx="58" cy="150" r="2.5"/><circle cx="180" cy="130" r="2.5"/></g>
-                  </svg>
-                  <dl>
-                    <div><dt>Core temperament</dt><dd>Sun, Moon and Ascendant read together</dd></div>
-                    <div><dt>Ways of relating</dt><dd>Venus and Mars placements</dd></div>
-                    <div><dt>Recurring tensions</dt><dd>Major aspects in the chart</dd></div>
-                    <div><dt>Daily reflection</dt><dd>Members · optional</dd></div>
-                  </dl>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
+      <div class="one-principles">
+        <div><span class="one-small-number">01</span><h3>Explore deeply.</h3><p>Follow enduring questions back to the texts themselves.</p></div>
+        <div><span class="one-small-number">02</span><h3>Make it your own.</h3><p>Gather sources, connect ideas and develop your perspective.</p></div>
+        <div><span class="one-small-number">03</span><h3>Bring it into life.</h3><p>Turn understanding into a practice you can return to.</p></div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- 3. JOURNEY -->
-    <section class="chapter journey" id="journey" aria-labelledby="journey-h">
-      <div class="wrap">
-        <p class="kicker">The unified path</p>
-        <h2 id="journey-h">One account carries a question from exploration to wisdom</h2>
-        <p class="lede">You decide what moves between tools. A search result becomes a Codex source only when you send it; a reflection informs a later answer only when you allow it.</p>
-        <svg viewBox="0 0 1000 150" role="img" aria-label="Path diagram: Exploration in Search leads to Knowledge in Codex and the Agent, then Practice in LumenNous and myAeon, then Wisdom kept in WisdomVault.">
-          <g stroke="#FADB5F" stroke-width="1.2" fill="none" stroke-opacity=".7"><path d="M125 75 H375 M625 75 H875"/><path d="M375 75 H625" stroke-dasharray="4 6"/></g>
-          <g stroke="#FADB5F" stroke-opacity=".25" fill="none"><path d="M125 75 L250 20 L375 75 L500 130 L625 75 L750 20 L875 75"/></g>
-          <g fill="#030305" stroke="#FADB5F" stroke-width="1.3">
-            <path d="M125 45 151 60v30l-26 15-26-15V60Z"/><path d="M375 45 401 60v30l-26 15-26-15V60Z"/><path d="M625 45 651 60v30l-26 15-26-15V60Z"/><path d="M875 45 901 60v30l-26 15-26-15V60Z"/>
-          </g>
-          <g fill="#FADB5F"><circle cx="125" cy="75" r="4"/><circle cx="375" cy="75" r="4"/><circle cx="625" cy="75" r="4"/><circle cx="875" cy="40" r="6"/></g>
-        </svg>
-        <div class="stations">
-          <div><p class="kicker">Exploration</p><h3>Acuity.Search</h3><p>Look broadly or narrowly; keep only the sources that matter.</p></div>
-          <div><p class="kicker">Knowledge</p><h3>Codex &amp; Agent</h3><p>Bring sources into a sphere, read the Archive, question with citations.</p></div>
-          <div><p class="kicker">Practice</p><h3>LumenNous &amp; myAeon</h3><p>Turn insight into prayer, coherence and personal reflection.</p></div>
-          <div><p class="kicker">Wisdom</p><h3>WisdomVault</h3><p>Keep what proved meaningful, and let it inform future work.</p></div>
-        </div>
-        <div class="consent">
-          <h3>Personal context, by permission</h3>
-          <ul class="ticks" style="margin:0">
-            <li>One Acuity login (Better Auth) across all five tools</li>
-            <li>Each tool asks for a scoped permission before it can read your personal context</li>
-            <li>Generation runs through one shared Acuity gateway, so your allowance and history live in one place</li>
-            <li>Nothing personal is used without your explicit consent</li>
-          </ul>
-        </div>
+  <section class="one-section one-instruments" id="tools" aria-labelledby="tools-h">
+    <div class="one-wrap">
+      <div class="one-section-line"><span>02 / THE INSTRUMENTS</span><span>FIVE TOOLS. ONE CONNECTED EXPERIENCE.</span></div>
+      <div class="one-section-heading">
+        <h2 id="tools-h">A constellation.<br><em>With you at its centre.</em></h2>
+        <p>Each tool has a purpose of its own. Together, they give your inquiry somewhere to go next.</p>
       </div>
-    </section>
-
-    <!-- 4. WISDOMVAULT -->
-    <section class="chapter" id="vault" aria-labelledby="vault-h">
-      <div class="wrap split">
-        <div>
-          <p class="kicker">Membership · WisdomVault</p>
-          <h2 id="vault-h">WisdomVault keeps what you choose, and nothing else</h2>
-          <p class="lede">WisdomVault is not a silent record of every conversation. It is a private collection you curate: a passage that changed how you read, a reflection worth keeping, an insight from a chart reading.</p>
-          <ol class="vault-steps">
-            <li><h4>Choose</h4><p>Save a source, reflection or insight from any tool, one item at a time.</p></li>
-            <li><h4>Keep</h4><p>Review, rename or remove items whenever you like.</p></li>
-            <li><h4>Allow</h4><p>Mark eligible items to inform AI answers across the tools, only when you decide to.</p></li>
-          </ol>
-        </div>
-        <svg class="vault-sky" viewBox="0 0 500 460" role="img" aria-label="A constellation of saved items inside a portal arch; chosen items glow gold, the rest stay dim.">
-          <path d="M70 450 V200 A180 180 0 0 1 430 200 V450" fill="none" stroke="#FADB5F" stroke-width="2" stroke-opacity=".75"/>
-          <path d="M95 450 V205 A155 155 0 0 1 405 205 V450" fill="none" stroke="#D4AF37" stroke-opacity=".25"/>
-          <g fill="#fff" fill-opacity=".3"><circle cx="20" cy="40" r="1"/><circle cx="480" cy="90" r="1.2"/><circle cx="460" cy="380" r="1"/><circle cx="30" cy="300" r="1"/><circle cx="250" cy="20" r="1"/><circle cx="140" cy="390" r="1"/><circle cx="360" cy="420" r="1"/></g>
-          <g stroke="#FADB5F" stroke-opacity=".55" stroke-width=".9" fill="none"><path d="M170 180 L250 130 L330 185 L300 280 L200 300 Z M250 130 L250 230 L300 280 M200 300 L250 230"/></g>
-          <g fill="#FADB5F"><circle cx="250" cy="130" r="6"/><circle cx="170" cy="180" r="4" class="tw"/><circle cx="330" cy="185" r="4"/><circle cx="300" cy="280" r="4" class="tw" style="animation-delay:1.3s"/><circle cx="200" cy="300" r="4"/><circle cx="250" cy="230" r="8"/></g>
-          <g fill="none" stroke="#fff" stroke-opacity=".35"><circle cx="140" cy="250" r="3"/><circle cx="360" cy="250" r="3"/><circle cx="250" cy="370" r="3"/><circle cx="180" cy="400" r="3"/></g>
-          <circle cx="250" cy="230" r="22" fill="none" stroke="#FADB5F" stroke-opacity=".3"/>
-        </svg>
+      <div class="one-tabs" role="tablist" aria-label="Explore the five Acuity tools">
+        <button id="tab-agent" role="tab" aria-selected="true" aria-controls="panel-agent" tabindex="0"><svg aria-hidden="true"><use href="#i-agent"/></svg><span>Acuity.Agent</span></button>
+        <button id="tab-search" role="tab" aria-selected="false" aria-controls="panel-search" tabindex="-1"><svg aria-hidden="true"><use href="#i-search"/></svg><span>Acuity.Search</span></button>
+        <button id="tab-codex" role="tab" aria-selected="false" aria-controls="panel-codex" tabindex="-1"><svg aria-hidden="true"><use href="#i-codex"/></svg><span>Acuity.Codex</span></button>
+        <button id="tab-lumen" role="tab" aria-selected="false" aria-controls="panel-lumen" tabindex="-1"><svg aria-hidden="true"><use href="#i-lumen"/></svg><span>LumenNous</span></button>
+        <button id="tab-aeon" role="tab" aria-selected="false" aria-controls="panel-aeon" tabindex="-1"><svg aria-hidden="true"><use href="#i-aeon"/></svg><span>myAeon</span></button>
       </div>
-    </section>
-
-    <!-- 5. PRICING -->
-    <section class="chapter" id="pricing" aria-labelledby="pricing-h">
-      <div class="wrap">
-        <p class="kicker">Membership</p>
-        <h2 id="pricing-h">Two ways in, both opening soon</h2>
-        <p class="lede">Neither tier is available to buy yet. Request an invitation and we will write when Acuity.One opens.</p>
-        <div class="tiers">
-          <div class="tier">
-            <p class="status">Coming soon</p>
-            <h3 style="margin-top:.8rem">Acuity.One Free</h3>
-            <p class="price">£0 <small>per month</small></p>
-            <ul class="ticks">
-              <li>5 AI tasks per month across Agent, Search, Codex, LumenNous and myAeon</li>
-              <li>A one-time myAeon chart profile: your natal chart plus fixed insights based on it</li>
-              <li>Unlimited curated LumenNous Library (custom AI practices use AI tasks)</li>
-              <li>Library reading with saved progress, a personal library and bookmarks from the full Archive</li>
-              <li>One login across all five tools</li>
-            </ul>
-            <a class="cta" href="#invitation">Request a Free invitation</a>
-          </div>
-          <div class="tier">
-            <p class="status">Coming soon</p>
-            <h3 style="margin-top:.8rem">Acuity.One Membership</h3>
-            <p class="price">Price TBC <small></small></p>
-            <p class="muted" style="font-size:.88rem">Subscription price to be confirmed.</p>
-            <ul class="ticks">
-              <li>Unlimited AI tasks across all Acuity apps and services</li>
-              <li>WisdomVault: your curated, consent-based memory across tools</li>
-              <li>The full Codex instrument suite: Context Spheres, The Lens, myVault and Studio</li>
-              <li>Custom LumenNous coherence practices and personal celestial readings in myAeon</li>
-              <li>Everything in Free</li>
-            </ul>
-            <a class="cta primary" href="#invitation">Request a Membership invitation</a>
+      <div class="one-product-stage">
+        <div id="panel-agent" class="one-product" role="tabpanel" aria-labelledby="tab-agent" tabindex="0">
+          <div class="one-product-copy"><p class="one-eyebrow">THE INQUIRY / ACUITY.AGENT</p><h3>A conversation.<br><em>A library behind it.</em></h3><p>Ask about a difficult passage, a shared theme or a teaching that stays with you. Follow a considered answer back to its sources, with room for context, difference and doubt.</p><ul class="one-list"><li>Explore sacred, philosophical and esoteric texts</li><li>Compare ideas without losing their traditions</li><li>Return to your questions and develop them further</li></ul><a class="one-text-link" href="https://acuity.institute/tools/agent">Explore Acuity.Agent <span aria-hidden="true">↗</span></a></div>
+          <div class="one-specimen">
+            <div class="one-window"><div class="one-window-bar"><span class="one-window-brand">ACUITY<span>.AGENT</span></span><span class="one-window-status"><i></i> THE INQUIRY</span></div><div class="one-agent-screen">
+              <div class="one-screen-label">A QUESTION TO BEGIN WITH</div><p class="one-prompt">How do different traditions<br>approach inner stillness?</p>
+              <div class="one-research-status"><span>01 SEARCH</span><i></i><span>02 READ</span><i></i><span>03 UNDERSTAND</span></div>
+              <p class="one-demo-prose">Explore the passages side by side. Notice where the teachings meet, and where their meanings remain distinct.</p>
+              <div class="one-source-stack">
+                <a href="https://acuity.institute/library"><span><b>01</b> Tao Te Ching</span><small>CHAPTER 16 <span aria-hidden="true">↗</span></small></a>
+                <a href="https://acuity.institute/library"><span><b>02</b> Meditations</span><small>BOOK IV <span aria-hidden="true">↗</span></small></a>
+                <a href="https://acuity.institute/library"><span><b>03</b> Dhammapada</span><small>THE MIND <span aria-hidden="true">↗</span></small></a>
+              </div><p class="one-screen-foot">The passage. Its context. Your understanding.</p>
+            </div></div><p class="one-specimen-caption">ILLUSTRATIVE STUDY VIEW · EXPLORE THE OPEN LIBRARY VIA THE SOURCE LINKS</p>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- 6. BYOK vs ONE -->
-    <section class="chapter" id="compare" aria-labelledby="compare-h">
-      <div class="wrap">
-        <p class="kicker">Two ways to use Acuity</p>
-        <h2 id="compare-h">Standalone tools with your own key, or Acuity.One fully managed</h2>
-        <p class="lede">The standalone tools on acuity.institute are not being locked away. They stay separately hosted, and you can run them with your own AI provider key and pay that provider for what you use. Acuity.One is the joined-up, fully managed service: one login, one allowance, shared context.</p>
-        <div class="table-wrap">
-          <table class="cmp">
-            <thead><tr><th scope="col"></th><th scope="col">Standalone (bring your own key)</th><th scope="col">Acuity.One Free</th><th scope="col">Acuity.One Membership</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">AI usage</th><td>Pay your provider as you go</td><td>5 AI tasks a month</td><td>Unlimited AI tasks</td></tr>
-              <tr><th scope="row">Sign-in</th><td>Per tool</td><td>One login, five tools</td><td>One login, five tools</td></tr>
-              <tr><th scope="row">Shared context</th><td>Each tool on its own</td><td>Saved progress and bookmarks</td><td>WisdomVault across tools, by consent</td></tr>
-              <tr><th scope="row">Setup</th><td>You manage keys and settings</td><td>Managed by Acuity</td><td>Managed by Acuity</td></tr>
-              <tr><th scope="row">Best for</th><td>Advanced users who want direct control</td><td>Exploring the path</td><td>Daily study and practice</td></tr>
-            </tbody>
-          </table>
+        <div id="panel-search" class="one-product" role="tabpanel" aria-labelledby="tab-search" tabindex="0" hidden>
+          <div class="one-product-copy"><p class="one-eyebrow">THE DISCOVERY / ACUITY.SEARCH</p><h3>Follow the question.<br><em>Widen the horizon.</em></h3><p>Move between the open web, literature and specialist collections. Find the material that deserves a closer reading, then bring it into your own field of study.</p><ul class="one-list"><li>Choose General, Literature or Collections</li><li>See the evidence behind a cited synthesis</li><li>Carry selected research into Acuity.Codex</li></ul><a class="one-text-link" href="https://acuity.institute/tools/search">Explore Acuity.Search <span aria-hidden="true">↗</span></a></div>
+          <div class="one-specimen"><div class="one-window"><div class="one-window-bar"><span class="one-window-brand">ACUITY<span>.SEARCH</span></span><span class="one-window-status">THE DISCOVERY</span></div><div class="one-search-screen"><div class="one-screen-label">CHOOSE YOUR FIELD OF INQUIRY</div><div class="one-scope" role="group" aria-label="Example search scope"><button type="button" aria-pressed="false" data-scope="general">General</button><button type="button" aria-pressed="true" data-scope="literature">Literature</button><button type="button" aria-pressed="false" data-scope="collections">Collections</button></div><p class="one-search-query">The idea of the inner light <svg aria-hidden="true"><use href="#i-search"/></svg></p><p id="scope-caption" class="one-demo-prose" aria-live="polite">Follow an idea through primary texts, translations and commentary.</p><div class="one-search-result"><span>01 / PRIMARY TEXT</span><h4>Return to the original.</h4><p>Read the passage in its own setting.</p></div><div class="one-search-result"><span>02 / CONTEXT & COMMENTARY</span><h4>See the wider conversation.</h4><p>Keep interpretation distinct from the source.</p></div><div class="one-screen-foot">Discover <span aria-hidden="true">→</span> Select <span aria-hidden="true">→</span> Study in Codex</div></div></div><p class="one-specimen-caption">INTERACTIVE CONCEPT · SELECT A SEARCH SCOPE</p></div>
+        </div>
+        <div id="panel-codex" class="one-product" role="tabpanel" aria-labelledby="tab-codex" tabindex="0" hidden>
+          <div class="one-product-copy"><p class="one-eyebrow">THE INSTRUMENT / ACUITY.CODEX</p><h3>A place for ideas<br><em>to find their shape.</em></h3><p>Build a Context Sphere around a subject that matters to you. Gather texts and notes, ask through The Lens, then create something useful from the sources you have chosen.</p><ul class="one-list"><li>Organise separate fields of study in Context Spheres</li><li>Question and compare through The Lens</li><li>Create study guides, summaries and audio in Studio</li></ul><a class="one-text-link" href="https://acuity.institute/tools/codex">Explore Acuity.Codex <span aria-hidden="true">↗</span></a></div>
+          <div class="one-specimen"><div class="one-window"><div class="one-window-bar"><span class="one-window-brand">ACUITY<span>.CODEX</span></span><span class="one-window-status">THE INSTRUMENT</span></div><div class="one-codex-screen"><div class="one-codex-top"><div><span class="one-screen-label">CONTEXT SPHERE / 01</span><h4>The inner life</h4></div><span class="one-mini-badge">5 SOURCES</span></div><div class="one-sphere" aria-hidden="true"><div class="one-orbit one-orbit-1"></div><div class="one-orbit one-orbit-2"></div><span class="one-sphere-core">✧</span><span class="one-sphere-node one-node-1">The Upanishads</span><span class="one-sphere-node one-node-2">Enneads</span><span class="one-sphere-node one-node-3">My reflections</span><span class="one-sphere-node one-node-4">The Cloud<br>of Unknowing</span><span class="one-sphere-node one-node-5">Gospel of Thomas</span></div><div class="one-codex-facets"><span>The Archive</span><span>The Lens</span><span>Studio</span></div></div></div><p class="one-specimen-caption">ILLUSTRATIVE CONTEXT SPHERE · SOURCES CHOSEN FOR ONE INQUIRY</p></div>
+        </div>
+        <div id="panel-lumen" class="one-product" role="tabpanel" aria-labelledby="tab-lumen" tabindex="0" hidden>
+          <div class="one-product-copy"><p class="one-eyebrow">THE PRACTICE / LUMENNOUS</p><h3>From something read<br><em>to something lived.</em></h3><p>Let understanding settle into a quieter rhythm. Explore contemplative prayer, sacred listening and guided reflection, or shape a personal practice around the intention you bring.</p><ul class="one-list"><li>An open library of prayers and guided practices</li><li>Coherence practice with paced breathing</li><li>Personal practices shaped around your intention</li></ul><a class="one-text-link" href="https://lumennous.acuity.institute">Explore LumenNous <span aria-hidden="true">↗</span></a></div>
+          <div class="one-specimen"><div class="one-window"><div class="one-window-bar"><span class="one-window-brand">LUMEN<span>NOUS</span></span><span class="one-window-status">THE PRACTICE</span></div><div class="one-lumen-screen"><span class="one-screen-label">A MOMENT TO RETURN</span><div class="one-breath" id="breath-orb"><i></i><i></i><i></i><span>Arrive.<small>LET YOUR ATTENTION SETTLE.</small></span></div><button class="one-quiet-button" id="breath-toggle" type="button" aria-pressed="false">Begin a quiet moment <span aria-hidden="true">▷</span></button><div class="one-practice-steps"><span>01 SETTLE</span><span>02 BREATHE</span><span>03 REFLECT</span></div></div></div><p class="one-specimen-caption">INTERACTIVE CONCEPT · A QUIET VISUAL PAUSE, WITHOUT AUDIO</p></div>
+        </div>
+        <div id="panel-aeon" class="one-product" role="tabpanel" aria-labelledby="tab-aeon" tabindex="0" hidden>
+          <div class="one-product-copy"><p class="one-eyebrow">THE PERSPECTIVE / MYAEON</p><h3>A little perspective.<br><em>A wider sky.</em></h3><p>Explore your calculated birth chart as a language for reflection. Consider patterns, tensions and possibilities, with optional celestial readings to accompany your personal practice.</p><ul class="one-list"><li>A personal chart from your birth details</li><li>Reflective readings of placements and aspects</li><li>Daily perspectives to consider in your own way</li></ul><p class="one-aside">Astrology as reflection, not prediction.</p><a class="one-text-link" href="https://myaeon.acuity.institute">Explore myAeon <span aria-hidden="true">↗</span></a></div>
+          <div class="one-specimen"><div class="one-window"><div class="one-window-bar"><span class="one-window-brand">my<span>AEON</span></span><span class="one-window-status">THE PERSPECTIVE</span></div><div class="one-aeon-screen"><svg class="one-chart" viewBox="0 0 340 340" fill="none" aria-hidden="true"><circle cx="170" cy="170" r="142"/><circle cx="170" cy="170" r="123"/><circle cx="170" cy="170" r="96"/><g id="one-chart-spokes"></g><path d="M87 120 239 103 218 253 87 120 264 188 111 247 239 103" stroke-opacity=".5"/><path d="M87 120 218 253 264 188 111 247" stroke-opacity=".3"/><circle class="one-chart-dot" cx="87" cy="120" r="4"/><circle class="one-chart-dot" cx="239" cy="103" r="4"/><circle class="one-chart-dot" cx="218" cy="253" r="4"/><circle class="one-chart-dot" cx="264" cy="188" r="4"/><circle class="one-chart-dot" cx="111" cy="247" r="4"/><path d="M170 148v44M148 170h44" stroke-opacity=".4"/></svg><div class="one-aeon-caption"><span class="one-screen-label">YOUR SKY, READ REFLECTIVELY</span><p>A starting point for self-understanding.</p></div></div></div><p class="one-specimen-caption">ILLUSTRATIVE CHART · NOT A PERSONAL READING</p></div>
         </div>
       </div>
-    </section>
+      <div class="one-library-ribbon"><div class="one-library-symbol" aria-hidden="true">✧</div><div><span class="one-screen-label">THE FOUNDATION / THE ACUITY LIBRARY</span><p>Every path begins with an open book.</p><small>The Institute’s reading room remains free to read and download. No membership required.</small></div><a class="one-text-link" href="https://acuity.institute/library">Enter the Library <span aria-hidden="true">↗</span></a></div>
+    </div>
+  </section>
 
-    <!-- 7. FAQ -->
-    <section class="chapter" id="faq" aria-labelledby="faq-h">
-      <div class="wrap">
-        <p class="kicker">Questions</p>
-        <h2 id="faq-h">Questions about Acuity.One</h2>
-        <div class="faq">
-          <details><summary>Can I join Acuity.One today?</summary><p>Not yet. Both the Free tier and the Membership are coming soon. Requesting an invitation simply tells us you would like to hear when it opens; it does not create an account or a subscription.</p></details>
-          <details><summary>What counts as an AI task?</summary><p>An AI task is one generated result: an Agent answer, a cited Search answer, a Lens synthesis or Studio output in Codex, a custom LumenNous practice, or a myAeon reading. Reading the Library, browsing the curated LumenNous Library and using bookmarks do not use tasks.</p></details>
-          <details><summary>How much will the Membership cost?</summary><p>The subscription price has not been confirmed. We will publish it before Membership opens, and nobody will be charged without choosing to subscribe.</p></details>
-          <details><summary>Does WisdomVault remember everything I write?</summary><p>No. WisdomVault holds only the sources, reflections and insights you choose to save, and only items you mark as eligible can inform AI answers. You can review and remove them.</p></details>
-          <details><summary>What happens to the standalone tools?</summary><p>They remain separately hosted on acuity.institute and its tool sites, usable with your own AI provider key. Acuity.One is an additional, fully managed way to use them together.</p></details>
-          <details><summary>Is Acuity a replacement for spiritual direction or therapy?</summary><p>No. The tools help you research, study and reflect on texts and practices. They show their sources and their limits, and they are not a substitute for a teacher, counsellor or medical professional.</p></details>
-        </div>
+  <section class="one-section one-journey" id="journey" aria-labelledby="journey-h">
+    <div class="one-wrap">
+      <div class="one-section-line"><span>03 / THE CONTINUITY</span><span>A THREAD WORTH FOLLOWING</span></div>
+      <div class="one-journey-heading"><p class="one-eyebrow">LESS STARTING OVER. MORE GOING DEEPER.</p><h2 id="journey-h">One question.<br><em>A path that keeps unfolding.</em></h2><p>What you discover can become something you study, something you practise, and something you choose to keep.</p></div>
+      <div class="one-path">
+        <article><span class="one-path-point">01</span><p class="one-screen-label">DISCOVER</p><h3>Follow a spark.</h3><p>Find a teaching, a passage or a question that asks you to look a little closer.</p><span class="one-path-tools">SEARCH · LIBRARY</span></article>
+        <article><span class="one-path-point">02</span><p class="one-screen-label">UNDERSTAND</p><h3>Stay with it.</h3><p>Read in context. Compare perspectives. Build a field of study around your own questions.</p><span class="one-path-tools">AGENT · CODEX</span></article>
+        <article><span class="one-path-point">03</span><p class="one-screen-label">PRACTISE</p><h3>Make room for it.</h3><p>Bring an insight into prayer, contemplation or a personal reflection on daily life.</p><span class="one-path-tools">LUMENNOUS · MYAEON</span></article>
+        <article><span class="one-path-point">04</span><p class="one-screen-label">KEEP</p><h3>Return with more.</h3><p>Save what has meaning. Let your chosen knowledge inform the next chapter.</p><span class="one-path-tools">WISDOMVAULT</span></article>
       </div>
-    </section>
+      <p class="one-journey-note"><span aria-hidden="true">✦</span> You choose what moves between tools, and what remains simply yours.</p>
+    </div>
+  </section>
+
+  <section class="one-section one-vault" id="vault" aria-labelledby="vault-h">
+    <div class="one-wrap">
+      <div class="one-section-line"><span>04 / YOUR WISDOMVAULT</span><span>INCLUDED WITH MEMBERSHIP</span></div>
+      <div class="one-vault-grid">
+        <div class="one-vault-visual"><figure class="one-art"><img src="assets/membership/wisdom-vault.webp" width="1536" height="1024" alt="A finely crafted golden cryptex opens around a crystalline core, with a single thread of light." loading="lazy" decoding="async"></figure><div class="one-vault-label"><span class="one-figure-mark">◇</span><span>WISDOMVAULT<small>KNOWLEDGE, CHOSEN BY YOU.</small></span></div></div>
+        <div class="one-copy"><p class="one-eyebrow">THE PERSONAL THREAD</p><h2 id="vault-h">Keep what matters.<br><em>Let it grow with you.</em></h2><p class="one-lead">A passage. A reflection.<br>An understanding you want to return to.</p><p>WisdomVault is your chosen collection of knowledge and experience. Bring meaningful sources and personal insights together, so your explorations can deepen over time.</p><div class="one-vault-rules"><div><span>01</span><p><b>Save deliberately.</b> You decide what belongs in your collection.</p></div><div><span>02</span><p><b>Choose the context.</b> You decide which saved material may inform an answer.</p></div><div><span>03</span><p><b>Stay in control.</b> Review your selections as your understanding changes.</p></div></div><p class="one-aside">Personalisation begins with permission.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="one-section one-membership" id="pricing" aria-labelledby="pricing-h">
+    <div class="one-wrap">
+      <div class="one-section-line"><span>05 / THE MEMBERSHIP</span><span>YOUR INVITATION TO GO FURTHER</span></div>
+      <div class="one-section-heading"><h2 id="pricing-h">A place to begin.<br><em>Room to go deeper.</em></h2><p>Start with curiosity. Choose Membership when you want a continuous home for your study and practice.</p></div>
+      <div class="one-plans">
+        <article class="one-plan one-free"><p class="one-eyebrow">THE OPEN DOOR</p><h3>Acuity.One Free</h3><p class="one-plan-intro">A first step into the connected experience.</p><div class="one-price">£0 <span>/ month</span></div><div class="one-plan-divider"></div><ul class="one-list"><li>Five AI tasks each month across the tools</li><li>One personal myAeon chart profile</li><li>The curated LumenNous practice library</li><li>Library bookmarks and reading progress</li><li>One account for the Acuity tools</li></ul><a href="#invitation" class="one-button one-button-outline" data-plan="Acuity.One Free">Request a Free invitation <span aria-hidden="true">↗</span></a><p class="one-plan-status">COMING SOON</p></article>
+        <article class="one-plan one-member"><div class="one-member-glow" aria-hidden="true"></div><div class="one-member-top"><p class="one-eyebrow">THE WHOLE PATH</p><span class="one-mini-badge">ACUITY.ONE</span></div><h3>The Membership</h3><p class="one-plan-intro">Your instruments. Your knowledge. Your practice.</p><div class="one-price one-price-pending">Price to be confirmed</div><p class="one-price-note">Subscription details will be published before launch.</p><div class="one-plan-divider"></div><ul class="one-list"><li><b>Unlimited AI use</b> across the Acuity tools*</li><li><b>WisdomVault</b> for the knowledge you choose to keep</li><li><b>The full Codex suite:</b> Spheres, The Lens and Studio</li><li><b>Personal practice</b> and reflective celestial readings</li><li><b>Everything in Free,</b> connected around your inquiry</li></ul><a href="#invitation" class="one-button one-button-gold" data-plan="Acuity.One Membership">Request a Membership invitation <span aria-hidden="true">↗</span></a><p class="one-plan-status">COMING SOON · NO PAYMENT TAKEN</p></article>
+      </div>
+      <p class="one-plan-footnote">The planned offering is shown here. *Usage scope, fair-use terms and any specialist media allowances will be confirmed with pricing before launch. An invitation request creates no subscription.</p>
+      <details class="one-comparison" id="compare"><summary>Compare Free, Membership and the standalone tools <span aria-hidden="true">+</span></summary><div class="one-table-scroll" role="region" aria-label="Plan comparison" tabindex="0"><table><caption>Ways to use Acuity</caption><thead><tr><th scope="col">Your experience</th><th scope="col">Standalone · BYOK</th><th scope="col">One Free</th><th scope="col">One Membership</th></tr></thead><tbody><tr><th scope="row">AI use</th><td>Your provider, your usage</td><td>5 tasks / month</td><td>Unlimited use*</td></tr><tr><th scope="row">Setup</th><td>Your own provider keys</td><td>Managed by Acuity</td><td>Managed by Acuity</td></tr><tr><th scope="row">Account</th><td>Separate tool accounts</td><td>One Acuity account</td><td>One Acuity account</td></tr><tr><th scope="row">Continuity</th><td>Within each tool</td><td>Progress & bookmarks</td><td>Chosen context in WisdomVault</td></tr><tr><th scope="row">Best for</th><td>Direct control</td><td>Beginning to explore</td><td>Ongoing study & practice</td></tr></tbody></table></div><p>The separately hosted tools remain available with your own AI provider keys. The public Library stays open to everyone.</p></details>
+    </div>
+  </section>
+
+  <section class="one-section one-faq" id="faq" aria-labelledby="faq-h">
+    <div class="one-wrap"><div class="one-section-line"><span>06 / A FEW QUESTIONS</span><span>CLARITY BEFORE YOU BEGIN</span></div><div class="one-faq-grid"><div><p class="one-eyebrow">A LITTLE MORE CONTEXT</p><h2 id="faq-h">Before you<br><em>step inside.</em></h2><p>Something else on your mind?</p><a class="one-text-link" href="mailto:hello@acuity.institute">Write to the Institute <span aria-hidden="true">↗</span></a></div><div class="one-questions">
+      <details><summary>When can I join Acuity.One?</summary><p>The connected membership is in development. Request an invitation to hear when it opens. Launch timing, pricing and final allowances will be confirmed before anyone is asked to subscribe.</p></details>
+      <details><summary>What does one AI task include?</summary><p>The proposed Free allowance counts a generated result: an Agent answer, a Search synthesis, a Codex output, a custom LumenNous practice or a myAeon reading. Reading the public Library and browsing the curated practice library do not use AI tasks. Final counting rules and media allowances will be published before launch.</p></details>
+      <details><summary>What makes the experience personal?</summary><p>You choose what to save in WisdomVault, and which saved items may inform a particular answer. That chosen context is intended to bring continuity to your study and practice without making every conversation part of your personal knowledge collection.</p></details>
+      <details><summary>Will the Library and standalone tools remain available?</summary><p>Yes. The Library remains an open reading room, free to read and download. The standalone tools remain separate options for people who prefer to use their own AI provider keys. Acuity.One brings the tools together as a managed membership.</p></details>
+      <details><summary>Do I need to follow a particular tradition?</summary><p>No. Acuity supports self-guided inquiry across traditions, with attention to the differences between them. You bring the questions and decide what has meaning for you. Generated interpretations should be read alongside their sources.</p></details>
+      <details><summary>How should I use the personal and celestial reflections?</summary><p>As invitations to reflection, held with your own judgement. Acuity supports study and contemplative practice. It does not provide clinical care, predict your future or replace a trusted teacher, counsellor or health professional.</p></details>
+    </div></div></div>
+  </section>
+</div>
+
 
     <!-- CLOSING (preserved 360vh milky-way-lake scrub). Overlay copy editable in #copy-lake. -->
     <section class="track pos-top" id="track-lake" aria-label="Request an invitation: Milky Way Lake film">
@@ -669,7 +345,7 @@
         <div class="loading" aria-hidden="true"><i id="bar-lake"></i></div>
         <div class="hero-copy" id="copy-lake">
           <p class="eyebrow">Acuity.One · Coming soon</p>
-          <h1>An open invite to wisdom</h1>
+          <h2 class="closing-title">An open invite to wisdom</h2>
           <p class="sub">Request an invitation and we will write when Acuity.One opens.</p>
           <form class="invite" id="invite-form" novalidate aria-describedby="invite-note">
             <label>Name<input name="name" autocomplete="name" /></label>
@@ -707,6 +383,7 @@
     </div>
   </footer>
 
+  <script type="module" src="shared/membership.js"></script>
   <script type="module">
     import { createScrollClock, prefersReducedMotion, HEX_LOGO } from "./shared/scroll-clock.js";
 
@@ -771,12 +448,12 @@
             img.src = `${framesFolder}/f-${pad(i + 1)}.jpg`;
           }))
         );
-        return imgs.filter(Boolean);
+        return imgs;
       }
 
       function drawFrame(index) {
         if (!frames.length) return;
-        const img = frames[Math.max(0, Math.min(frames.length - 1, index))];
+        const img = frames[Math.max(0, Math.min(frames.length - 1, index))] || frames.find(Boolean);
         if (!img) return;
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       }
@@ -798,7 +475,7 @@
       return {
         async init() {
           frames = await loadFrames();
-          if (frames.length && media) {
+          if (frames.some(Boolean) && media) {
             media.classList.add("is-ready");
             drawFrame(currentFrame);
           }
@@ -832,11 +509,19 @@
       holdStart: 0.66
     });
 
-    // Load both frame sequences concurrently
-    Promise.all([heroSection.init(), lakeSection.init()]).then(() => {
+    heroSection.init().then(() => {
       window.dispatchEvent(new Event("scroll"));
       window.__ready = true;
     });
+    if ("IntersectionObserver" in window) {
+      const lakeLoader = new IntersectionObserver((entries) => {
+        if (entries.some(entry => entry.isIntersecting)) {
+          lakeSection.init();
+          lakeLoader.disconnect();
+        }
+      }, { rootMargin: "1000px" });
+      lakeLoader.observe(document.getElementById("track-lake"));
+    } else lakeSection.init();
     const footMark = document.getElementById("mark-foot");
     if (footMark) footMark.innerHTML = HEX_LOGO + "<span>Acuity</span>";
 
@@ -851,7 +536,7 @@
       e.preventDefault();
       const email = form.email.value.trim();
       if (!form.email.checkValidity() || !email) { statusEl.textContent = "Please enter a valid email address."; form.email.focus(); return; }
-      const name = form.name.value.trim();
+      const name = form.elements.namedItem("name").value.trim();
       const plan = form.plan.value;
       const body = `Hello Acuity Institute,\n\nI would like an invitation to Acuity.One when it opens.\n\nName: ${name || "(not given)"}\nEmail: ${email}\nInterested in: ${plan}\n\nThank you.`;
       const href = "mailto:hello@acuity.institute?subject=" + encodeURIComponent("Acuity.One invitation request") + "&body=" + encodeURIComponent(body);
