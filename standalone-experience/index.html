@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Acuity.One — An open invite to wisdom | Acuity Institute</title>
+  <meta name="description" content="Acuity.One brings Acuity.Agent, Acuity.Search, Acuity.Codex, LumenNous and myAeon together under one login. Free and Membership tiers are coming soon." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared/brand.css" />
+  <style>
+    /* Section Tracks & Stages */
+    .track { position: relative; height: 360vh; }
+    .stage { position: sticky; top: 0; height: 100svh; overflow: hidden; background: #02040c; }
+    .media { position: absolute; inset: 0; z-index: 1; }
+    .media img, .media canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .media canvas, .media img.still { opacity: 0; }
+    .media.is-ready canvas { opacity: 1; }
+    .media.is-ready img.poster { opacity: 0; transition: opacity 0.3s ease; }
+    
+    .copy-scrim { position: absolute; inset: 0; z-index: 15; background: var(--scrim); opacity: 0.7; pointer-events: none; transition: opacity 0.2s ease; }
+    .hero-copy { opacity: 0; will-change: transform, opacity; }
+
+    /* Track-specific layout variants */
+    .pos-bottom .hero-copy {
+      justify-content: flex-end;
+      padding-bottom: clamp(3.5rem, 10vh, 7rem);
+    }
+
+    .pos-top .hero-copy {
+      justify-content: flex-start;
+      padding-top: clamp(6rem, 14vh, 9.5rem);
+    }
+    .pos-top .copy-scrim {
+      background: linear-gradient(180deg, rgba(2,4,12,0.85) 0%, rgba(2,4,12,0.4) 45%, rgba(2,4,12,0.1) 75%);
+    }
+
+    /* Loading Bars */
+    .loading {
+      position: absolute;
+      z-index: 25;
+      left: 50%;
+      bottom: 1.5rem;
+      transform: translateX(-50%);
+      width: 140px;
+      height: 2px;
+      background: rgba(224,182,90,0.15);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .loading i {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: var(--gold-bright, #e0b65a);
+      transition: width .15s ease;
+    }
+    .media.is-ready ~ .loading { display: none; }
+    /* ============ Acuity.One content system ============ */
+    :root { --hair: rgba(250,219,95,.22); --hair-soft: rgba(255,255,255,.09); --panel: #070a12; --muted: rgba(255,255,255,.6); --wrap: 1180px; --pad: clamp(1.25rem, 5vw, 4rem); }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    body { font-weight: 400; line-height: 1.65; }
+    :focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; }
+    .skip { position: absolute; left: 1rem; top: -4rem; z-index: 2000; background: var(--gold-bright); color: #030305; padding: .6rem 1rem; font-weight: 600; }
+    .skip:focus { top: 1rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; }
+    .cta.primary { background: var(--gold-bright); color: #030305; border-color: var(--gold-bright); font-weight: 600; }
+    .cta.primary:hover, .cta.primary:focus-visible { background: #fff1a8; }
+    .hero-copy .eyebrow { font-family: var(--font-display); font-weight: 600; }
+    .hero-copy .sub { max-width: 46ch; }
+    .cta { font-family: var(--font-display); font-weight: 600; transition: background .2s, border-color .2s, transform .15s; }
+    .cta:hover { transform: translateY(-1px); } .cta:active { transform: translateY(0); }
+    .topnav { pointer-events: auto; display: flex; gap: 1.4rem; }
+    .topnav a { font-family: var(--font-display); font-size: .72rem !important; letter-spacing: .14em !important; text-transform: uppercase; }
+    @media (max-width: 720px) { .topnav a:not(.keep) { display: none; } }
+
+    .chapter { position: relative; background: var(--navy-deep); border-top: 1px solid var(--hair-soft); padding: clamp(5rem, 11vh, 8rem) 0; min-height: 100svh; display: flex; align-items: center; }
+    .wrap { width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 0 var(--pad); }
+    .kicker { font-family: var(--font-display); font-weight: 600; font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); margin: 0 0 1.1rem; }
+    h2 { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.9rem, 3.6vw, 3rem); line-height: 1.12; letter-spacing: -.01em; margin: 0 0 1.25rem; max-width: 22ch; }
+    h3 { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.25rem, 1.8vw, 1.55rem); line-height: 1.25; margin: 0 0 .8rem; }
+    h4 { font-family: var(--font-display); font-weight: 600; font-size: .95rem; margin: 0 0 .4rem; letter-spacing: .01em; }
+    .lede { font-weight: 300; font-size: clamp(1.05rem, 1.4vw, 1.22rem); color: var(--ink-soft); max-width: 60ch; margin: 0 0 1rem; }
+    p { margin: 0 0 1rem; }
+    .muted { color: var(--muted); }
+    .gold { color: var(--gold-bright); }
+    a.link { color: var(--gold-bright); border-bottom: 1px solid rgba(250,219,95,.4); transition: border-color .2s; }
+    a.link:hover { border-color: var(--gold-bright); }
+    .split { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.1fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+    ul.ticks { list-style: none; padding: 0; margin: 1.2rem 0 0; display: grid; gap: .7rem; }
+    ul.ticks li { position: relative; padding-left: 1.4rem; color: var(--ink-soft); }
+    ul.ticks li::before { content: ""; position: absolute; left: 0; top: .62em; width: .55rem; height: 1px; background: var(--gold-bright); }
+
+    /* Position */
+    .pillars { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); border-top: 1px solid var(--hair); margin-top: clamp(2.5rem, 6vh, 4rem); }
+    .pillars > div { padding: 1.6rem 1.4rem 0 0; }
+    .pillars > div + div { padding-left: 1.4rem; border-left: 1px solid var(--hair-soft); }
+    .pillars .n { font-family: var(--font-display); font-weight: 700; color: var(--gold-bright); font-size: .8rem; letter-spacing: .1em; }
+    .pillars p { color: var(--ink-soft); font-size: .95rem; margin: 0; }
+
+    /* Tools */
+    #tools { display: block; }
+    .toolnav { display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); margin: 2.2rem 0 0; }
+    .toolnav a { flex: 1 1 0; min-width: 9rem; display: flex; align-items: center; gap: .7rem; padding: 1rem 1.1rem; font-family: var(--font-display); font-weight: 600; font-size: .86rem; color: var(--ink-soft); transition: color .2s, background .2s; }
+    .toolnav a + a { border-left: 1px solid var(--hair-soft); }
+    .toolnav a:hover { color: #fff; background: rgba(250,219,95,.05); }
+    .toolnav svg, .tool-head svg { width: 1.6rem; height: 1.6rem; flex: none; color: var(--gold-bright); }
+    .tool { padding: clamp(4rem, 10vh, 6.5rem) 0; border-bottom: 1px solid var(--hair-soft); scroll-margin-top: 1rem; }
+    .tool:last-child { border-bottom: 0; padding-bottom: 0; }
+    .tool .split { grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); }
+    .tool:nth-child(even) .split > .copy { order: 2; }
+    .tool-head { display: flex; align-items: center; gap: .8rem; margin-bottom: 1rem; }
+    .tool-head span { font-family: var(--font-display); font-weight: 600; font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+    .tool .open { display: inline-block; margin-top: 1.6rem; font-family: var(--font-display); font-weight: 600; font-size: .82rem; }
+
+    /* App frame vignettes */
+    .app { background: var(--panel); border: 1px solid var(--hair-soft); border-radius: 6px; overflow: hidden; font-size: .84rem; box-shadow: 0 30px 80px -40px rgba(250,219,95,.18); }
+    .app-bar { display: flex; align-items: center; gap: .6rem; padding: .7rem 1rem; border-bottom: 1px solid var(--hair-soft); font-family: var(--font-display); font-weight: 600; font-size: .74rem; letter-spacing: .06em; color: var(--muted); }
+    .app-bar svg { width: 1rem; height: 1rem; color: var(--gold-bright); }
+    .app-bar .r { margin-left: auto; font-weight: 400; }
+    .app-body { padding: 1.1rem; }
+    .q { margin-left: auto; max-width: 80%; background: #111827; border: 1px solid var(--hair-soft); padding: .65rem .85rem; border-radius: 4px; margin-bottom: .9rem; }
+    .a { border-left: 1px solid var(--gold-bright); padding: .1rem 0 .1rem .9rem; color: var(--ink-soft); }
+    sup.c { color: var(--gold-bright); font-family: var(--font-display); font-weight: 700; font-size: .66rem; }
+    .src { display: grid; gap: .45rem; margin-top: 1rem; }
+    .src div { display: flex; justify-content: space-between; gap: 1rem; border: 1px solid var(--hair-soft); padding: .5rem .7rem; border-radius: 3px; }
+    .src b { font-weight: 400; color: #fff; } .src i { font-style: normal; color: var(--muted); font-size: .76rem; white-space: nowrap; }
+    .limit { margin-top: .9rem; font-size: .76rem; color: var(--muted); border-top: 1px dashed var(--hair-soft); padding-top: .7rem; }
+    .seg { display: flex; border: 1px solid var(--hair-soft); border-radius: 3px; width: max-content; max-width: 100%; margin-bottom: .9rem; }
+    .seg span { padding: .35rem .8rem; font-size: .76rem; color: var(--muted); }
+    .seg span + span { border-left: 1px solid var(--hair-soft); }
+    .seg .on { color: #030305; background: var(--gold-bright); font-weight: 600; }
+    .field { border: 1px solid var(--hair); padding: .6rem .8rem; border-radius: 3px; margin-bottom: .9rem; color: #fff; }
+    .filters { display: flex; flex-wrap: wrap; gap: .4rem 1rem; font-size: .74rem; color: var(--muted); margin-bottom: .9rem; }
+    .filters span::before { content: "▪ "; color: var(--gold); }
+    .ledger { width: 100%; border-collapse: collapse; font-size: .76rem; }
+    .ledger th, .ledger td { text-align: left; padding: .45rem .3rem; border-top: 1px solid var(--hair-soft); font-weight: 400; }
+    .ledger th { color: var(--muted); font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; }
+    .ledger td:first-child { color: var(--gold-bright); font-family: var(--font-display); font-weight: 700; }
+    .app-foot { display: flex; justify-content: space-between; align-items: center; gap: 1rem; border-top: 1px solid var(--hair-soft); padding: .7rem 1rem; font-size: .74rem; color: var(--muted); }
+    .app-foot b { color: var(--gold-bright); font-weight: 600; font-family: var(--font-display); }
+    .codex { display: grid; grid-template-columns: 8.5rem minmax(0,1fr); }
+    .codex nav { border-right: 1px solid var(--hair-soft); padding: .8rem 0; font-size: .76rem; }
+    .codex nav span { display: block; padding: .38rem 1rem; color: var(--muted); }
+    .codex nav .on { color: #fff; border-left: 2px solid var(--gold-bright); padding-left: calc(1rem - 2px); }
+    .codex svg.const { width: 100%; height: auto; display: block; }
+    .wave { display: flex; align-items: center; gap: 2px; height: 1.6rem; flex: 1; }
+    .wave i { flex: 1; background: var(--gold); opacity: .55; height: var(--h); }
+    .breath { display: grid; place-items: center; padding: 1.2rem 0 .4rem; }
+    .breath svg { width: min(16rem, 70%); height: auto; }
+    .ring-pulse { transform-origin: 100px 100px; animation: breathe 8s ease-in-out infinite; }
+    @keyframes breathe { 0%,100% { transform: scale(.82); opacity: .55; } 45%,55% { transform: scale(1); opacity: 1; } }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--hair-soft); }
+    .steps div { padding: .7rem .8rem; font-size: .74rem; color: var(--muted); }
+    .steps div + div { border-left: 1px solid var(--hair-soft); }
+    .steps b { display: block; color: #fff; font-weight: 600; font-family: var(--font-display); font-size: .8rem; }
+    .aeon { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 1rem; align-items: center; }
+    .aeon svg { width: 100%; height: auto; }
+    .aeon dl { margin: 0; display: grid; gap: .55rem; font-size: .78rem; }
+    .aeon dt { color: var(--gold-bright); font-family: var(--font-display); font-weight: 600; }
+    .aeon dd { margin: 0; color: var(--muted); }
+
+    /* Journey */
+    .journey svg { width: 100%; height: auto; display: block; margin: 1rem 0 2rem; }
+    .stations { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 0; border-top: 1px solid var(--hair); }
+    .stations > div { padding: 1.4rem 1.2rem 0 0; }
+    .stations > div + div { padding-left: 1.2rem; border-left: 1px solid var(--hair-soft); }
+    .stations p { color: var(--ink-soft); font-size: .92rem; margin: 0; }
+    .consent { margin-top: 2.5rem; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.6fr); gap: 2rem; border: 1px solid var(--hair); padding: 1.6rem; }
+
+    /* Vault */
+    #vault { background: radial-gradient(60% 70% at 75% 50%, rgba(26,34,53,.75), transparent 70%), var(--navy-deep); }
+    .vault-sky { width: 100%; height: auto; display: block; }
+    .vault-steps { counter-reset: s; list-style: none; padding: 0; margin: 1.8rem 0 0; display: grid; gap: 1.1rem; }
+    .vault-steps li { counter-increment: s; display: grid; grid-template-columns: 2.4rem 1fr; gap: .2rem 1rem; }
+    .vault-steps li::before { content: "0" counter(s); grid-row: span 2; font-family: var(--font-display); font-weight: 700; color: var(--gold-bright); font-size: .85rem; padding-top: .15rem; }
+    .vault-steps p { margin: 0; color: var(--ink-soft); font-size: .95rem; }
+    .tw { animation: tw 4s ease-in-out infinite; }
+    @keyframes tw { 50% { opacity: .35; } }
+
+    /* Pricing */
+    .tiers { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--hair); margin-top: 2.5rem; }
+    .tier { padding: clamp(1.6rem, 3vw, 2.6rem); display: flex; flex-direction: column; }
+    .tier + .tier { border-left: 1px solid var(--hair); background: linear-gradient(180deg, rgba(26,34,53,.55), transparent 60%); }
+    .status { font-family: var(--font-display); font-weight: 600; font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gold-bright); }
+    .price { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.2rem, 4vw, 3rem); margin: .6rem 0 .1rem; line-height: 1; }
+    .price small { font-size: .9rem; font-weight: 400; color: var(--muted); }
+    .tier .ticks { flex: 1; margin-bottom: 1.6rem; }
+    .tier .cta { align-self: flex-start; }
+
+    /* Compare */
+    .table-wrap { overflow-x: auto; margin-top: 2.2rem; border-top: 1px solid var(--hair); }
+    table.cmp { width: 100%; border-collapse: collapse; min-width: 620px; font-size: .93rem; }
+    table.cmp th, table.cmp td { text-align: left; vertical-align: top; padding: 1rem 1rem 1rem 0; border-bottom: 1px solid var(--hair-soft); }
+    table.cmp thead th { font-family: var(--font-display); font-weight: 600; color: var(--gold-bright); font-size: .82rem; letter-spacing: .04em; }
+    table.cmp tbody th { font-weight: 400; color: #fff; width: 22%; }
+    table.cmp td { color: var(--ink-soft); }
+
+    /* FAQ */
+    .faq { border-top: 1px solid var(--hair); margin-top: 2rem; }
+    .faq details { border-bottom: 1px solid var(--hair-soft); }
+    .faq summary { list-style: none; cursor: pointer; padding: 1.2rem 2.5rem 1.2rem 0; position: relative; font-family: var(--font-display); font-weight: 600; font-size: 1.02rem; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; position: absolute; right: .3rem; top: 1.05rem; color: var(--gold-bright); font-size: 1.3rem; font-weight: 400; transition: transform .2s; }
+    .faq details[open] summary::after { transform: rotate(45deg); }
+    .faq summary:hover { color: var(--gold-bright); }
+    .faq details p { color: var(--ink-soft); max-width: 70ch; margin: 0 0 1.3rem; }
+
+    /* Invitation form (closing film) */
+    .invite-anchor { position: absolute; left: 0; top: 240vh; height: 1px; width: 1px; }
+    .invite { width: 100%; max-width: 560px; margin-top: .4rem; text-align: left; background: rgba(3,3,5,.72); border: 1px solid var(--hair); padding: 1.2rem; display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+    .invite label { display: grid; gap: .3rem; font-size: .72rem; letter-spacing: .06em; color: var(--ink-soft); font-family: var(--font-display); font-weight: 600; }
+    .invite .full { grid-column: 1 / -1; }
+    .invite input, .invite select { width: 100%; background: rgba(255,255,255,.04); border: 1px solid var(--hair-soft); color: #fff; font: 400 .92rem var(--font-ui); padding: .6rem .7rem; border-radius: 2px; }
+    .invite select option { background: #0b0f1a; }
+    .invite input:focus, .invite select:focus { outline: 2px solid var(--gold-bright); outline-offset: 1px; }
+    .invite button { grid-column: 1 / -1; min-height: 2.8rem; background: var(--gold-bright); color: #030305; border: 0; border-radius: 2px; font: 600 .78rem var(--font-display); letter-spacing: .14em; text-transform: uppercase; transition: background .2s, transform .15s; }
+    .invite button:hover { background: #fff1a8; transform: translateY(-1px); }
+    .invite .note { grid-column: 1 / -1; font-size: .76rem; color: var(--ink-soft); margin: 0; font-family: var(--font-ui); }
+    .invite .note a { color: var(--gold-bright); text-decoration: underline; text-underline-offset: 3px; }
+    #invite-status { grid-column: 1 / -1; font-size: .8rem; color: var(--gold-bright); margin: 0; min-height: 0; }
+    .pos-top .hero-copy { padding-top: clamp(5rem, 11vh, 8rem); }
+    .tagline { font-family: var(--font-display); font-weight: 600; font-size: .72rem; letter-spacing: .38em; text-transform: uppercase; color: var(--gold); }
+
+    footer.site { background: var(--navy-deep); border-top: 1px solid var(--hair); padding: 3rem 0 2.5rem; font-size: .86rem; color: var(--muted); }
+    footer.site .cols { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2rem; }
+    footer.site ul { list-style: none; padding: 0; margin: 0; display: grid; gap: .45rem; }
+    footer.site a:hover { color: var(--gold-bright); }
+    footer.site .base { margin-top: 2.5rem; padding-top: 1.2rem; border-top: 1px solid var(--hair-soft); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; font-size: .78rem; }
+
+    @media (max-width: 960px) {
+      .split, .tool .split, .consent { grid-template-columns: 1fr; }
+      .tool:nth-child(even) .split > .copy { order: 0; }
+      .pillars, .stations { grid-template-columns: 1fr 1fr; }
+      .pillars > div:nth-child(3), .stations > div:nth-child(3) { border-left: 0; padding-left: 0; }
+      .pillars > div:nth-child(n+3), .stations > div:nth-child(n+3) { border-top: 1px solid var(--hair-soft); margin-top: 1.4rem; }
+      .tiers { grid-template-columns: 1fr; } .tier + .tier { border-left: 0; border-top: 1px solid var(--hair); }
+      footer.site .cols { grid-template-columns: 1fr 1fr; }
+      .chapter { min-height: 0; }
+    }
+    @media (max-width: 600px) {
+      .pillars, .stations { grid-template-columns: 1fr; }
+      .pillars > div, .stations > div, .pillars > div + div, .stations > div + div { border-left: 0; padding-left: 0; }
+      .pillars > div + div, .stations > div + div { border-top: 1px solid var(--hair-soft); margin-top: 1.2rem; }
+      .toolnav a { flex: 1 1 50%; } .toolnav a + a { border-left: 0; }
+      .codex { grid-template-columns: 1fr; } .codex nav { display: flex; overflow: hidden; border-right: 0; border-bottom: 1px solid var(--hair-soft); padding: 0; }
+      .codex nav span { padding: .5rem .6rem; white-space: nowrap; } .codex nav .on { border-left: 0; border-bottom: 2px solid var(--gold-bright); padding-left: .6rem; }
+      .aeon { grid-template-columns: 1fr; }
+      .invite { grid-template-columns: 1fr; padding: .9rem; gap: .55rem; }
+      .hero-actions .cta { width: 100%; }
+      footer.site .cols { grid-template-columns: 1fr; }
+      .app-foot { flex-wrap: wrap; }
+    }
+    @media (max-width: 720px) and (max-height: 760px) { .pos-top .hero-copy { padding-top: 4rem; } .pos-top .hero-copy h1 { font-size: 1.7rem; } .pos-top .hero-copy .sub { display: none; } .pos-top .hero-copy .eyebrow { margin-bottom: .5rem; } .invite .note { font-size: .7rem; } }
+    /* Reduced Motion (original) */
+    /* Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      .track { height: auto; }
+      .stage { position: relative; }
+      .hero-copy { opacity: 1 !important; transform: none !important; }
+      .media canvas, .media img.poster, .loading { display: none; }
+      .ring-pulse, .tw { animation: none !important; }
+      .media img.still { opacity: 1 !important; }
+    }
+  </style>
+  <noscript>
+    <style>
+      .hero-copy { opacity: 1 !important; }
+      .loading { display: none; }
+      .ring-pulse, .tw { animation: none !important; }
+      .media img.poster { opacity: 0; }
+      .media img.still { opacity: 1; }
+    </style>
+  </noscript>
+
+</head>
+<body>
+  <a class="skip" href="#intro">Skip to content</a>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-agent" viewBox="0 0 32 32"><path d="M6 28V14a10 10 0 0 1 20 0v14" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M11 28V15a5 5 0 0 1 10 0v13" fill="none" stroke="currentColor" stroke-width="1.1" opacity=".6"/><circle cx="16" cy="9" r="1.6" fill="currentColor"/></symbol>
+      <symbol id="i-search" viewBox="0 0 32 32"><circle cx="14" cy="14" r="8.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M20.2 20.2 27 27" stroke="currentColor" stroke-width="1.6"/><path d="M9.5 14h9M14 9.5v9" stroke="currentColor" stroke-width=".9" opacity=".6"/></symbol>
+      <symbol id="i-codex" viewBox="0 0 32 32"><path d="M16 3 27 9.5v13L16 29 5 22.5v-13Z" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5 9.5 16 16l11-6.5M16 16v13" fill="none" stroke="currentColor" stroke-width="1" opacity=".6"/><circle cx="16" cy="16" r="2" fill="currentColor"/></symbol>
+      <symbol id="i-lumen" viewBox="0 0 32 32"><circle cx="16" cy="16" r="5" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width=".9" opacity=".5"/><path d="M16 1.5v4M16 26.5v4M1.5 16h4M26.5 16h4" stroke="currentColor" stroke-width="1.2"/></symbol>
+      <symbol id="i-aeon" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12.5" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="16" cy="16" r="7" fill="none" stroke="currentColor" stroke-width=".9" opacity=".6"/><path d="M16 3.5v5M16 23.5v5M3.5 16h5M23.5 16h5M7.2 7.2l3.5 3.5M21.3 21.3l3.5 3.5M24.8 7.2l-3.5 3.5M10.7 21.3l-3.5 3.5" stroke="currentColor" stroke-width=".8" opacity=".7"/><circle cx="21" cy="11" r="1.6" fill="currentColor"/></symbol>
+      <symbol id="i-vault" viewBox="0 0 32 32"><path d="M6 28V13a10 10 0 0 1 20 0v15Z" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="16" cy="18" r="3.2" fill="none" stroke="currentColor" stroke-width="1.1"/><path d="M16 21.2V25" stroke="currentColor" stroke-width="1.1"/></symbol>
+    </defs>
+  </svg>
+  <main>
+    <!-- HERO (preserved 360vh horizon-portal scrub). Overlay copy is editable in #copy-hero. -->
+    <section class="track pos-bottom" id="track-hero" aria-label="Acuity.One introduction: Horizon Portal film">
+      <div class="stage">
+        <div class="topbar">
+          <div class="brand-mark" id="mark-hero"><span>Acuity</span></div>
+          <nav class="topnav" aria-label="Page sections">
+            <a href="#tools">Tools</a><a href="#pricing">Membership</a><a href="#faq">Questions</a><a class="keep" href="#invitation">Request an invitation</a>
+          </nav>
+        </div>
+        <div class="media" id="media-hero">
+          <img class="still" src="assets/horizon-portal/still.jpg" width="1920" height="1080" alt="" aria-hidden="true" />
+          <img class="poster" src="assets/horizon-portal/poster.jpg" width="1920" height="1080" alt="A small gold portal on a misty horizon flares, grows, and the camera passes between its pillars." />
+          <canvas id="canvas-hero" width="1920" height="1080" aria-hidden="true"></canvas>
+        </div>
+        <div class="copy-scrim" id="scrim-hero" aria-hidden="true"></div>
+        <div class="loading" aria-hidden="true"><i id="bar-hero"></i></div>
+        <div class="hero-copy" id="copy-hero">
+          <p class="eyebrow">Acuity.One · Coming soon</p>
+          <h1>An open invite to wisdom</h1>
+          <p class="sub">Five Acuity tools, one login. Begin on the Free tier with five AI tasks a month, or join the Membership for unlimited use across every app.</p>
+          <div class="hero-actions">
+            <a class="cta primary" href="#invitation">Request an invitation</a>
+            <a class="cta" href="#tools">Explore the tools</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. POSITION -->
+    <section class="chapter" id="intro" aria-labelledby="intro-h">
+      <div class="wrap">
+        <p class="kicker">One place for the whole inquiry</p>
+        <h2 id="intro-h">Research, reflection and practice, joined by the sources behind them</h2>
+        <p class="lede">Acuity.One is not a general chatbot with a spiritual theme. Each tool works from material you can inspect: curated sacred texts, literature you searched for, the sources you placed in a Codex sphere, your own calculated chart. When an answer is generated, the passages that informed it stay in view.</p>
+        <p class="lede">Today these tools live on separate addresses. Acuity.One gives them one account, so a passage found in Search can be studied in Codex, discussed with the Agent and carried into practice without starting again.</p>
+        <div class="pillars">
+          <div><p class="n">01 · Research</p><h3>Find the evidence</h3><p>Search the web, literature and chosen collections; keep the citations.</p></div>
+          <div><p class="n">02 · Study</p><h3>Understand it</h3><p>Ask the Agent or The Lens questions grounded in retrieved passages.</p></div>
+          <div><p class="n">03 · Practice</p><h3>Live with it</h3><p>Contemplative prayers and reflection in LumenNous; chart-based insight in myAeon.</p></div>
+          <div><p class="n">04 · Continuity</p><h3>Return to it</h3><p>Saved progress, bookmarks and, for Members, a WisdomVault you curate.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. TOOLS -->
+    <section class="chapter" id="tools" aria-labelledby="tools-h">
+      <div class="wrap">
+        <p class="kicker">The five tools</p>
+        <h2 id="tools-h">Five instruments, each built for one part of the path</h2>
+        <p class="lede">Every tool keeps its own character. Acuity.One adds the shared login, the shared allowance and the option to carry your chosen material between them.</p>
+        <nav class="toolnav" aria-label="Jump to a tool">
+          <a href="#tool-agent"><svg><use href="#i-agent"/></svg>Acuity.Agent</a>
+          <a href="#tool-search"><svg><use href="#i-search"/></svg>Acuity.Search</a>
+          <a href="#tool-codex"><svg><use href="#i-codex"/></svg>Acuity.Codex</a>
+          <a href="#tool-lumennous"><svg><use href="#i-lumen"/></svg>LumenNous</a>
+          <a href="#tool-myaeon"><svg><use href="#i-aeon"/></svg>myAeon</a>
+        </nav>
+
+        <div class="tools">
+          <article class="tool" id="tool-agent" aria-labelledby="agent-h">
+            <div class="split">
+              <div class="copy">
+                <div class="tool-head"><svg><use href="#i-agent"/></svg><span>The inquiry</span></div>
+                <h3 id="agent-h">Acuity.Agent — a conversation with a library in the room</h3>
+                <p class="muted">Ask about a teaching, a difficult passage or an idea that keeps returning. The Agent searches curated sacred texts and answers from the passages it retrieves, with references you can follow back to the edition.</p>
+                <ul class="ticks">
+                  <li>Answers grounded in retrieved passages, with source links</li>
+                  <li>Saved conversations you can return to and continue</li>
+                  <li>Attach your own material to a question</li>
+                  <li>Says plainly when the texts do not settle a question. It is a study companion, not an oracle or a therapist.</li>
+                </ul>
+                <a class="open link" href="https://acuity.institute/tools/agent">Read about Acuity.Agent</a>
+              </div>
+              <div class="app" role="img" aria-label="Acuity.Agent interface: a question about inner stillness, an answer with numbered citations and a list of sources.">
+                <div class="app-bar"><svg><use href="#i-agent"/></svg>Acuity.Agent<span class="r">Saved chat · Inner stillness</span></div>
+                <div class="app-body">
+                  <p class="q">How do different traditions approach inner stillness?</p>
+                  <div class="a">
+                    <p>The Taoist texts treat stillness as returning to the root, a receptive emptiness<sup class="c">1</sup>. Marcus Aurelius describes retreating into one's own mind as a place of quiet<sup class="c">2</sup>. The Dhammapada links a calm mind to disciplined attention<sup class="c">3</sup>.</p>
+                    <p style="margin:0">Would you like to compare the original wording of each passage?</p>
+                  </div>
+                  <div class="src">
+                    <div><b>¹ Tao Te Ching</b><i>Ch. 16 · Library edition</i></div>
+                    <div><b>² Meditations</b><i>Book IV · Library edition</i></div>
+                    <div><b>³ Dhammapada</b><i>Ch. III · Library edition</i></div>
+                  </div>
+                  <p class="limit">Based on 3 retrieved passages. Interpretations differ between translations.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="tool" id="tool-search" aria-labelledby="search-h">
+            <div class="split">
+              <div class="copy">
+                <div class="tool-head"><svg><use href="#i-search"/></svg><span>The discovery</span></div>
+                <h3 id="search-h">Acuity.Search — a broader search with a deliberate scope</h3>
+                <p class="muted">Esoteric knowledge is scattered across archives, translations, specialist collections and the wider web. Search brings three routes of discovery into one place, then shows the evidence behind every answer.</p>
+                <ul class="ticks">
+                  <li><strong>General</strong>, <strong>Literature</strong> or <strong>Collections</strong> scope for each question</li>
+                  <li>Source cards, filters and a cited answer you can audit</li>
+                  <li>An evidence ledger linking each claim to its source</li>
+                  <li>Send what you found into a Codex sphere for deeper study</li>
+                </ul>
+                <a class="open link" href="https://acuity.institute/tools/search">Read about Acuity.Search</a>
+              </div>
+              <div class="app" role="img" aria-label="Acuity.Search interface: Literature scope selected, filters, and an evidence ledger with a Send to Codex action.">
+                <div class="app-bar"><svg><use href="#i-search"/></svg>Acuity.Search<span class="r">Research</span></div>
+                <div class="app-body">
+                  <div class="seg"><span>General</span><span class="on">Literature</span><span>Collections</span></div>
+                  <div class="field">Hermetic ideas of correspondence in Renaissance texts</div>
+                  <div class="filters"><span>Primary texts</span><span>Translations</span><span>Scholarly commentary</span></div>
+                  <table class="ledger">
+                    <thead><tr><th>Ref</th><th>Claim</th><th>Source type</th></tr></thead>
+                    <tbody>
+                      <tr><td>S1</td><td>Origin of the "as above, so below" maxim</td><td>Primary text</td></tr>
+                      <tr><td>S2</td><td>Reception in fifteenth-century Florence</td><td>Commentary</td></tr>
+                      <tr><td>S3</td><td>Comparison of English translations</td><td>Translation</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="app-foot"><span>3 sources cited · answer ready</span><b>Send to Codex →</b></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="tool" id="tool-codex" aria-labelledby="codex-h">
+            <div class="split">
+              <div class="copy">
+                <div class="tool-head"><svg><use href="#i-codex"/></svg><span>The instrument</span></div>
+                <h3 id="codex-h">Acuity.Codex — instruments of clarity</h3>
+                <p class="muted">Codex turns a collection of knowledge into a personal field of study. Gather sources into Context Spheres, each with its own purpose and boundary, and ask through The Lens with the evidence in view.</p>
+                <ul class="ticks">
+                  <li><strong>Archive</strong> — the curated text library, read in place</li>
+                  <li><strong>Context Spheres</strong> — choose exactly which sources a question may use, and inspect that context</li>
+                  <li><strong>The Lens</strong> — answers and synthesis bound to the chosen sphere</li>
+                  <li><strong>myVault</strong> — your own notes and uploaded material</li>
+                  <li><strong>Studio</strong> — study guides and audio created from your sources</li>
+                </ul>
+                <a class="open link" href="https://acuity.institute/tools/codex">Read about Acuity.Codex</a>
+              </div>
+              <div class="app" role="img" aria-label="Acuity.Codex interface: a Context Sphere shown as a constellation of connected sources, with a Studio audio row.">
+                <div class="app-bar"><svg><use href="#i-codex"/></svg>Acuity.Codex<span class="r">Sphere · The Inner Light</span></div>
+                <div class="codex">
+                  <nav aria-hidden="true"><span>Archive</span><span class="on">Context Spheres</span><span>The Lens</span><span>myVault</span><span>Studio</span></nav>
+                  <div class="app-body">
+                    <svg class="const" viewBox="0 0 400 230" aria-hidden="true">
+                      <g stroke="#FADB5F" stroke-opacity=".45" stroke-width=".8" fill="none">
+                        <path d="M200 115 L80 50 M200 115 L320 45 M200 115 L340 160 M200 115 L95 180 M200 115 L210 205 M80 50 L320 45 M95 180 L210 205"/>
+                      </g>
+                      <g fill="#fff" fill-opacity=".35"><circle cx="30" cy="20" r="1"/><circle cx="380" cy="100" r="1"/><circle cx="150" cy="25" r=".8"/><circle cx="260" cy="190" r=".8"/><circle cx="40" cy="120" r=".9"/><circle cx="370" cy="215" r="1"/></g>
+                      <circle cx="200" cy="115" r="9" fill="#FADB5F"/><circle cx="200" cy="115" r="18" fill="none" stroke="#FADB5F" stroke-opacity=".35"/>
+                      <g fill="#030305" stroke="#FADB5F" stroke-width="1.2"><circle cx="80" cy="50" r="5"/><circle cx="320" cy="45" r="5"/><circle cx="340" cy="160" r="5"/><circle cx="95" cy="180" r="5"/><circle cx="210" cy="205" r="5"/></g>
+                      <g font-family="Open Sans, sans-serif" font-size="11" fill="#fff" fill-opacity=".8">
+                        <text x="92" y="44">Gospel of Thomas</text><text x="250" y="30">Enneads</text><text x="276" y="182">My notes</text><text x="28" y="204">Cloud of Unknowing</text><text x="222" y="222" fill-opacity=".55">Upanishads</text>
+                      </g>
+                    </svg>
+                  </div>
+                </div>
+                <div class="app-foot"><span>Studio · Audio overview</span><span class="wave" aria-hidden="true"><i style="--h:30%"></i><i style="--h:70%"></i><i style="--h:45%"></i><i style="--h:90%"></i><i style="--h:55%"></i><i style="--h:35%"></i><i style="--h:80%"></i><i style="--h:50%"></i><i style="--h:65%"></i><i style="--h:25%"></i><i style="--h:75%"></i><i style="--h:40%"></i></span><b>5 sources</b></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="tool" id="tool-lumennous" aria-labelledby="lumen-h">
+            <div class="split">
+              <div class="copy">
+                <div class="tool-head"><svg><use href="#i-lumen"/></svg><span>The practice</span></div>
+                <h3 id="lumen-h">LumenNous — contemplative prayer and coherence</h3>
+                <p class="muted">A curated library of contemplative prayers, reflections and coherence practices: paced breathing with a settled focus. When you want something written for your situation, LumenNous can compose a custom practice from your intention.</p>
+                <ul class="ticks">
+                  <li>Unlimited access to the curated LumenNous Library on Free</li>
+                  <li>Custom AI-composed coherence practices (each one uses an AI task on Free)</li>
+                  <li>A guided path: settle, breathe, reflect</li>
+                </ul>
+                <a class="open link" href="https://lumennous.acuity.institute">Visit LumenNous</a>
+              </div>
+              <div class="app" role="img" aria-label="LumenNous interface: a breathing ring guiding a slow coherence rhythm, with three practice steps.">
+                <div class="app-bar"><svg><use href="#i-lumen"/></svg>LumenNous<span class="r">Library · Evening coherence</span></div>
+                <div class="breath">
+                  <svg viewBox="0 0 200 200" aria-hidden="true">
+                    <circle cx="100" cy="100" r="88" fill="none" stroke="#fff" stroke-opacity=".08"/>
+                    <circle cx="100" cy="100" r="88" fill="none" stroke="#FADB5F" stroke-width="1.5" stroke-dasharray="330 553" stroke-linecap="round" transform="rotate(-90 100 100)"/>
+                    <g class="ring-pulse"><circle cx="100" cy="100" r="60" fill="rgba(250,219,95,.06)" stroke="#FADB5F" stroke-opacity=".6"/></g>
+                    <text x="100" y="96" text-anchor="middle" font-family="Montserrat, sans-serif" font-weight="600" font-size="14" fill="#fff">Breathe in</text>
+                    <text x="100" y="116" text-anchor="middle" font-family="Open Sans, sans-serif" font-size="10" fill="#fff" fill-opacity=".6">a slow, even rhythm</text>
+                  </svg>
+                </div>
+                <div class="steps"><div><b>Settle</b>Arrive and soften</div><div><b>Breathe</b>Paced rhythm</div><div><b>Reflect</b>A short prayer</div></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="tool" id="tool-myaeon" aria-labelledby="aeon-h">
+            <div class="split">
+              <div class="copy">
+                <div class="tool-head"><svg><use href="#i-aeon"/></svg><span>The self</span></div>
+                <h3 id="aeon-h">myAeon — your chart, read with care</h3>
+                <p class="muted">myAeon calculates your natal chart from your birth details and writes a profile of fixed insights drawn from that calculated chart. Members can add optional celestial context and a daily reflection reading.</p>
+                <ul class="ticks">
+                  <li>Personal natal chart with placements and aspects</li>
+                  <li>A chart-based profile, generated once on Free</li>
+                  <li>Unlimited personal celestial and daily reflection readings for Members</li>
+                </ul>
+                <a class="open link" href="https://myaeon.acuity.institute">Visit myAeon</a>
+              </div>
+              <div class="app" role="img" aria-label="myAeon interface: a circular natal chart wheel beside profile insight headings.">
+                <div class="app-bar"><svg><use href="#i-aeon"/></svg>myAeon<span class="r">Natal profile</span></div>
+                <div class="app-body aeon">
+                  <svg viewBox="0 0 220 220" aria-hidden="true">
+                    <circle cx="110" cy="110" r="104" fill="none" stroke="#FADB5F" stroke-opacity=".7"/>
+                    <circle cx="110" cy="110" r="84" fill="none" stroke="#FADB5F" stroke-opacity=".35"/>
+                    <circle cx="110" cy="110" r="40" fill="none" stroke="#fff" stroke-opacity=".15"/>
+                    <g stroke="#FADB5F" stroke-opacity=".35" id="spokes"></g>
+                    <g stroke="#fff" stroke-opacity=".5" stroke-width=".8"><path d="M110 110 L66 52 M110 110 L170 74 M66 52 L170 74 M110 110 L150 168 M66 52 L150 168"/></g>
+                    <g fill="#FADB5F"><circle cx="66" cy="52" r="3.5"/><circle cx="170" cy="74" r="3.5"/><circle cx="150" cy="168" r="3.5"/><circle cx="58" cy="150" r="2.5"/><circle cx="180" cy="130" r="2.5"/></g>
+                  </svg>
+                  <dl>
+                    <div><dt>Core temperament</dt><dd>Sun, Moon and Ascendant read together</dd></div>
+                    <div><dt>Ways of relating</dt><dd>Venus and Mars placements</dd></div>
+                    <div><dt>Recurring tensions</dt><dd>Major aspects in the chart</dd></div>
+                    <div><dt>Daily reflection</dt><dd>Members · optional</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. JOURNEY -->
+    <section class="chapter journey" id="journey" aria-labelledby="journey-h">
+      <div class="wrap">
+        <p class="kicker">The unified path</p>
+        <h2 id="journey-h">One account carries a question from exploration to wisdom</h2>
+        <p class="lede">You decide what moves between tools. A search result becomes a Codex source only when you send it; a reflection informs a later answer only when you allow it.</p>
+        <svg viewBox="0 0 1000 150" role="img" aria-label="Path diagram: Exploration in Search leads to Knowledge in Codex and the Agent, then Practice in LumenNous and myAeon, then Wisdom kept in WisdomVault.">
+          <g stroke="#FADB5F" stroke-width="1.2" fill="none" stroke-opacity=".7"><path d="M125 75 H375 M625 75 H875"/><path d="M375 75 H625" stroke-dasharray="4 6"/></g>
+          <g stroke="#FADB5F" stroke-opacity=".25" fill="none"><path d="M125 75 L250 20 L375 75 L500 130 L625 75 L750 20 L875 75"/></g>
+          <g fill="#030305" stroke="#FADB5F" stroke-width="1.3">
+            <path d="M125 45 151 60v30l-26 15-26-15V60Z"/><path d="M375 45 401 60v30l-26 15-26-15V60Z"/><path d="M625 45 651 60v30l-26 15-26-15V60Z"/><path d="M875 45 901 60v30l-26 15-26-15V60Z"/>
+          </g>
+          <g fill="#FADB5F"><circle cx="125" cy="75" r="4"/><circle cx="375" cy="75" r="4"/><circle cx="625" cy="75" r="4"/><circle cx="875" cy="40" r="6"/></g>
+        </svg>
+        <div class="stations">
+          <div><p class="kicker">Exploration</p><h3>Acuity.Search</h3><p>Look broadly or narrowly; keep only the sources that matter.</p></div>
+          <div><p class="kicker">Knowledge</p><h3>Codex &amp; Agent</h3><p>Bring sources into a sphere, read the Archive, question with citations.</p></div>
+          <div><p class="kicker">Practice</p><h3>LumenNous &amp; myAeon</h3><p>Turn insight into prayer, coherence and personal reflection.</p></div>
+          <div><p class="kicker">Wisdom</p><h3>WisdomVault</h3><p>Keep what proved meaningful, and let it inform future work.</p></div>
+        </div>
+        <div class="consent">
+          <h3>Personal context, by permission</h3>
+          <ul class="ticks" style="margin:0">
+            <li>One Acuity login (Better Auth) across all five tools</li>
+            <li>Each tool asks for a scoped permission before it can read your personal context</li>
+            <li>Generation runs through one shared Acuity gateway, so your allowance and history live in one place</li>
+            <li>Nothing personal is used without your explicit consent</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. WISDOMVAULT -->
+    <section class="chapter" id="vault" aria-labelledby="vault-h">
+      <div class="wrap split">
+        <div>
+          <p class="kicker">Membership · WisdomVault</p>
+          <h2 id="vault-h">WisdomVault keeps what you choose, and nothing else</h2>
+          <p class="lede">WisdomVault is not a silent record of every conversation. It is a private collection you curate: a passage that changed how you read, a reflection worth keeping, an insight from a chart reading.</p>
+          <ol class="vault-steps">
+            <li><h4>Choose</h4><p>Save a source, reflection or insight from any tool, one item at a time.</p></li>
+            <li><h4>Keep</h4><p>Review, rename or remove items whenever you like.</p></li>
+            <li><h4>Allow</h4><p>Mark eligible items to inform AI answers across the tools, only when you decide to.</p></li>
+          </ol>
+        </div>
+        <svg class="vault-sky" viewBox="0 0 500 460" role="img" aria-label="A constellation of saved items inside a portal arch; chosen items glow gold, the rest stay dim.">
+          <path d="M70 450 V200 A180 180 0 0 1 430 200 V450" fill="none" stroke="#FADB5F" stroke-width="2" stroke-opacity=".75"/>
+          <path d="M95 450 V205 A155 155 0 0 1 405 205 V450" fill="none" stroke="#D4AF37" stroke-opacity=".25"/>
+          <g fill="#fff" fill-opacity=".3"><circle cx="20" cy="40" r="1"/><circle cx="480" cy="90" r="1.2"/><circle cx="460" cy="380" r="1"/><circle cx="30" cy="300" r="1"/><circle cx="250" cy="20" r="1"/><circle cx="140" cy="390" r="1"/><circle cx="360" cy="420" r="1"/></g>
+          <g stroke="#FADB5F" stroke-opacity=".55" stroke-width=".9" fill="none"><path d="M170 180 L250 130 L330 185 L300 280 L200 300 Z M250 130 L250 230 L300 280 M200 300 L250 230"/></g>
+          <g fill="#FADB5F"><circle cx="250" cy="130" r="6"/><circle cx="170" cy="180" r="4" class="tw"/><circle cx="330" cy="185" r="4"/><circle cx="300" cy="280" r="4" class="tw" style="animation-delay:1.3s"/><circle cx="200" cy="300" r="4"/><circle cx="250" cy="230" r="8"/></g>
+          <g fill="none" stroke="#fff" stroke-opacity=".35"><circle cx="140" cy="250" r="3"/><circle cx="360" cy="250" r="3"/><circle cx="250" cy="370" r="3"/><circle cx="180" cy="400" r="3"/></g>
+          <circle cx="250" cy="230" r="22" fill="none" stroke="#FADB5F" stroke-opacity=".3"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 5. PRICING -->
+    <section class="chapter" id="pricing" aria-labelledby="pricing-h">
+      <div class="wrap">
+        <p class="kicker">Membership</p>
+        <h2 id="pricing-h">Two ways in, both opening soon</h2>
+        <p class="lede">Neither tier is available to buy yet. Request an invitation and we will write when Acuity.One opens.</p>
+        <div class="tiers">
+          <div class="tier">
+            <p class="status">Coming soon</p>
+            <h3 style="margin-top:.8rem">Acuity.One Free</h3>
+            <p class="price">£0 <small>per month</small></p>
+            <ul class="ticks">
+              <li>5 AI tasks per month across Agent, Search, Codex, LumenNous and myAeon</li>
+              <li>A one-time myAeon chart profile: your natal chart plus fixed insights based on it</li>
+              <li>Unlimited curated LumenNous Library (custom AI practices use AI tasks)</li>
+              <li>Library reading with saved progress, a personal library and bookmarks from the full Archive</li>
+              <li>One login across all five tools</li>
+            </ul>
+            <a class="cta" href="#invitation">Request a Free invitation</a>
+          </div>
+          <div class="tier">
+            <p class="status">Coming soon</p>
+            <h3 style="margin-top:.8rem">Acuity.One Membership</h3>
+            <p class="price">Price TBC <small></small></p>
+            <p class="muted" style="font-size:.88rem">Subscription price to be confirmed.</p>
+            <ul class="ticks">
+              <li>Unlimited AI tasks across all Acuity apps and services</li>
+              <li>WisdomVault: your curated, consent-based memory across tools</li>
+              <li>The full Codex instrument suite: Context Spheres, The Lens, myVault and Studio</li>
+              <li>Custom LumenNous coherence practices and personal celestial readings in myAeon</li>
+              <li>Everything in Free</li>
+            </ul>
+            <a class="cta primary" href="#invitation">Request a Membership invitation</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. BYOK vs ONE -->
+    <section class="chapter" id="compare" aria-labelledby="compare-h">
+      <div class="wrap">
+        <p class="kicker">Two ways to use Acuity</p>
+        <h2 id="compare-h">Standalone tools with your own key, or Acuity.One fully managed</h2>
+        <p class="lede">The standalone tools on acuity.institute are not being locked away. They stay separately hosted, and you can run them with your own AI provider key and pay that provider for what you use. Acuity.One is the joined-up, fully managed service: one login, one allowance, shared context.</p>
+        <div class="table-wrap">
+          <table class="cmp">
+            <thead><tr><th scope="col"></th><th scope="col">Standalone (bring your own key)</th><th scope="col">Acuity.One Free</th><th scope="col">Acuity.One Membership</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">AI usage</th><td>Pay your provider as you go</td><td>5 AI tasks a month</td><td>Unlimited AI tasks</td></tr>
+              <tr><th scope="row">Sign-in</th><td>Per tool</td><td>One login, five tools</td><td>One login, five tools</td></tr>
+              <tr><th scope="row">Shared context</th><td>Each tool on its own</td><td>Saved progress and bookmarks</td><td>WisdomVault across tools, by consent</td></tr>
+              <tr><th scope="row">Setup</th><td>You manage keys and settings</td><td>Managed by Acuity</td><td>Managed by Acuity</td></tr>
+              <tr><th scope="row">Best for</th><td>Advanced users who want direct control</td><td>Exploring the path</td><td>Daily study and practice</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. FAQ -->
+    <section class="chapter" id="faq" aria-labelledby="faq-h">
+      <div class="wrap">
+        <p class="kicker">Questions</p>
+        <h2 id="faq-h">Questions about Acuity.One</h2>
+        <div class="faq">
+          <details><summary>Can I join Acuity.One today?</summary><p>Not yet. Both the Free tier and the Membership are coming soon. Requesting an invitation simply tells us you would like to hear when it opens; it does not create an account or a subscription.</p></details>
+          <details><summary>What counts as an AI task?</summary><p>An AI task is one generated result: an Agent answer, a cited Search answer, a Lens synthesis or Studio output in Codex, a custom LumenNous practice, or a myAeon reading. Reading the Library, browsing the curated LumenNous Library and using bookmarks do not use tasks.</p></details>
+          <details><summary>How much will the Membership cost?</summary><p>The subscription price has not been confirmed. We will publish it before Membership opens, and nobody will be charged without choosing to subscribe.</p></details>
+          <details><summary>Does WisdomVault remember everything I write?</summary><p>No. WisdomVault holds only the sources, reflections and insights you choose to save, and only items you mark as eligible can inform AI answers. You can review and remove them.</p></details>
+          <details><summary>What happens to the standalone tools?</summary><p>They remain separately hosted on acuity.institute and its tool sites, usable with your own AI provider key. Acuity.One is an additional, fully managed way to use them together.</p></details>
+          <details><summary>Is Acuity a replacement for spiritual direction or therapy?</summary><p>No. The tools help you research, study and reflect on texts and practices. They show their sources and their limits, and they are not a substitute for a teacher, counsellor or medical professional.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLOSING (preserved 360vh milky-way-lake scrub). Overlay copy editable in #copy-lake. -->
+    <section class="track pos-top" id="track-lake" aria-label="Request an invitation: Milky Way Lake film">
+      <span class="invite-anchor" id="invitation" aria-hidden="true"></span>
+      <div class="stage">
+        <div class="topbar">
+          <div class="brand-mark" id="mark-lake"><span>Acuity</span></div>
+          <span class="tagline">Creating Pathways to Wisdom</span>
+        </div>
+        <div class="media" id="media-lake">
+          <img class="still" src="assets/milky-way-lake/still.jpg" width="1920" height="1080" alt="" aria-hidden="true" />
+          <img class="poster" src="assets/milky-way-lake/poster.jpg" width="1920" height="1080" alt="Lakeshore figure under the Milky Way with glowing arch igniting and fireflies." />
+          <canvas id="canvas-lake" width="1920" height="1080" aria-hidden="true"></canvas>
+        </div>
+        <div class="copy-scrim" id="scrim-lake" aria-hidden="true"></div>
+        <div class="loading" aria-hidden="true"><i id="bar-lake"></i></div>
+        <div class="hero-copy" id="copy-lake">
+          <p class="eyebrow">Acuity.One · Coming soon</p>
+          <h1>An open invite to wisdom</h1>
+          <p class="sub">Request an invitation and we will write when Acuity.One opens.</p>
+          <form class="invite" id="invite-form" novalidate aria-describedby="invite-note">
+            <label>Name<input name="name" autocomplete="name" /></label>
+            <label>Email<input name="email" type="email" autocomplete="email" required /></label>
+            <label class="full">Interested in
+              <select name="plan"><option>Not sure yet</option><option>Acuity.One Free</option><option>Acuity.One Membership</option></select>
+            </label>
+            <button type="submit">Write my invitation request</button>
+            <p class="note" id="invite-note">This opens a pre-written email in your own mail app. Nothing is sent until you send it. Or <a href="mailto:hello@acuity.institute?subject=Acuity.One%20invitation%20request">Email invitation request</a> directly.</p>
+            <p id="invite-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site">
+    <div class="wrap">
+      <div class="cols">
+        <div><div class="brand-mark" id="mark-foot"><span>Acuity</span></div><p style="margin-top:1rem">Acuity.One brings the Acuity Institute's tools for research, study and practice under one login. Coming soon.</p></div>
+        <nav aria-label="Acuity tools"><ul>
+          <li><a href="https://agent.acuity.institute">Acuity.Agent</a></li>
+          <li><a href="https://search.acuity.institute">Acuity.Search</a></li>
+          <li><a href="https://codex.acuity.institute/codex">Acuity.Codex</a></li>
+          <li><a href="https://lumennous.acuity.institute">LumenNous</a></li>
+          <li><a href="https://myaeon.acuity.institute">myAeon</a></li>
+        </ul></nav>
+        <nav aria-label="Institute"><ul>
+          <li><a href="https://acuity.institute">acuity.institute</a></li>
+          <li><a href="mailto:hello@acuity.institute">hello@acuity.institute</a></li>
+          <li><a href="https://acuity.institute/privacy">Privacy</a></li>
+        </ul></nav>
+      </div>
+      <div class="base"><span>© 2026 Acuity Institute</span><span>Creating Pathways to Wisdom</span></div>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { createScrollClock, prefersReducedMotion, HEX_LOGO } from "./shared/scroll-clock.js";
+
+    // Initialize brand marks
+    const heroMark = document.getElementById("mark-hero");
+    const lakeMark = document.getElementById("mark-lake");
+    
+    if (heroMark) heroMark.innerHTML = HEX_LOGO + "<span>Acuity</span>";
+    if (lakeMark) lakeMark.innerHTML = HEX_LOGO + "<span>Acuity</span>";
+    
+
+    const reduced = prefersReducedMotion();
+    const isMobile = window.matchMedia("(max-width: 900px)").matches;
+    const FRAME_COUNT = 96;
+    const pad = (n) => String(n).padStart(3, "0");
+
+    // Helper to setup a scroll scrub section
+    function setupScrubSection({
+      trackId,
+      canvasId,
+      mediaId,
+      copyId,
+      scrimId,
+      barId,
+      assetDir,
+      scrubRange = 0.86,
+      holdStart = 0.66
+    }) {
+      const track = document.getElementById(trackId);
+      const canvas = document.getElementById(canvasId);
+      const ctx = canvas.getContext("2d");
+      const media = document.getElementById(mediaId);
+      const copy = document.getElementById(copyId);
+      const scrim = document.getElementById(scrimId);
+      const bar = document.getElementById(barId);
+
+      if (isMobile) {
+        canvas.width = 960;
+        canvas.height = 540;
+      }
+
+      const framesFolder = isMobile ? `${assetDir}/frames-m` : `${assetDir}/frames`;
+      let frames = [];
+      let currentFrame = 0;
+
+      async function loadFrames() {
+        if (reduced) {
+          if (copy) copy.style.opacity = "1";
+          return [];
+        }
+        let done = 0;
+        const imgs = await Promise.all(
+          Array.from({ length: FRAME_COUNT }, (_, i) => new Promise((resolve) => {
+            const img = new Image();
+            img.decoding = "async";
+            img.onload = () => {
+              done++;
+              if (bar) bar.style.width = (done / FRAME_COUNT * 100) + "%";
+              resolve(img);
+            };
+            img.onerror = () => resolve(null);
+            img.src = `${framesFolder}/f-${pad(i + 1)}.jpg`;
+          }))
+        );
+        return imgs.filter(Boolean);
+      }
+
+      function drawFrame(index) {
+        if (!frames.length) return;
+        const img = frames[Math.max(0, Math.min(frames.length - 1, index))];
+        if (!img) return;
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      }
+
+      const clock = createScrollClock(track, { reducedMotion: reduced });
+      clock.on((p) => {
+        const hold = Math.min(1, Math.max(0, (p - holdStart) / (1 - holdStart)));
+        if (scrim) scrim.style.opacity = String(0.35 + hold * 0.65);
+        if (copy) {
+          copy.style.opacity = String(Math.min(1, Math.max(0, (hold - 0.05) / 0.6)));
+          copy.style.transform = `translateY(${(1 - hold) * 16}px)`;
+        }
+        if (!frames.length) return;
+        const scrub = Math.min(1, Math.max(0, p / scrubRange));
+        currentFrame = Math.round(scrub * (frames.length - 1));
+        drawFrame(currentFrame);
+      });
+
+      return {
+        async init() {
+          frames = await loadFrames();
+          if (frames.length && media) {
+            media.classList.add("is-ready");
+            drawFrame(currentFrame);
+          }
+        }
+      };
+    }
+
+    // Setup Section 1: Horizon Portal
+    const heroSection = setupScrubSection({
+      trackId: "track-hero",
+      canvasId: "canvas-hero",
+      mediaId: "media-hero",
+      copyId: "copy-hero",
+      scrimId: "scrim-hero",
+      barId: "bar-hero",
+      assetDir: "assets/horizon-portal",
+      scrubRange: 0.86,
+      holdStart: 0.66
+    });
+
+    // Setup Section 2: Milky Way Lake
+    const lakeSection = setupScrubSection({
+      trackId: "track-lake",
+      canvasId: "canvas-lake",
+      mediaId: "media-lake",
+      copyId: "copy-lake",
+      scrimId: "scrim-lake",
+      barId: "bar-lake",
+      assetDir: "assets/milky-way-lake",
+      scrubRange: 0.86,
+      holdStart: 0.66
+    });
+
+    // Load both frame sequences concurrently
+    Promise.all([heroSection.init(), lakeSection.init()]).then(() => {
+      window.dispatchEvent(new Event("scroll"));
+      window.__ready = true;
+    });
+    const footMark = document.getElementById("mark-foot");
+    if (footMark) footMark.innerHTML = HEX_LOGO + "<span>Acuity</span>";
+
+    // myAeon chart: 12 house spokes
+    const spokes = document.getElementById("spokes");
+    if (spokes) for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6; const l = document.createElementNS("http://www.w3.org/2000/svg", "line"); l.setAttribute("x1", 110 + 84 * Math.cos(a)); l.setAttribute("y1", 110 + 84 * Math.sin(a)); l.setAttribute("x2", 110 + 104 * Math.cos(a)); l.setAttribute("y2", 110 + 104 * Math.sin(a)); spokes.appendChild(l); }
+
+    // Honest invitation request: compose an email draft in the visitor's own mail app. Nothing is sent from this page.
+    const form = document.getElementById("invite-form");
+    const statusEl = document.getElementById("invite-status");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = form.email.value.trim();
+      if (!form.email.checkValidity() || !email) { statusEl.textContent = "Please enter a valid email address."; form.email.focus(); return; }
+      const name = form.name.value.trim();
+      const plan = form.plan.value;
+      const body = `Hello Acuity Institute,\n\nI would like an invitation to Acuity.One when it opens.\n\nName: ${name || "(not given)"}\nEmail: ${email}\nInterested in: ${plan}\n\nThank you.`;
+      const href = "mailto:hello@acuity.institute?subject=" + encodeURIComponent("Acuity.One invitation request") + "&body=" + encodeURIComponent(body);
+      form.dataset.mailto = href;
+      window.location.href = href;
+      statusEl.textContent = "Your mail app should now open with the request drafted. It is not sent until you press send there.";
+    });
+  </script>
+</body>
+</html>
