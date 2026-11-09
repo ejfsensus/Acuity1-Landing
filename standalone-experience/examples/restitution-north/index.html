@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Restitution, Northward</title>
+<style>
+
+@font-face { font-family: Montserrat; src: url("fonts/Montserrat.ttf") format("truetype"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Open Sans"; src: url("fonts/OpenSans.ttf") format("truetype"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Plex Hebrew"; src: url("fonts/PlexHebrew.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "Noto Sans Runic"; src: url("fonts/NotoSansRunic.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "Noto Sans Symbols"; src: url("fonts/NotoSansSymbols.ttf") format("truetype"); font-display: swap; }
+
+
+:root {
+    --stage-bg: #030305;
+    --slide-bg: #030305;
+    --bg: #030305;
+    --gold: #FADB5F;
+    --nebula: #1A2235;
+    --white: #FFFFFF;
+    --muted: #D4AF37;
+}
+
+/* ===========================================
+   FIXED 16:9 STAGE
+   Adapted from viewport-base.css in Frontend Slides
+   (https://github.com/zarazhangrui/frontend-slides), MIT, Zara Zhang.
+   The renderer inlines this file into every deck.
+   Slides are authored at 1920×1080 and scaled as a whole.
+
+   Reduced motion is handled on each effect in the renderer.
+   This file does not zero animation durations globally.
+   =========================================== */
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #030305);
+    color-scheme: dark;
+}
+
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #030305);
+    touch-action: manipulation;
+}
+
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #030305);
+}
+
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #030305);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+}
+
+
+:root {
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+* { box-sizing: border-box; }
+body {
+    font-family: "Open Sans", "Plex Hebrew", "Noto Sans Runic", "Noto Sans Symbols", sans-serif;
+    color: var(--white);
+}
+button, input { font: inherit; color: inherit; }
+.sky {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    z-index: 0;
+    pointer-events: none;
+}
+.slide::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 78% 18%, color-mix(in srgb, var(--nebula) 92%, transparent), transparent 52%),
+        radial-gradient(ellipse at 12% 88%, color-mix(in srgb, var(--gold) 10%, transparent), transparent 42%);
+    pointer-events: none;
+    z-index: 0;
+}
+.chrome, .body, .foot { position: absolute; z-index: 1; }
+.chrome {
+    left: 96px; right: 96px; top: 44px;
+    display: flex; justify-content: space-between; align-items: baseline;
+}
+.kicker, .index, .mark, .chip, .wordmark, .meta, .attrib {
+    font-family: Montserrat, sans-serif;
+}
+.kicker {
+    margin: 0;
+    color: var(--gold);
+    font-size: 18px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    min-height: 1em;
+}
+.index { margin: 0; color: var(--muted); font-size: 18px; letter-spacing: 0.16em; }
+.index span { color: var(--white); }
+.body { left: 96px; right: 96px; top: 148px; bottom: 108px; }
+.foot {
+    left: 96px; right: 96px; bottom: 36px;
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-top: 1px solid color-mix(in srgb, var(--gold) 35%, transparent);
+    padding-top: 14px;
+}
+.mark, .wordmark { margin: 0; letter-spacing: 0.46em; font-size: 15px; font-weight: 600; }
+.chip { margin: 0; color: var(--muted); font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; }
+h1, h2, h3 { font-family: Montserrat, sans-serif; font-weight: 600; margin: 0; letter-spacing: -0.03em; }
+h1 { font-size: 88px; line-height: 1.02; max-width: 980px; }
+h2.display { font-size: 58px; line-height: 1.12; max-width: 1460px; }
+h2 { font-size: 52px; line-height: 1.08; max-width: 1500px; }
+h3 { font-size: 28px; line-height: 1.2; color: var(--gold); font-weight: 600; }
+p { margin: 0; }
+.lede, .prompt { margin-top: 28px; max-width: 1280px; font-size: 30px; line-height: 1.35; font-weight: 400; }
+.prompt { font-size: 36px; max-width: 1400px; }
+.meta, .attrib { margin-top: 18px; color: var(--muted); font-size: 20px; letter-spacing: 0.04em; }
+em { font-style: normal; color: var(--gold); }
+.arch {
+    position: absolute; z-index: 0; color: var(--gold); opacity: 0.55;
+    width: 620px; height: 820px; right: 48px; top: 120px; pointer-events: none;
+}
+.slide-title .body, .slide-close .body { top: 180px; display: flex; flex-direction: column; justify-content: center; }
+.slide-title .lede { max-width: 900px; }
+.slide-close .arch { left: 50%; right: auto; transform: translateX(-50%); opacity: 0.28; top: 40px; }
+.lockup { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px; }
+.mark-svg { width: 160px; height: 170px; color: var(--gold); }
+.lockup h2 { font-size: 28px; letter-spacing: 0.18em; font-weight: 500; text-transform: uppercase; }
+.domain { color: var(--muted); letter-spacing: 0.22em; text-transform: uppercase; font-family: Montserrat, sans-serif; font-size: 18px; }
+.stack, .plain, .cards, .split, .epochs { margin: 32px 0 0; padding: 0; }
+.stack { list-style: none; display: grid; gap: 18px; }
+.stack li { display: grid; grid-template-columns: 1fr; gap: 6px; }
+.stack li.step { grid-template-columns: 56px 1fr; column-gap: 8px; }
+.num { color: var(--gold); font-family: Montserrat, sans-serif; font-size: 22px; letter-spacing: 0.08em; }
+.stack p, .panel p, .plain { font-size: 24px; line-height: 1.35; }
+.cards { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.cards.three { grid-template-columns: repeat(3, 1fr); }
+.panel {
+    border: 1px solid color-mix(in srgb, var(--gold) 42%, transparent);
+    background: color-mix(in srgb, var(--nebula) 72%, transparent);
+    padding: 28px 28px 24px;
+}
+.panel p { margin-top: 12px; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
+.split ul, .plain { padding-left: 1.1em; }
+.split li, .plain li { font-size: 26px; line-height: 1.35; margin: 10px 0; }
+blockquote { margin: 36px 0 0; max-width: 1400px; }
+blockquote p { font-family: Montserrat, sans-serif; font-size: 40px; line-height: 1.25; font-weight: 500; color: var(--white); }
+.meet { margin-top: 28px; font-size: 26px; color: var(--gold); max-width: 1400px; }
+.epochs { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 28px; position: relative; }
+.epochs li { border-top: 1px solid var(--gold); padding-top: 18px; }
+table { width: 100%; border-collapse: collapse; margin-top: 36px; font-size: 24px; }
+th, td { text-align: left; padding: 16px 18px; border-bottom: 1px solid color-mix(in srgb, var(--gold) 30%, transparent); vertical-align: top; }
+th { color: var(--gold); font-family: Montserrat, sans-serif; font-weight: 600; }
+.constellation { position: relative; height: 520px; margin-top: 8px; }
+.constellation svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.constellation line { stroke: var(--gold); stroke-width: 0.4; }
+.constellation ul { list-style: none; margin: 0; padding: 0; position: absolute; inset: 0; }
+.constellation li {
+    position: absolute; transform: translate(-50%, -50%);
+    border: 1px solid color-mix(in srgb, var(--gold) 60%, transparent);
+    padding: 12px 18px; font-family: Montserrat, sans-serif; font-size: 22px;
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    white-space: nowrap;
+}
+.deck-controls button {
+    min-width: 44px; min-height: 44px; padding: 0 16px;
+    border: 1px solid color-mix(in srgb, var(--gold) 55%, transparent);
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    color: var(--white); font-family: Montserrat, sans-serif; font-size: 16px; letter-spacing: 0.08em;
+    cursor: pointer;
+}
+.deck-controls p { margin: 0 8px; font-family: Montserrat, sans-serif; font-size: 16px; letter-spacing: 0.12em; }
+:where(a, button):focus-visible, .slide :is(h1, h2):focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 4px;
+}
+.slide :is(h1, h2):focus { outline: none; }
+.visually-hidden:where(:not(:focus-within, :active)) {
+    position: absolute !important;
+    clip-path: inset(50%) !important;
+    overflow: hidden !important;
+    width: 1px !important; height: 1px !important;
+    margin: -1px !important; padding: 0 !important; border: 0 !important;
+    white-space: nowrap !important;
+}
+@media (prefers-reduced-motion: no-preference) {
+    .reveal {
+        transform: translateY(18px);
+        transition: transform 0.55s var(--ease);
+    }
+    .slide.active .reveal { transform: none; }
+    .slide.active .reveal:nth-child(2) { transition-delay: 0.05s; }
+    .slide.active .reveal:nth-child(3) { transition-delay: 0.1s; }
+    .slide.active .reveal:nth-child(4) { transition-delay: 0.15s; }
+    .slide.active .reveal:nth-child(5) { transition-delay: 0.2s; }
+    .slide.active .reveal:nth-child(6) { transition-delay: 0.25s; }
+}
+@media print {
+    .reveal { transform: none !important; transition: none !important; }
+}
+@media (forced-colors: active) {
+    .slide, .deck-stage, .deck-viewport { background: Canvas; color: CanvasText; }
+    .kicker, em, h3, .meet, .mark-svg { color: LinkText; }
+}
+
+</style>
+</head>
+<body>
+<p class="visually-hidden" id="live" aria-live="polite"></p>
+<div class="deck-viewport">
+  <main class="deck-stage" id="deckStage">
+    <svg class="sky" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="312.9" cy="452.2" r="1.1" fill="#ffffff" opacity="0.79"/><circle cx="1877.5" cy="647.2" r="1.4" fill="#FADB5F" opacity="0.53"/><circle cx="842.4" cy="789.4" r="1.8" fill="#ffffff" opacity="0.44"/><circle cx="1171.1" cy="388.2" r="1.4" fill="#ffffff" opacity="0.69"/><circle cx="603.3" cy="296.3" r="1.1" fill="#ffffff" opacity="0.66"/><circle cx="1227.4" cy="520.7" r="2.2" fill="#ffffff" opacity="0.56"/><circle cx="1477.4" cy="315.9" r="1.4" fill="#ffffff" opacity="0.84"/><circle cx="239.4" cy="904.5" r="1.4" fill="#ffffff" opacity="0.58"/><circle cx="1644.1" cy="962.7" r="1.1" fill="#ffffff" opacity="0.47"/><circle cx="1186.1" cy="528.7" r="1.4" fill="#ffffff" opacity="0.36"/><circle cx="369.8" cy="152.9" r="1.4" fill="#FADB5F" opacity="0.40"/><circle cx="483.0" cy="764.9" r="1.4" fill="#ffffff" opacity="0.51"/><circle cx="448.5" cy="503.1" r="2.2" fill="#ffffff" opacity="0.61"/><circle cx="1112.0" cy="768.1" r="1.8" fill="#ffffff" opacity="0.58"/><circle cx="1364.1" cy="221.9" r="1.4" fill="#ffffff" opacity="0.47"/><circle cx="1346.9" cy="614.1" r="1.8" fill="#ffffff" opacity="0.72"/><circle cx="287.0" cy="47.7" r="1.4" fill="#ffffff" opacity="0.67"/><circle cx="689.6" cy="161.0" r="2.2" fill="#ffffff" opacity="0.37"/><circle cx="1700.6" cy="747.6" r="1.8" fill="#ffffff" opacity="0.37"/><circle cx="1890.9" cy="908.1" r="2.2" fill="#ffffff" opacity="0.57"/><circle cx="1569.8" cy="851.2" r="1.1" fill="#ffffff" opacity="0.39"/><circle cx="1422.2" cy="143.2" r="1.4" fill="#ffffff" opacity="0.81"/><circle cx="108.1" cy="1014.2" r="1.8" fill="#ffffff" opacity="0.75"/><circle cx="1708.9" cy="238.8" r="1.8" fill="#ffffff" opacity="0.75"/><circle cx="1039.3" cy="524.1" r="1.1" fill="#ffffff" opacity="0.75"/><circle cx="1901.4" cy="227.1" r="1.4" fill="#ffffff" opacity="0.76"/><circle cx="773.0" cy="713.6" r="1.8" fill="#ffffff" opacity="0.57"/><circle cx="277.7" cy="678.3" r="2.2" fill="#ffffff" opacity="0.59"/><circle cx="552.5" cy="164.3" r="2.2" fill="#ffffff" opacity="0.70"/><circle cx="1622.2" cy="272.2" r="1.1" fill="#ffffff" opacity="0.40"/><circle cx="1240.5" cy="241.9" r="1.8" fill="#ffffff" opacity="0.39"/><circle cx="1430.2" cy="241.3" r="2.2" fill="#FADB5F" opacity="0.85"/><circle cx="438.7" cy="89.2" r="1.4" fill="#ffffff" opacity="0.57"/><circle cx="1217.9" cy="104.0" r="1.8" fill="#ffffff" opacity="0.64"/><circle cx="254.3" cy="515.7" r="1.1" fill="#ffffff" opacity="0.52"/><circle cx="1909.8" cy="241.2" r="1.8" fill="#ffffff" opacity="0.36"/><circle cx="315.8" cy="277.7" r="1.8" fill="#ffffff" opacity="0.36"/><circle cx="332.6" cy="953.0" r="2.2" fill="#ffffff" opacity="0.56"/><circle cx="1332.2" cy="333.4" r="1.8" fill="#ffffff" opacity="0.48"/><circle cx="1725.3" cy="26.3" r="1.1" fill="#ffffff" opacity="0.39"/><circle cx="1365.5" cy="704.0" r="1.4" fill="#FADB5F" opacity="0.39"/><circle cx="78.1" cy="815.4" r="1.4" fill="#ffffff" opacity="0.83"/><circle cx="307.5" cy="265.2" r="1.1" fill="#ffffff" opacity="0.52"/><circle cx="847.2" cy="153.8" r="2.2" fill="#FADB5F" opacity="0.43"/><circle cx="908.4" cy="908.9" r="2.2" fill="#ffffff" opacity="0.56"/><circle cx="205.4" cy="788.2" r="1.1" fill="#ffffff" opacity="0.73"/><circle cx="655.2" cy="151.8" r="1.1" fill="#FADB5F" opacity="0.71"/><circle cx="745.9" cy="921.4" r="2.2" fill="#ffffff" opacity="0.83"/><circle cx="322.1" cy="984.2" r="1.1" fill="#ffffff" opacity="0.42"/><circle cx="1059.5" cy="392.8" r="1.4" fill="#ffffff" opacity="0.53"/><circle cx="991.1" cy="4.4" r="1.1" fill="#ffffff" opacity="0.83"/><circle cx="504.0" cy="238.6" r="1.4" fill="#ffffff" opacity="0.65"/><circle cx="122.8" cy="998.4" r="1.1" fill="#ffffff" opacity="0.50"/><circle cx="736.7" cy="160.4" r="1.1" fill="#ffffff" opacity="0.39"/><circle cx="991.4" cy="771.3" r="1.1" fill="#ffffff" opacity="0.46"/><circle cx="83.1" cy="398.3" r="2.2" fill="#ffffff" opacity="0.82"/><circle cx="1865.4" cy="555.9" r="1.1" fill="#FADB5F" opacity="0.37"/><circle cx="1423.1" cy="908.3" r="1.8" fill="#ffffff" opacity="0.41"/><circle cx="1270.0" cy="625.2" r="1.1" fill="#ffffff" opacity="0.78"/><circle cx="296.7" cy="695.0" r="1.1" fill="#ffffff" opacity="0.49"/><circle cx="1180.1" cy="521.4" r="1.4" fill="#ffffff" opacity="0.39"/><circle cx="1269.2" cy="398.5" r="2.2" fill="#ffffff" opacity="0.65"/><circle cx="1755.9" cy="803.0" r="1.8" fill="#ffffff" opacity="0.84"/><circle cx="1054.7" cy="361.4" r="2.2" fill="#ffffff" opacity="0.49"/></svg>
+    
+    <section class="slide slide-title active" aria-hidden="false" data-index="1" aria-labelledby="h-hook">
+      <header class="chrome">
+        <p class="kicker">A study briefing</p>
+        <p class="index"><span>01</span> / 19</p>
+      </header>
+      <svg class="arch" viewBox="0 0 640 860" aria-hidden="true">
+  <path d="M70 800 V 340 A 250 250 0 0 1 570 340 V 800" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <circle cx="320" cy="78" r="8" fill="currentColor"/>
+</svg>
+      <div class="body"><h1 id="h-hook" class="display reveal">Restitution, Northward</h1><p class="lede reveal">Postel, the four-letter Tarot, the Rose Cross, and the rune of the North.</p></div>
+      <footer class="foot">
+        <p class="mark">ACUITY</p>
+        
+      </footer>
+      <aside class="speaker-notes" hidden></aside>
+    </section>
+    <section class="slide slide-question" inert aria-hidden="true" data-index="2" aria-labelledby="h-the-question">
+      <header class="chrome">
+        <p class="kicker">The spine</p>
+        <p class="index"><span>02</span> / 19</p>
+      </header>
+      
+      <div class="body"><h2 id="h-the-question" class="display reveal">How does one doctrine of restitution travel from Postel into the Tarot, the Rose Cross, and the North?</h2><p class="lede reveal">Each system in the briefing claims a single order: one restitution, one sacred name, one invisible fraternity, one northern king.</p></div>
+      <footer class="foot">
+        <p class="mark">ACUITY</p>
+        
+      </footer>
+      <aside class="speaker-notes" hidden>The deck selects. It does not transcribe the briefing. Biographical detail, the alphabet list, and the temple lore sit in later speaker notes.</aside>
+    </section>
+    <section class="slide slide-sources" inert aria-hidden="true" data-index="3" aria-labelledby="h-the-sources">
+      <header class="chrome">
+        <p class="kicker">On the table</p>
+        <p class="index"><span>03</span> / 19</p>
+      </header>
+      
+      <div class="body"><h2 id="h-the-sources" class="reveal">Six works the briefing uses</h2><ul class="cards"><li class="reveal panel"><h3>Linguarum duodecim characteribus</h3><p>Guillaume Postel</p><p class="meta">1538</p></li><li class="reveal panel"><h3>Absconditorum clavis</h3><p>Guillaume Postel</p><p class="meta">1547</p></li><li class="reveal panel"><h3>Clavis, with Key of the Key</h3><p>Abraham von Franckenberg</p><p class="meta">1646</p></li><li class="reveal panel"><h3>Fama, Confessio, Hochzeit</h3><p>Rosicrucian manifestos</p><p class="meta">1614–1616</p></li><li class="reveal panel"><h3>Monas Hieroglyphica</h3><p>John Dee</p><p class="meta">1564</p></li><li class="reveal panel"><h3>Adulruna Rediviva</h3><p>Johannes Bureus</p><p class="meta">1605–1643</p></li></ul></div>
+      <footer class="foot">
+        <p class="mark">ACUITY</p>
+        
+      </footer>
+      <aside class="speaker-notes" hidden>Also in the briefing, and not given a line here: Grammatica Arabica, about 1538; De Originibus, 1533/1538; Candelabri typici, 1548; the Zohar on Genesis and Sefer Yetzirah in Latin, 1552.</aside>
+    </section>
+    <section class="slide slide-triad" inert aria-hidden="true" data-index="4" aria-labelledby="h-postel">
+      <header class="chrome">
+        <p class="kicker">Guillaume Postel</p>
+        <p class="index"><span>04</span> / 19</p>
+      </header>
+      
+      <div class="body"><h2 id="h-postel" class="reveal">Three offices, one scholar</h2><ul class="cards three"><li class="panel reveal"><h3>Linguistic pioneer</h3><p>Arabic grammar and twelve alphabets, both in 1538. A Semitic family.</p></li><li class="panel reveal"><h3>Christian Kabbalist</h3><p>First Latin Zohar on Genesis, and Sefer Yetzirah, in 1552.</p></li><li class="panel reveal"><h3>Prophetic universalist</h3><p>Restitutio omnium, under one Pan-Sophia and a world monarchy.</p></li></ul></div>
+      <footer class="foot">
+        <p class="mark">ACUITY</p>
+        
+      </footer>
+      <aside class="speaker-notes" hidden>Postel, 25 March 1510 to 6 September 1581. François I sent him to Istanbul in 1536 with Jean de la Forest. Chair at the Collège Royal, 1538. He joined the Jesuits under Ignatius Loyola in 1544 and was expelled. The Roman Inquisition held him in Castel Sant&#x27;Angelo, 1555–1559. From 1563 he was confined at Saint Martin des Champs, where he taught Scaliger and Raphelengius and aided the Antwerp Polyglot.</aside>
+    </section>
+    <section class="slide slide-claim" inert aria-hidden="true" data-index="5" aria-labelledby="h-mere-jeanne">
+      <header class="chrome">
+        <p class="kicker">Venice, 1547</p>
+        <p class="index"><span>05</span> / 19</p>
+      </header>
+      
+      <div class="body"><h2 id="h-mere-jeanne" class="reveal">The New Eve, then the key</h2><p class="lede reveal">In Venice, Postel met Mère Jeanne, called the mater mundi and the New Eve, a feminine spiritual messiah with a perfect Kabbalah.</p><p class="meta reveal">After her death he claimed her spirit immuted into his body, and he took the name Elias Pandocheus.</p></div>
+      <footer class="foot">
+        <p class="mark">ACUITY</p>
+        
+      </footer>
+      <aside class="speaker-notes" hidden>He was censoring Hebrew print for Daniel Bomberg. She was about fifty, and uneducated. The Clavis of 1547 is the Key to all things hidden in the constitution of the World. The Menorah treatise, Candelabri typici, followed in 1548, after the Hebrew broadsheet Or Nerot ha-Menorah. His Hebrew style-name was Ish Kefar Sekhanya u-Shemo Eliyyahu Kol-Maskalyah.</aside>
+    </section>
+    <section class="slide slide-steps" inert aria-hidden="true" data-index="6" aria-labelledby="h-franckenberg">
+      <header class="chrome">
+        <p class="kicker">Amsterdam, 1646</p>
+        <p class="index"><span>06</span> / 19</p>
+      </header>
+      
+      <div class="body"><h2 id="h-franckenberg" class="reveal">A path into the sanctuary</h2><ol class="stack"><li class="reveal step"><span class="num" aria-hidden="true">01</span><div><h3>Decrees of initiates</h3><p>Mercabah, the chariot, and the Sephirothic wheels.</p></div></li><li class="reveal step"><span class="num" aria-hidden="true">02</span><div><h3>The sacred monotriad</h3><p>Three lines of a divine triangle, sealed at a fourth center.</p></div></li><li class="reveal step"><span class="num" aria-hidden="true">03</span><div><h3>Canon of the sanctuary</h3><p>Nature and Scripture joined in Christ, living in the believer.</p></div></li></ol></div>
+      <footer class="foot">
+        <p class="mark">ACUITY</p>
+        
+      </footer>
+      <aside class="speaker-notes" hidden>Franckenberg, friend and biographer of Jacob Böhme, republished the Clavis through Ioannem Jansonius, with a dedication to Werner of Pallant and an appendix, Key of the Key. Concord, he says, comes by the tenuous breath of grace, not by war or dogma. The chain he names: Joachim of Fiore, Pico della Mirandola, Reuchlin, Agrippa, Francesco Giorgio, Giordano Bruno, Julius Sperber. His phrase: Writing with Nature and Nature with Writing.</aside>
+    </section>
+    <section class="slide slide-claim" inert aria-hidden="true" data-index="7" aria-labelledby="h-the-pack">
+      <header class="chrome">
+        <p class="kicker">The Tarot</p>
+        <p class="index"><span>07</span> / 19</p>
+      </header>
+      
+      <div class="body"><h2 id="h-the-pack" class="reveal">Seventy-eight, by the Name</h2><p class="lede reveal">Four suits of fourteen make the 56 Minor Arcana. Twenty-one numbered trumps and one unnumbered card make the 22 Major.</p><p class="meta reveal">Commentators who cite Postel&#x27;s Clavis and Lévi govern that pack by Yod-He-Vau-He.</p></div>
+      <footer class="foot">
+        <p class="mark">ACUITY</p>
+        
+      </footer>
+      <aside class="speaker-notes" hidden>The briefing calls this a mechanical apparatus of strict numerical laws. It attributes the system to esoteric analyses referencing the Clavis and Lévi&#x27;s Dogme et Rituel, and Papus&#x27;s Tarot of the Bohemians in the closing table. It does not say Postel designed the cards.</aside>
+    </section>
+    <section class="slide slide-matrix" inert aria-hidden="true" data-index="8" aria-labelledby="h-the-name">
+      <header class="chrome">
+        <p class="kicker">Court cards</p>
+        <p class="index"><span>08</span> / 19</p>
+      </header>
+      
+      <div class="body"><h2 id="h-the-name" class="reveal">Four figures, one name</h2><table class="reveal"><caption class="visually-hidden">Four figures, one name</caption><thead><tr><th scope="col">Letter</th><th scope="col">Figure</th><th scope="col">Series</th></tr></thead><tbody><tr><th scope="row">Yod</th><td>King, active male</td><td>1, 4, 7</td></tr><tr><th scope="row">1st He</th><td>Queen, passive</td><td>2, 5, 8</td></tr><tr><th scope="row">Vau</th><td>Knight, adolescent</td><td>3, 6, 9</td></tr><tr><th scope="row">2nd He</th><td>Knave, transition</td><td>10, next suit</td></tr></tbody></table></div>
+      <footer class="foot">
+        <p class="mark">ACUITY</p>
+        
+      </footer>
+      <aside class="speaker-notes" hidden>Each suit is four figures and ten numbers, Ace through Ten. The second He is the transition term. The briefing calls the Knight neuter as well as adolescent.</aside>
+    </section>
+    <section class="slide slide-points" inert aria-hidden="true" data-index="9" aria-labelledby="h-three-worlds">
+      <header class="chrome">
+        <p class="kicker">One suit</p>
+        <p class="index"><span>09</span> / 19</p>
+      </header>
+      
+      <div class="body"><h2 id="h-three-worlds" class="reveal">The ten, across three worlds</h2><ul class="stack"><li class="reveal point"><div><h3>Divine world</h3><p>Emanation: 1, 2, 3, 4. The King, with aces, twos, and threes. The head.</p></div></li><li class="reveal point"><div><h3>Human world</h3><p>Evolution: 4, 5, 6, 7. The Queen, with fours, fives, and sixes. The chest.</p></div></li><li class="reveal point"><div><h3>Material world</h3><p>Evolution: 7, 8, 9, 10. The Knight, with sevens, eights, and nines. The body.</p></div></li><li class="reveal point"><div><h3>The transition</h3><p>The Knave holds the tens, and passes the suit on toward the Major Arcana.</p></div></li></ul></div>
+      <footer class="foot">
+        <p class="mark">ACUITY</p>
+        
+      </footer>
+      <aside class="speaker-notes" hidden>The briefing links the worlds by repeating 4 and 7, and calls the ten the transition term. The material series includes 10, while the anatomy gives the tens to the Knave rather than the Knight. Both statements are kept.</aside>
+    </section>
+    <section class="slide slide-matrix" inert aria-hidden="true" data-index="10" aria-labelledby="h-the-suits">
+      <header class="chrome">
+        <p class="kicker">Liturgy</p>
+        <p class="index"><span>10</span> / 19</p>
+      </header>
+      
+      <div class="body"><h2 id="h-the-suits" class="reveal">Suits, letters, and vessels</h2><table class="reveal"><caption class="visually-hidden">Suits, letters, and vessels</caption><thead><tr><th scope="col">Suit</th><th scope="col">Cards</th><th scope="col">Letter</th><th scope="col">Vessel</th></tr></thead><tbody><tr><th scope="row">Sceptre</th><td>Clubs</td><td>Yod</td><td>Crosier</td></tr><tr><th scope="row">Cup</th><td>Hearts</td><td>1st He</td><td>Chalice</td></tr><tr><th scope="row">Sword</th><td>Spades</td><td>Vau</td><td>Cross</td></tr><tr><th scope="row">Pentacle</th><td>Diamonds</td><td>2nd He</td><td>Host</td></tr></tbody></table></div>
+      <footer class="foot">
+        <p class="mark">ACUITY</p>
+        
+      </footer>
+      <aside class="speaker-notes" hidden>Principles in the briefing: Sceptre, male and active; Cup, female and passive; Sword, union and the crucial form; Pentacle, the transition term, from natural to supernatural. The Pentacles, the second He, bridge the 56 Minor Arcana to the 22 Major Arcana.</aside>
+    </section>
+    <section class="slide slide-timeline" inert aria-hidden="true" data-index="11" aria-labelledby="h-the-epochs">
+      <header class="chrome">
+        <p class="kicker">The Rose Cross</p>
+        <p class="index"><span>11</span> / 19</p>
+      </header>
+      
+      <div class="body"><h2 id="h-the-epochs" class="reveal">Three epochs of the Rose</h2><ol class="epochs"><li class="reveal"><p class="meta">1610–1620</p><h3>Paracelsian reform</h3><p>Fama, Confessio, and the Chymical Wedding, Tübingen and Kassel.</p></li><li class="reveal"><p class="meta">1620–1660</p><h3>Stuart restoration</h3><p>Moray, Erskine, and Ashmole, in the networks for the Stuarts.</p></li><li class="reveal"><p class="meta">1710–1740</p><h3>High-grade revival</h3><p>Golden and Rosy Cross, Richter, Oetinger, then Herder and Hegel.</p></li></ol></div>
+      <footer class="foot">
+        <p class="mark">ACUITY</p>
+        
+      </footer>
+      <aside class="speaker-notes" hidden>The briefing defines Rosicrucianism as an invisible, non-organizational Christian-Hermetic theosophy: spiritual knights keeping a feminine flame, Sophia or the Shekhinah, a rose outside and the blue fire of alchemy within. The Fama places C.R.C.&#x27;s learning in Damcar. The 1615 Frankfurt Confessio corrects that name to Damar, a city in Yemen. Precursors named here: Simon Studion&#x27;s Naometria (1592) and Cruce Signata (1586); Dee&#x27;s Monas, explicated by Gabella in 1615; Khunrath&#x27;s Amphitheatrum.</aside>
+    </section>
+    <section class="slide slide-compare" inert aria-hidden="true" data-index="12" aria-labelledby="h-two-readings">
+      <header class="chrome">
+        <p class="kicker">By 1618</p>
+        <p class="index"><span>12</span> / 19</p>
+      </header>
+      
+      <div class="body"><h2 id="h-two-readings" class="reveal">Two readings of the same rose</h2><div class="split"><div class="panel reveal"><h3>Astro-spiritual</h3><ul><li>Gabella, Michael Maier, and Robert Fludd.</li><li>Dee&#x27;s Monas, Ssabian temples, and alchemical tinctures.</li><li>Angelic magic, of macrocosm and microcosm.</li></ul></div><div class="panel reveal"><h3>Pietist</h3><ul><li>Johann Valentin Andreae and Melchior Breler.</li><li>Tauler, Thomas à Kempis, and Johann Arndt.</li><li>Inward regeneration, and the devotional cross.</li></ul></div></div></div>
+      <footer class="foot">
+        <p class="mark">ACUITY</p>
+        
+      </footer>
+      <aside class="speaker-notes" hidden>The briefing calls the right-hand camp Pietist and Lutheran, and traces it to German mysticism. Damar, in the Confessio, is also offered as a government of wise men and a model for European reform. The esoteric gloss of Damcar is blood of the Lamb.</aside>
+    </section>
+    <section class="slide slide-relation" inert aria-hidden="true" data-index="13" aria-labelledby="h-the-adulruna">
+      <header class="chrome">
+        <p class="kicker">Johannes Bureus</p>
+        <p class="index"><span>13</span> / 19</p>
+      </header>
+      
+      <div class="body"><h2 id="h-the-adulruna" class="reveal">Monas, rune, Adulruna</h2><div class="constellation"><svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line x1="78.53" y1="32.58" x2="50.00" y2="16.00" /><line x1="67.63" y1="59.42" x2="50.00" y2="16.00" /><line x1="50.00" y1="16.00" x2="32.37" y2="59.42" /><line x1="50.00" y1="16.00" x2="21.47" y2="32.58" /></svg><ul><li class="reveal" style="left:50.00%;top:16.00%">Adulruna</li><li class="reveal" style="left:78.53%;top:32.58%">Dee&#x27;s Monas</li><li class="reveal" style="left:67.63%;top:59.42%">Bjarkan ᛒ</li><li class="reveal" style="left:32.37%;top:59.42%">Solar cross</li><li class="reveal" style="left:21.47%;top:32.58%">Infinite circle</li></ul></div><p class="lede reveal">In 1610 Bureus set Dee&#x27;s Monas on the rune Bjarkan. The Adulruna is a crucified sun in an infinite circle. He read the Northern runes as Skanzea&#x27;s script.</p></div>
+      <footer class="foot">
+        <p class="mark">ACUITY</p>
+        
+      </footer>
+      <aside class="speaker-notes" hidden>Bureus, 1568–1652, archivist and tutor to Gustav II Adolf. A diagram header gives a death year before the birth. The prose and the closing table say 1568–1652, which this deck uses. The Japhetic line is from Postel&#x27;s De Originibus: Noah, Japheth, Gomer, Askenaz, then Skanzea. The Monas was a 1564 copy from the Jesuit library at Posen. Manuals in 1611 and 1643. Pamphlets: Ara Foederis Therapici and FaMa e sCanzIa reDUX (1616), then Surge (1622). Bjarkan is paired with Aries.</aside>
+    </section>
+    <section class="slide slide-triad" inert aria-hidden="true" data-index="14" aria-labelledby="h-three-gods">
+      <header class="chrome">
+        <p class="kicker">Uppsala</p>
+        <p class="index"><span>14</span> / 19</p>
+      </header>
+      
+      <div class="body"><h2 id="h-three-gods" class="reveal">Three crowns, three gods</h2><ul class="cards three"><li class="panel reveal"><h3>Thor, the Father</h3><p>Lumen and divine law. Jupiter, and Thora as the law of the Jews.</p></li><li class="panel reveal"><h3>Othin, the Son</h3><p>Verbum Dei and sapientia. Mars and Hercules, the eternal word.</p></li><li class="panel reveal"><h3>Freya, Holy Spirit</h3><p>Divine goodness and fecundity. The Ephesian Diana.</p></li></ul></div>
+      <footer class="foot">
+        <p class="mark">ACUITY</p>
+        
+      </footer>
+      <aside class="speaker-notes" hidden>Bureus claims Uppsala was founded before Abraham. The three golden crowns stand for three fylkelands, Tyunda, Ottunda, and Ferugra, and for these three gods. He calls Zamolxes and Abaris northern sages who taught Pythagoras, and he dates the sibyl Alruna to 432 BC.</aside>
+    </section>
+    <section class="slide slide-quote" inert aria-hidden="true" data-index="15" aria-labelledby="h-stora-tuna">
+      <header class="chrome">
+        <p class="kicker">5 December 1613</p>
+        <p class="index"><span>15</span> / 19</p>
+      </header>
+      
+      <div class="body"><h2 id="h-stora-tuna" class="reveal">The meadows are full</h2><blockquote class="reveal"><p>“Close up the streams, young boy, for the meadows have drunk themselves full”</p></blockquote><p class="attrib reveal">Virgil, Eclogues III, as heard by Bureus</p><p class="meta reveal">Stora Tuna, Dalecarlia, 6:30 in the morning</p></div>
+      <footer class="foot">
+        <p class="mark">ACUITY</p>
+        
+      </footer>
+      <aside class="speaker-notes" hidden>The singing voice gave the line in capitals, RIVos IaM CLaVDe PVEr sat prata bIberVnt, whose numeral letters Bureus read as 1673. He drew a crucified heart with three nails, inscribed ECCe CRVCeM Cor et ClaVos IesV, which he read as 1666. He took the pair as the opening of the scroll with seven seals in Revelations 5:5, the secret that no author could disclose.</aside>
+    </section>
+    <section class="slide slide-compare" inert aria-hidden="true" data-index="16" aria-labelledby="h-the-lion">
+      <header class="chrome">
+        <p class="kicker">Leo Septentrionalis</p>
+        <p class="index"><span>16</span> / 19</p>
+      </header>
+      
+      <div class="body"><h2 id="h-the-lion" class="reveal">The Lion of the North</h2><div class="split"><div class="panel reveal"><h3>The prophecy</h3><ul><li>Paracelsus forecasts a northern chemical liberator.</li><li>Roeslin and Paul Grebner expand the forecast.</li><li>The name in German: der Löwe aus der Mitternacht.</li></ul></div><div class="panel reveal"><h3>The Swedish crown</h3><ul><li>Taken up by the crown and the Protestant League, 1630–1632.</li><li>Bureus names Gustav II Adolf the anointed liberator.</li><li>An Erfurt coin of 1633 shows him with sulphur and mercury.</li></ul></div></div></div>
+      <footer class="foot">
+        <p class="mark">ACUITY</p>
+        
+      </footer>
+      <aside class="speaker-notes" hidden>Bureus says Gustav II Adolf will crush Apap, the papal antichrist and dragon, and open a seventh age of peace. The briefing&#x27;s parenthetical dates for Helisaeus Roeslin are impossible and are left off this slide. Roeslin remains the author of Theoria Nova Meteoron (1578), on the 1572 Cassiopeia supernova, writing as Lampertus Floridus.</aside>
+    </section>
+    <section class="slide slide-matrix" inert aria-hidden="true" data-index="17" aria-labelledby="h-the-matrix">
+      <header class="chrome">
+        <p class="kicker">The closing table</p>
+        <p class="index"><span>17</span> / 19</p>
+      </header>
+      
+      <div class="body"><h2 id="h-the-matrix" class="reveal">Five systems, one argument</h2><table class="reveal"><caption class="visually-hidden">Five systems, one argument</caption><thead><tr><th scope="col">Figure</th><th scope="col">When</th><th scope="col">Text</th><th scope="col">Mechanism</th><th scope="col">Aim</th></tr></thead><tbody><tr><th scope="row">Postel</th><td>1510–1581</td><td>Clavis, 1547</td><td>Kabbalah, Menorah</td><td>Restitutio omnium</td></tr><tr><th scope="row">Minor Arcana</th><td>Traditional</td><td>Lévi and Papus</td><td>Yod-He-Vau-He</td><td>Macrocosm in signs</td></tr><tr><th scope="row">Franckenberg</th><td>1646</td><td>Key of the Key</td><td>Mercabah, triad</td><td>Peace in the war</td></tr><tr><th scope="row">Rosicrucians</th><td>1610–1620</td><td>Fama, Confessio</td><td>C.R.C. and Damar</td><td>Protestant reform</td></tr><tr><th scope="row">Bureus</th><td>1568–1652</td><td>Adulruna</td><td>Monas plus rune</td><td>Lion of the North</td></tr></tbody></table></div>
+      <footer class="foot">
+        <p class="mark">ACUITY</p>
+        
+      </footer>
+      <aside class="speaker-notes" hidden>Cells are compressed from the briefing&#x27;s closing table so each one can sit on a slide. The Rosicrucian row keeps the first-epoch date the table itself uses. Later epochs are on the timeline. Bureus&#x27;s aim in the source is Hyperborean Gothic supremacy and the verification of Gustav Adolf as the Lion of the North.</aside>
+    </section>
+    <section class="slide slide-meaning" inert aria-hidden="true" data-index="18" aria-labelledby="h-how-to-hold">
+      <header class="chrome">
+        <p class="kicker">A reading</p>
+        <p class="index"><span>18</span> / 19</p>
+      </header>
+      
+      <div class="body"><h2 id="h-how-to-hold" class="reveal">How to hold the briefing</h2><p class="prompt reveal">Hold each system as its author&#x27;s claim. The Tarot map cites Postel and Lévi. The 1615 Confessio corrects Damcar to Damar in Yemen.</p></div>
+      <footer class="foot">
+        <p class="mark">ACUITY</p>
+        
+      </footer>
+      <aside class="speaker-notes" hidden>Damar was a Sabean center in Yemen, linked in the briefing to the Queen of Sheba. The Ssabians of Harran, often conflated there with the Mandaeans, built planetary temples: triangle for Jupiter, square for the Sun, hexagon in a square for Mercury. Esoterically the briefing glosses Damcar as blood of the Lamb, a cover for the place-name Damar.</aside>
+    </section>
+    <section class="slide slide-close" inert aria-hidden="true" data-index="19" aria-labelledby="h-end">
+      <header class="chrome">
+        <p class="kicker"></p>
+        <p class="index"><span>19</span> / 19</p>
+      </header>
+      <svg class="arch" viewBox="0 0 640 860" aria-hidden="true">
+  <path d="M70 800 V 340 A 250 250 0 0 1 570 340 V 800" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <circle cx="320" cy="78" r="8" fill="currentColor"/>
+</svg>
+      <div class="body"><div class="lockup reveal"><svg class="mark-svg" viewBox="-70 -80 140 150" aria-hidden="true">
+  <g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+    <polygon points="0,-48 41.6,-24 41.6,24 0,48 -41.6,24 -41.6,-24"/>
+    <polyline points="-41.6,-24 0,0 41.6,-24"/>
+    <line x1="0" y1="0" x2="0" y2="48"/>
+  </g>
+  <circle cx="0" cy="-58" r="9" fill="currentColor" stroke="none"/>
+</svg><p class="wordmark">ACUITY</p><h2 id="h-end">Creating Pathways to Wisdom</h2><p class="domain">acuity.institute</p></div></div>
+      <footer class="foot">
+        <p class="mark">ACUITY</p>
+        
+      </footer>
+      <aside class="speaker-notes" hidden></aside>
+    </section>
+  </main>
+</div>
+<nav class="deck-controls" aria-label="Slides">
+  <button type="button" id="prev">Back</button>
+  <p id="readout" aria-hidden="true">1 / 19</p>
+  <button type="button" id="next">Next</button>
+</nav>
+<script>
+
+(() => {
+    const stage = document.getElementById("deckStage");
+    const slides = [...document.querySelectorAll(".slide")];
+    const live = document.getElementById("live");
+    const readout = document.getElementById("readout");
+    let current = 0;
+
+    const fit = () => {
+        const bar = 76;
+        const factor = Math.min(window.innerWidth / 1920, (window.innerHeight - bar) / 1080);
+        const x = (window.innerWidth - 1920 * factor) / 2;
+        const y = Math.max(0, (window.innerHeight - bar - 1080 * factor) / 2);
+        stage.style.transform = `translate(${x}px, ${y}px) scale(${factor})`;
+    };
+
+    const titleOf = (slide) => {
+        const heading = slide.querySelector("h1, h2");
+        return heading ? heading.textContent.trim() : "Slide";
+    };
+
+    const show = (index, focusHeading) => {
+        current = Math.max(0, Math.min(index, slides.length - 1));
+        slides.forEach((slide, slideIndex) => {
+            const on = slideIndex === current;
+            slide.classList.toggle("active", on);
+            slide.classList.toggle("visible", on);
+            if (on) {
+                slide.removeAttribute("inert");
+                slide.setAttribute("aria-hidden", "false");
+            } else {
+                slide.setAttribute("inert", "");
+                slide.setAttribute("aria-hidden", "true");
+            }
+        });
+        const slide = slides[current];
+        readout.textContent = `${current + 1} / ${slides.length}`;
+        live.textContent = `${current + 1} of ${slides.length}. ${titleOf(slide)}`;
+        const nextHash = `#${current + 1}`;
+        if (location.hash !== nextHash) history.replaceState(null, "", nextHash);
+        if (focusHeading) {
+            const heading = slide.querySelector("h1, h2");
+            if (heading) {
+                heading.setAttribute("tabindex", "-1");
+                heading.focus({ preventScroll: true });
+            }
+        }
+    };
+
+    const go = (step) => show(current + step, true);
+
+    document.getElementById("prev").addEventListener("click", () => go(-1));
+    document.getElementById("next").addEventListener("click", () => go(1));
+
+    document.addEventListener("keydown", (event) => {
+        const tag = event.target && event.target.tagName;
+        if (tag === "INPUT" || tag === "TEXTAREA" || (event.target && event.target.isContentEditable)) return;
+        const forward = event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ";
+        const back = event.key === "ArrowLeft" || event.key === "PageUp";
+        if (forward) {
+            if (event.key === " " && tag === "BUTTON") return;
+            event.preventDefault();
+            go(1);
+        } else if (back) {
+            event.preventDefault();
+            go(-1);
+        } else if (event.key === "Home") {
+            event.preventDefault();
+            show(0, true);
+        } else if (event.key === "End") {
+            event.preventDefault();
+            show(slides.length - 1, true);
+        }
+    });
+
+    let startX = 0;
+    let startY = 0;
+    stage.addEventListener("pointerdown", (event) => {
+        startX = event.clientX;
+        startY = event.clientY;
+    });
+    stage.addEventListener("pointerup", (event) => {
+        const dx = event.clientX - startX;
+        const dy = event.clientY - startY;
+        if (Math.abs(dx) < 64 || Math.abs(dx) < Math.abs(dy)) return;
+        go(dx < 0 ? 1 : -1);
+    });
+
+    fit();
+    window.addEventListener("resize", fit);
+    const fromHash = Number(location.hash.replace("#", ""));
+    const initial = Number.isInteger(fromHash) && fromHash >= 1 && fromHash <= slides.length ? fromHash - 1 : 0;
+    show(initial, false);
+})();
+
+</script>
+</body>
+</html>

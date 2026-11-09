@@ -11,6 +11,110 @@
   <link rel="stylesheet" href="shared/brand.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,400;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <meta name="theme-color" content="#09090f">
+  <link rel="canonical" href="https://one.acuity.institute/" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="icon" href="assets/brand/acuity-mark.svg" type="image/svg+xml" />
+  <link rel="alternate" type="text/plain" href="llms.txt" title="llms.txt" />
+  <link rel="preload" as="image" href="assets/horizon-portal/poster.jpg" fetchpriority="high" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Acuity.One" />
+  <meta property="og:locale" content="en_GB" />
+  <meta property="og:title" content="Acuity.One — A membership for the enquiring life" />
+  <meta property="og:description" content="Follow a question. Study the sources. Bring understanding into practice. Discover the forthcoming Acuity.One membership and your personal WisdomVault." />
+  <meta property="og:url" content="https://one.acuity.institute/" />
+  <meta property="og:image" content="https://one.acuity.institute/assets/horizon-portal/poster.jpg" />
+  <meta property="og:image:width" content="1920" />
+  <meta property="og:image:height" content="1080" />
+  <meta property="og:image:alt" content="A small gold portal on a misty horizon, flaring into light." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Acuity.One — A membership for the enquiring life" />
+  <meta name="twitter:description" content="Follow a question. Study the sources. Bring understanding into practice. Discover the forthcoming Acuity.One membership and your personal WisdomVault." />
+  <meta name="twitter:image" content="https://one.acuity.institute/assets/horizon-portal/poster.jpg" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://acuity.institute/#organization",
+      "name": "Acuity Institute",
+      "url": "https://acuity.institute/",
+      "logo": "https://one.acuity.institute/assets/brand/acuity-mark.svg",
+      "email": "hello@acuity.institute"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://one.acuity.institute/#website",
+      "name": "Acuity.One",
+      "url": "https://one.acuity.institute/",
+      "description": "Follow a question. Study the sources. Bring understanding into practice. Discover the forthcoming Acuity.One membership and your personal WisdomVault.",
+      "inLanguage": "en-GB",
+      "publisher": {
+        "@id": "https://acuity.institute/#organization"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://one.acuity.institute/#faq",
+      "url": "https://one.acuity.institute/",
+      "inLanguage": "en-GB",
+      "isPartOf": {
+        "@id": "https://one.acuity.institute/#website"
+      },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "When can I join Acuity.One?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The connected membership is in development. Request an invitation to hear when it opens. Launch timing, pricing and final allowances will be confirmed before anyone is asked to subscribe."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does one AI task include?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The proposed Free allowance counts a generated result: an Agent answer, a Search synthesis, a Codex output, a custom LumenNous practice or a myAeon reading. Reading the public Library and browsing the curated practice library do not use AI tasks. Final counting rules and media allowances will be published before launch."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What makes the experience personal?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You choose what to save in WisdomVault, and which saved items may inform a particular answer. That chosen context is intended to bring continuity to your study and practice without making every conversation part of your personal knowledge collection."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will the Library and standalone tools remain available?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The Library remains an open reading room, free to read and download. The standalone tools remain separate options for people who prefer to use their own AI provider keys. Acuity.One brings the tools together as a managed membership."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need to follow a particular tradition?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Acuity supports self-guided inquiry across traditions, with attention to the differences between them. You bring the questions and decide what has meaning for you. Generated interpretations should be read alongside their sources."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How should I use the personal and celestial reflections?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "As invitations to reflection, held with your own judgement. Acuity supports study and contemplative practice. It does not provide clinical care, predict your future or replace a trusted teacher, counsellor or health professional."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
   <style>
     /* Section Tracks & Stages */
     .track { position: relative; height: 360vh; }
@@ -135,6 +239,295 @@
       .ring-pulse, .tw { animation: none !important; }
       .media img.still { opacity: 1 !important; }
     }
+
+    /* ============================================================
+       Invitation overlays — the two "An open invite to wisdom"
+       bookends. Scoped to #copy-hero / #copy-lake so the studies
+       page keeps the plain brand styles.
+       ============================================================ */
+
+    /* Eyebrow: hairline-flanked instrument label */
+    #copy-hero .eyebrow, #copy-lake .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .85rem;
+      margin: 0 0 1.5rem;
+      font-family: 'IBM Plex Mono', ui-monospace, monospace;
+      font-size: .63rem;
+      font-weight: 400;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: rgba(232,201,106,.88);
+    }
+    #copy-hero .eyebrow::before, #copy-lake .eyebrow::before,
+    #copy-hero .eyebrow::after, #copy-lake .eyebrow::after {
+      content: '';
+      width: clamp(1.6rem, 4.5vw, 3.6rem);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(232,201,106,.6));
+    }
+    #copy-hero .eyebrow::after, #copy-lake .eyebrow::after {
+      background: linear-gradient(90deg, rgba(232,201,106,.6), transparent);
+    }
+
+    /* Editorial title: geometric sans + a Cormorant italic accent,
+       matching the membership chapters behind the film. */
+    #copy-hero h1, #copy-lake .closing-title {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: clamp(2.5rem, 6vw, 4.6rem);
+      line-height: 1.05;
+      letter-spacing: -.028em;
+      color: #fffdf7;
+      margin: 0 0 1.15rem;
+      max-width: min(680px, 92vw);
+      text-wrap: balance;
+      text-shadow: 0 1px 2px rgba(0,0,0,.45), 0 18px 60px rgba(0,0,0,.4);
+    }
+    #copy-hero h1 em, #copy-lake .closing-title em {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: 1.16em;
+      letter-spacing: -.02em;
+      color: #edcf82;
+      text-shadow: 0 1px 2px rgba(0,0,0,.4), 0 0 34px rgba(232,201,106,.28);
+    }
+
+    #copy-hero .sub, #copy-lake .sub {
+      margin: 0 0 2rem;
+      max-width: 40ch;
+      font-size: clamp(.95rem, 1.35vw, 1.02rem);
+      line-height: 1.65;
+      color: rgba(255,255,255,.7);
+    }
+    #copy-lake .sub { max-width: 32ch; margin-bottom: 1.7rem; }
+
+    /* Buttons: a beveled gold gradient primary, a glass secondary */
+    #copy-hero .hero-actions { gap: .9rem; }
+    #copy-hero .cta, #copy-lake .invite button {
+      position: relative;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .7rem;
+      min-height: 3rem;
+      padding: 0 1.75rem;
+      border-radius: 3px;
+      font-family: 'IBM Plex Mono', ui-monospace, monospace;
+      font-size: .68rem;
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: .17em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform .35s var(--ease-out), box-shadow .35s ease,
+                  border-color .3s ease, background-color .3s ease, filter .3s ease;
+    }
+    #copy-hero .cta.primary, #copy-lake .invite button {
+      color: #1b1204;
+      border: 1px solid rgba(255,242,196,.55);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.32), rgba(255,255,255,0) 46%),
+        linear-gradient(160deg, #f7e7a7 0%, #e6c06a 45%, #cca52c 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.55),
+        inset 0 -1px 0 rgba(112,80,16,.4),
+        0 1px 0 rgba(0,0,0,.35),
+        0 16px 40px -14px rgba(233,197,106,.45);
+      text-shadow: 0 1px 0 rgba(255,255,255,.25);
+    }
+    #copy-hero .cta.primary::after, #copy-lake .invite button::after {
+      content: '';
+      position: absolute;
+      top: -60%;
+      bottom: -60%;
+      left: -30%;
+      width: 34%;
+      background: linear-gradient(100deg, transparent, rgba(255,255,255,.55), transparent);
+      transform: translateX(-220%) rotate(16deg);
+      transition: transform .7s var(--ease-out);
+      pointer-events: none;
+    }
+    #copy-hero .cta.primary:hover, #copy-lake .invite button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.04);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.6),
+        inset 0 -1px 0 rgba(112,80,16,.4),
+        0 2px 0 rgba(0,0,0,.3),
+        0 22px 48px -16px rgba(240,208,110,.6);
+    }
+    #copy-hero .cta.primary:hover::after, #copy-lake .invite button:hover::after {
+      transform: translateX(420%) rotate(16deg);
+    }
+    #copy-hero .cta.primary:active, #copy-lake .invite button:active {
+      transform: translateY(0);
+      filter: brightness(.98);
+    }
+    #copy-hero .cta:not(.primary) {
+      color: #f3e6bd;
+      border: 1px solid rgba(235,205,120,.34);
+      background: rgba(6,7,12,.32);
+      backdrop-filter: blur(10px) saturate(120%);
+      -webkit-backdrop-filter: blur(10px) saturate(120%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+    }
+    #copy-hero .cta:not(.primary):hover {
+      transform: translateY(-2px);
+      color: #fff4d2;
+      border-color: rgba(235,205,120,.72);
+      background: rgba(235,205,120,.09);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 14px 34px -18px rgba(240,208,110,.45);
+    }
+    .cta-arrow {
+      width: 11px;
+      height: 11px;
+      flex: none;
+      transition: transform .35s var(--ease-out);
+    }
+    #copy-hero .cta:hover .cta-arrow,
+    #copy-lake .invite button:hover .cta-arrow { transform: translate(2px, -2px); }
+    #copy-hero .cta:focus-visible, #copy-lake .invite button:focus-visible {
+      outline: 2px solid rgba(255,240,190,.9);
+      outline-offset: 3px;
+    }
+
+    /* Invitation card (closing film) */
+    #copy-lake .invite {
+      position: relative;
+      width: min(560px, 100%);
+      margin: .3rem auto 0;
+      padding: 1.55rem 1.5rem 1.35rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .95rem 1rem;
+      text-align: left;
+      border: 1px solid rgba(232,201,106,.16);
+      border-radius: 5px;
+      background: linear-gradient(175deg, rgba(12,12,18,.82), rgba(5,5,9,.92));
+      backdrop-filter: blur(18px) saturate(130%);
+      -webkit-backdrop-filter: blur(18px) saturate(130%);
+      box-shadow: 0 40px 100px -30px rgba(0,0,0,.85), inset 0 1px 0 rgba(255,255,255,.05);
+    }
+    #copy-lake .invite::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 16%;
+      right: 16%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(240,210,120,.8), transparent);
+      box-shadow: 0 0 24px rgba(240,210,120,.4);
+    }
+    #copy-lake .invite label {
+      display: grid;
+      gap: .45rem;
+      font-family: 'IBM Plex Mono', ui-monospace, monospace;
+      font-size: .58rem;
+      font-weight: 400;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(240,226,190,.55);
+    }
+    #copy-lake .invite input, #copy-lake .invite select {
+      width: 100%;
+      min-height: 2.95rem;
+      padding: .7rem .8rem;
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: 3px;
+      background: rgba(255,255,255,.04);
+      color: #f8f4ea;
+      font: 400 .92rem/1.3 var(--font-ui);
+      box-shadow: inset 0 1px 3px rgba(0,0,0,.35);
+      transition: border-color .25s ease, box-shadow .25s ease, background-color .25s ease;
+    }
+    #copy-lake .invite input:hover, #copy-lake .invite select:hover {
+      border-color: rgba(255,255,255,.2);
+    }
+    #copy-lake .invite input:focus, #copy-lake .invite select:focus {
+      outline: none;
+      border-color: rgba(232,201,106,.7);
+      background: rgba(255,255,255,.055);
+      box-shadow: inset 0 1px 3px rgba(0,0,0,.3), 0 0 0 3px rgba(232,201,106,.13);
+    }
+    #copy-lake .invite select {
+      appearance: none;
+      -webkit-appearance: none;
+      padding-right: 2.4rem;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23e8c96a' stroke-width='1.1' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right .85rem center;
+    }
+    #copy-lake .invite select option { background: #0b0d14; color: #f2efe8; }
+    #copy-lake .invite button {
+      grid-column: 1 / -1;
+      width: 100%;
+      margin-top: .15rem;
+    }
+    #copy-lake .invite .note {
+      font-size: .68rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,.42);
+      letter-spacing: .01em;
+    }
+    #copy-lake .invite .note a {
+      color: rgba(240,210,120,.85);
+      text-decoration-color: rgba(240,210,120,.4);
+    }
+    #invite-status { font-size: .72rem; color: var(--gold-bright); }
+
+    /* Topbar: quieter links, a hairline chip for the invitation */
+    .topbar { padding: 1.35rem clamp(1.25rem, 4vw, 2.5rem); }
+    .topbar .brand-mark { letter-spacing: .46em; color: #fdf7e3; text-shadow: 0 1px 14px rgba(0,0,0,.5); }
+    .topnav a {
+      font-size: .62rem !important;
+      letter-spacing: .19em !important;
+      color: rgba(255,255,255,.62);
+      transition: color .25s ease;
+    }
+    .topnav a:hover { color: #fff; }
+    .topnav a[href="#invitation"] {
+      color: #f0dfae;
+      border: 1px solid rgba(232,201,106,.38);
+      border-radius: 3px;
+      padding: .5rem .85rem;
+      margin: -.5rem 0;
+      transition: border-color .25s ease, background-color .25s ease, color .25s ease;
+    }
+    .topnav a[href="#invitation"]:hover {
+      border-color: rgba(232,201,106,.75);
+      background: rgba(232,201,106,.08);
+      color: #fff6d8;
+    }
+
+    @media (max-width: 600px) {
+      #copy-lake .invite { grid-template-columns: 1fr; padding: 1.2rem; gap: .7rem; }
+      #copy-hero h1, #copy-lake .closing-title { font-size: clamp(2.3rem, 9.5vw, 3.1rem); }
+      #copy-lake .invite button {
+        font-size: .6rem;
+        letter-spacing: .12em;
+        padding: 0 1rem;
+        gap: .55rem;
+        white-space: nowrap;
+      }
+      #track-lake .tagline { display: none; }
+    }
+    @media (max-width: 480px) {
+      .topnav { gap: .55rem; }
+      .topnav a[href="#invitation"] { padding: .42rem .6rem; font-size: .54rem !important; letter-spacing: .12em !important; }
+    }
+    @media (max-height: 760px) {
+      #copy-lake .invite { padding: 1.1rem 1.15rem; gap: .6rem; }
+      #copy-lake .invite input, #copy-lake .invite select { min-height: 2.6rem; }
+      #copy-lake .sub { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #copy-hero .cta, #copy-lake .invite button, .cta-arrow { transition: none !important; }
+      #copy-hero .cta:hover, #copy-lake .invite button:hover { transform: none; }
+      #copy-hero .cta.primary::after, #copy-lake .invite button::after { display: none; }
+    }
   </style>
   <link rel="stylesheet" href="shared/membership.css">
   <noscript>
@@ -164,6 +557,8 @@
       <symbol id="i-lumen" viewBox="0 0 32 32"><circle cx="16" cy="16" r="5" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width=".9" opacity=".5"/><path d="M16 1.5v4M16 26.5v4M1.5 16h4M26.5 16h4" stroke="currentColor" stroke-width="1.2"/></symbol>
       <symbol id="i-aeon" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12.5" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="16" cy="16" r="7" fill="none" stroke="currentColor" stroke-width=".9" opacity=".6"/><path d="M16 3.5v5M16 23.5v5M3.5 16h5M23.5 16h5M7.2 7.2l3.5 3.5M21.3 21.3l3.5 3.5M24.8 7.2l-3.5 3.5M10.7 21.3l-3.5 3.5" stroke="currentColor" stroke-width=".8" opacity=".7"/><circle cx="21" cy="11" r="1.6" fill="currentColor"/></symbol>
       <symbol id="i-vault" viewBox="0 0 32 32"><path d="M6 28V13a10 10 0 0 1 20 0v15Z" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="16" cy="18" r="3.2" fill="none" stroke="currentColor" stroke-width="1.1"/><path d="M16 21.2V25" stroke="currentColor" stroke-width="1.1"/></symbol>
+      <symbol id="i-schedule" viewBox="0 0 32 32"><rect x="4.5" y="6" width="23" height="21" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M4.5 12h23M10.5 3.8v3.8M21.5 3.8v3.8" stroke="currentColor" stroke-width="1.3"/><circle cx="16" cy="19.6" r="3.4" fill="none" stroke="currentColor" stroke-width="1.1"/><path d="M16 17.8v1.8l1.3.8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></symbol>
+      <symbol id="i-compass" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="m21.6 10.4-3 6.9-6.9 3 3-6.9z" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linejoin="round"/><circle cx="16" cy="16" r="1.1" fill="currentColor"/></symbol>
     </defs>
   </svg>
   <main>
@@ -185,11 +580,11 @@
         <div class="loading" aria-hidden="true"><i id="bar-hero"></i></div>
         <div class="hero-copy" id="copy-hero">
           <p class="eyebrow">Acuity.One · Coming soon</p>
-          <h1>An open invite to wisdom</h1>
+          <h1>An open invite to <em>wisdom</em></h1>
           <p class="sub">Five Acuity tools, one login. Begin on the Free tier with five AI tasks a month, or join the Membership for unlimited use across every app.</p>
           <div class="hero-actions">
-            <a class="cta primary" href="#invitation">Request an invitation</a>
-            <a class="cta" href="#tools">Explore the tools</a>
+            <a class="cta primary" href="#invitation">Request an invitation <svg class="cta-arrow" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M3.4 10.6 10.6 3.4M4.7 3.4h5.9v5.9" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a class="cta" href="#tools">Explore the tools <svg class="cta-arrow" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M3.4 10.6 10.6 3.4M4.7 3.4h5.9v5.9" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div>
         </div>
       </div>
@@ -312,6 +707,85 @@
         <div><span class="one-small-number">02</span><h3>The Constellation.</h3><p>A line appears only where one thing cites or continues another. Size means references, not authority.</p></div>
         <div><span class="one-small-number">03</span><h3>Kept distinct.</h3><p>Two translations remain two sources. Disagreement stays visible, and a suggestion never becomes evidence until you review it.</p></div>
       </div>
+      <div class="one-vault-details" aria-labelledby="vault-details-h">
+        <div class="one-vault-details-head">
+          <div>
+            <p class="one-eyebrow">INSIDE THE VAULT</p>
+            <h3 id="vault-details-h">What you keep,<br><em>and how it connects.</em></h3>
+          </div>
+          <p>Two ways to see the same material: a calm reading list, and a map of how your sources, notes and reflections meet. The evidence always lives in the source.</p>
+        </div>
+        <div class="one-constellation">
+          <div class="one-constellation-visual">
+            <svg class="one-constellation-graph" viewBox="0 0 620 420" aria-hidden="true" focusable="false">
+              <g class="one-graph-stars">
+                <circle cx="60" cy="70" r="1.2"/><circle cx="120" cy="250" r="1"/><circle cx="205" cy="60" r="1.4"/>
+                <circle cx="265" cy="180" r="1"/><circle cx="340" cy="60" r="1.2"/><circle cx="355" cy="300" r="1"/>
+                <circle cx="450" cy="70" r="1.5"/><circle cx="470" cy="330" r="1"/><circle cx="530" cy="200" r="1.3"/>
+                <circle cx="575" cy="90" r="1"/><circle cx="90" cy="360" r="1.2"/><circle cx="300" cy="380" r="1"/>
+                <circle cx="180" cy="190" r="1"/><circle cx="420" cy="160" r="1.1"/><circle cx="560" cy="380" r="1.2"/>
+                <circle cx="40" cy="180" r="1"/><circle cx="610" cy="260" r="1"/><circle cx="250" cy="120" r="1"/>
+              </g>
+              <g class="one-graph-edges">
+                <line data-nodes="tao stillness" x1="140" y1="140" x2="398" y2="208"/>
+                <line data-nodes="meditations stillness" x1="302" y1="96" x2="396" y2="202"/>
+                <line data-nodes="cloud stillness" x1="518" y1="124" x2="406" y2="204"/>
+                <line data-nodes="tao reflection" x1="146" y1="148" x2="216" y2="284"/>
+                <line data-nodes="reflection stillness" x1="228" y1="290" x2="392" y2="216"/>
+                <line data-nodes="reflection practice" x1="230" y1="298" x2="344" y2="350"/>
+                <line class="is-suggested" data-nodes="suggested stillness" x1="550" y1="310" x2="408" y2="214"/>
+              </g>
+              <g class="one-graph-nodes">
+                <g data-node="tao"><circle cx="140" cy="140" r="7" fill="#d4a843"/><text x="152" y="162">Tao Te Ching · 16</text></g>
+                <g data-node="meditations"><circle cx="300" cy="96" r="6.5" fill="#d4a843"/><text x="284" y="78">Meditations · IV</text></g>
+                <g data-node="cloud"><circle cx="520" cy="122" r="6.5" fill="#d4a843"/><text x="506" y="108" text-anchor="end">The Cloud of Unknowing</text></g>
+                <g data-node="stillness"><circle cx="400" cy="210" r="10" fill="#e8c96a"/><circle cx="400" cy="210" r="17" fill="none" stroke="rgba(232,201,106,.35)"/><text x="418" y="214">Inner stillness</text></g>
+                <g data-node="reflection"><circle cx="222" cy="292" r="7.5" fill="#cfc6ae"/><text x="238" y="312">Your reflection</text></g>
+                <g data-node="practice"><circle cx="352" cy="356" r="6" fill="#a99bd8"/><text x="366" y="360">Evening practice</text></g>
+                <g data-node="suggested"><circle cx="556" cy="316" r="5.5" fill="none" stroke="rgba(160,150,130,.7)" stroke-dasharray="2 3"/><text x="568" y="320" class="is-hint">Suggested theme</text></g>
+                <text x="470" y="272" class="is-hint">suggested · not evidence</text>
+              </g>
+            </svg>
+            <div class="one-constellation-evidence">
+              <p class="one-screen-label">EVIDENCE · 4 REFERENCES</p>
+              <p class="one-evidence-title">Inner stillness</p>
+              <ul>
+                <li>Tao Te Ching · Ch. 16 <span>v3</span></li>
+                <li>Meditations · IV <span>v1</span></li>
+                <li>The Cloud of Unknowing <span>v2</span></li>
+              </ul>
+              <p class="one-evidence-foot">Title · version · locator</p>
+            </div>
+            <p class="one-constellation-legend"><span class="is-line" aria-hidden="true"></span> cites / continues <span class="is-dash" aria-hidden="true"></span> suggested · not evidence <span class="is-size" aria-hidden="true">◉</span> size = references</p>
+          </div>
+          <div class="one-constellation-copy">
+            <p class="one-screen-label">THE CONSTELLATION · KNOWLEDGE GRAPH</p>
+            <h4>Follow the line back to the words.</h4>
+            <ul class="one-constellation-list">
+              <li><b>Explicit connections come first.</b> A line appears because something actually cites or continues something else.</li>
+              <li><b>Evidence is one step away.</b> Select any point and a side panel shows the supporting passage, with its title, version and locator.</li>
+              <li><b>Size means references, not authority.</b> A point grows with how often it is referenced — never with how important it is judged to be.</li>
+              <li><b>The map opens to every way of working.</b> Search, type filters, zoom, keyboard operation and a plain list view sit alongside the graph.</li>
+            </ul>
+            <p class="one-aside">“Not yet built”, “processing” and “unavailable” are shown as distinct states — never a placeholder graph presented as real.</p>
+          </div>
+        </div>
+        <div class="one-keeps">
+          <p class="one-screen-label">KEPT IN THE VAULT</p>
+          <div class="one-keeps-grid">
+            <div><span class="one-small-number">01</span><h4>Source passages</h4><p>Verbatim excerpts with their work, edition, translator and exact locator.</p></div>
+            <div><span class="one-small-number">02</span><h4>Notes &amp; reflections</h4><p>Your own words, clearly marked as yours.</p></div>
+            <div><span class="one-small-number">03</span><h4>Syntheses &amp; drafts</h4><p>Written by you, or with Apollo — labelled as interpretation, never as source.</p></div>
+            <div><span class="one-small-number">04</span><h4>Practice &amp; connected outputs</h4><p>Reflections after a LumenNous practice, and versioned results from Codex, Search and the other apps.</p></div>
+          </div>
+        </div>
+        <div class="one-provenance">
+          <div><span class="one-screen-label">EDITIONS</span><p>Two translations remain two sources.</p></div>
+          <div><span class="one-screen-label">DISAGREEMENT</span><p>Contradictions are kept side by side.</p></div>
+          <div><span class="one-screen-label">INFERENCE</span><p>Suggestions stay labelled, never evidence.</p></div>
+          <div><span class="one-screen-label">CONTROL</span><p>Save, context, pin, exclude, export and delete are separate choices.</p></div>
+        </div>
+      </div>
       <p class="one-journey-note"><span aria-hidden="true">✦</span> Included with Membership, and still in development. Apollo may draft from eligible material, and it saves only after you approve.</p>
     </div>
   </section>
@@ -344,6 +818,88 @@
         <div><span class="one-small-number">03</span><h4>Artifact authoring.</h4><p>Draft a synthesis, a reflection or a study outline in stages. Saving is a request, not a side effect.</p></div>
         <div><span class="one-small-number">04</span><h4>Data analysis.</h4><p>Inspect a small dataset you supply. Report the relationship, without turning a number into a meaning.</p></div>
       </div>
+      <div class="one-capabilities" aria-labelledby="instruments-h">
+        <div class="one-capabilities-head">
+          <div>
+            <p class="one-eyebrow">BEYOND THE CONVERSATION</p>
+            <h3 id="instruments-h">Enriched Acuity<br><em>Instrument Capabilities</em></h3>
+          </div>
+          <p>Apollo can carry one request across the instruments you already use — each keeps its own character and rules, and every output returns to you for review.</p>
+        </div>
+        <div class="one-instrument-grid">
+          <article class="one-instrument">
+            <div class="one-instrument-head">
+              <svg class="one-instrument-icon" aria-hidden="true"><use href="#i-codex"/></svg>
+              <div><h4>Acuity.Codex</h4><span class="one-instrument-tag">MEDIAOUTPUTS</span></div>
+            </div>
+            <ul class="one-instrument-list">
+              <li>Slide deck generations, built from the content of your Context Spheres.</li>
+              <li>Topic insight and exploration videos, built from the same sphere content.</li>
+            </ul>
+            <div class="one-instrument-actions">
+              <a class="one-demo-link" href="examples/restitution-north/index.html" target="_blank" rel="noopener" data-modal="demo-deck">Preview a slide deck <span aria-hidden="true">↗</span></a>
+              <a class="one-demo-link" href="examples/postel-keys_landscape_share.mov" target="_blank" rel="noopener" data-modal="demo-video">Watch a topic film <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+          <article class="one-instrument">
+            <div class="one-instrument-head">
+              <svg class="one-instrument-icon" aria-hidden="true"><use href="#i-lumen"/></svg>
+              <div><h4>LumenNous</h4><span class="one-instrument-tag">THE PRACTICE</span></div>
+            </div>
+            <ul class="one-instrument-list">
+              <li>Custom audio meditations shaped around your needs, with music and a personal script.</li>
+              <li>Structured by the five-stage coherence practice framework.</li>
+            </ul>
+            <div class="one-instrument-actions">
+              <a class="one-demo-link" href="examples/slow-down-ground-and-reset-wind-down.mp3" target="_blank" rel="noopener" data-modal="demo-audio">Listen to a meditation <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+          <article class="one-instrument">
+            <div class="one-instrument-head">
+              <svg class="one-instrument-icon" aria-hidden="true"><use href="#i-aeon"/></svg>
+              <div><h4>myAeon</h4><span class="one-instrument-tag">THE PERSPECTIVE</span></div>
+            </div>
+            <ul class="one-instrument-list">
+              <li>Deeper insights across Vedic, esoteric, Christian, historical and mainstream astrological considerations.</li>
+              <li>Custom audio readings to accompany your reflections.</li>
+            </ul>
+          </article>
+          <article class="one-instrument">
+            <div class="one-instrument-head">
+              <svg class="one-instrument-icon" aria-hidden="true"><use href="#i-agent"/></svg>
+              <div><h4>Acuity.Agent</h4><span class="one-instrument-tag">THE INQUIRY</span></div>
+            </div>
+            <ul class="one-instrument-list">
+              <li>Export findings to Codex, ready for your spheres.</li>
+              <li>Generate Reading List materials from the Sacred Text archive.</li>
+            </ul>
+          </article>
+        </div>
+        <div class="one-for-all">
+          <div class="one-for-all-intro">
+            <p class="one-eyebrow">FOR ALL INSTRUMENTS</p>
+            <h4>Included with every instrument</h4>
+            <p>You authorise what arrives, and suggestions appear only if you invite them.</p>
+          </div>
+          <div class="one-for-all-items">
+            <div class="one-for-all-item">
+              <svg class="one-instrument-icon" aria-hidden="true"><use href="#i-schedule"/></svg>
+              <div>
+                <h5>Scheduled tasks</h5>
+                <p>Day-starting affirmations, myAeon readings, Reading List prompts and Scripture excerpts — prepared ahead of time and waiting in your in-portal inbox.</p>
+              </div>
+            </div>
+            <div class="one-for-all-item">
+              <svg class="one-instrument-icon" aria-hidden="true"><use href="#i-compass"/></svg>
+              <div>
+                <h5>Continue Exploration <span class="one-optional-tag">OPTIONAL</span></h5>
+                <p>Suggested next steps through the texts and concepts you have been exploring, drawn only from the history you choose to share.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="one-aside">These instrument capabilities are planned with the Apollo integration. Nothing is generated without your request, and nothing is saved until you approve it.</p>
+      </div>
       <p class="one-journey-note"><span aria-hidden="true">✦</span> You can stop a turn, clear the working context, or begin again. A skill never widens what Apollo can see. When the evidence is missing, it says so. Live conversations have not opened.</p>
     </div>
   </section>
@@ -371,6 +927,65 @@
       <details><summary>How should I use the personal and celestial reflections?</summary><p>As invitations to reflection, held with your own judgement. Acuity supports study and contemplative practice. It does not provide clinical care, predict your future or replace a trusted teacher, counsellor or health professional.</p></details>
     </div></div></div>
   </section>
+
+  <!-- Demo previews: native dialogs, media loads only when opened -->
+  <dialog class="one-modal one-modal-wide" id="demo-deck" aria-labelledby="demo-deck-title">
+    <div class="one-modal-panel">
+      <div class="one-modal-head">
+        <div>
+          <p class="one-eyebrow">ACUITY.CODEX · MEDIAOUTPUTS</p>
+          <h3 id="demo-deck-title">Restitution, Northward</h3>
+        </div>
+        <button type="button" class="one-modal-close" aria-label="Close preview">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.6 3.6 8.8 8.8M12.4 3.6 3.6 12.4" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="one-modal-media">
+        <iframe data-src="examples/restitution-north/index.html" title="Restitution, Northward — a sample slide deck generated from Context Sphere content" allowfullscreen></iframe>
+      </div>
+      <p class="one-modal-note">Illustrative sample · a slide deck generated from Context Sphere content. <a class="one-modal-open-link" href="examples/restitution-north/index.html" target="_blank" rel="noopener">Open in a new tab <span aria-hidden="true">↗</span></a></p>
+    </div>
+  </dialog>
+
+  <dialog class="one-modal one-modal-wide" id="demo-video" aria-labelledby="demo-video-title">
+    <div class="one-modal-panel">
+      <div class="one-modal-head">
+        <div>
+          <p class="one-eyebrow">ACUITY.CODEX · MEDIAOUTPUTS</p>
+          <h3 id="demo-video-title">Postel's Keys</h3>
+        </div>
+        <button type="button" class="one-modal-close" aria-label="Close preview">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.6 3.6 8.8 8.8M12.4 3.6 3.6 12.4" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="one-modal-media one-modal-video">
+        <video controls playsinline preload="metadata" aria-label="Topic insight film — Postel's Keys">
+          <source data-src="examples/postel-keys_landscape_share.mov" type="video/quicktime">
+          <source data-src="examples/postel-keys_landscape_share.mp4" type="video/mp4">
+        </video>
+      </div>
+      <p class="one-modal-note">Illustrative sample · an insight film generated from Context Sphere content.</p>
+    </div>
+  </dialog>
+
+  <dialog class="one-modal one-modal-narrow" id="demo-audio" aria-labelledby="demo-audio-title">
+    <div class="one-modal-panel">
+      <div class="one-modal-head">
+        <div>
+          <p class="one-eyebrow">LUMENNOUS · THE PRACTICE</p>
+          <h3 id="demo-audio-title">Slow down, ground and reset</h3>
+        </div>
+        <button type="button" class="one-modal-close" aria-label="Close preview">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.6 3.6 8.8 8.8M12.4 3.6 3.6 12.4" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="one-modal-media one-modal-audio">
+        <div class="one-breath is-active" aria-hidden="true"><i></i><i></i><i></i><span>Arrive.<small>LET YOUR ATTENTION SETTLE.</small></span></div>
+        <audio data-src="examples/slow-down-ground-and-reset-wind-down.mp3" controls preload="metadata" aria-label="Wind-down meditation audio"></audio>
+      </div>
+      <p class="one-modal-note">Illustrative sample · a custom wind-down meditation in the five-stage coherence practice.</p>
+    </div>
+  </dialog>
 </div>
 
 
@@ -391,7 +1006,7 @@
         <div class="loading" aria-hidden="true"><i id="bar-lake"></i></div>
         <div class="hero-copy" id="copy-lake">
           <p class="eyebrow">Acuity.One · Coming soon</p>
-          <h2 class="closing-title">An open invite to wisdom</h2>
+          <h2 class="closing-title">An open invite to <em>wisdom</em></h2>
           <p class="sub">Request an invitation and we will write when Acuity.One opens.</p>
           <form class="invite" id="invite-form" novalidate aria-describedby="invite-note">
             <label>Name<input name="name" autocomplete="name" /></label>
@@ -399,7 +1014,7 @@
             <label class="full">Interested in
               <select name="plan"><option>Not sure yet</option><option>Acuity.One Free</option><option>Acuity.One Membership</option></select>
             </label>
-            <button type="submit">Write my invitation request</button>
+            <button type="submit">Write my invitation request <svg class="cta-arrow" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M3.4 10.6 10.6 3.4M4.7 3.4h5.9v5.9" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
             <p class="note" id="invite-note">This opens a pre-written email in your own mail app. Nothing is sent until you send it. Or <a href="mailto:hello@acuity.institute?subject=Acuity.One%20invitation%20request">Email invitation request</a> directly.</p>
             <p id="invite-status" role="status" aria-live="polite"></p>
           </form>
@@ -604,6 +1219,7 @@
       let owlTarget = 0;
       let owlShown = 0;
       let owlSeeking = false;
+      let owlSeekAt = 0;
       let owlSeekTimer = 0;
       let owlReady = false;
       let owlArmed = false;
@@ -640,6 +1256,11 @@
       }
       function loadOwl() {
         if (!owlVideo || owlVideo.getAttribute("src")) return;
+        // Upgrade preload so the browser actually buffers the film.
+        // With preload="none" Chrome suspends the fetch after a small
+        // prefix: loadeddata fires but the buffer never reaches the
+        // seek threshold, so the film never scrubs.
+        owlVideo.preload = "auto";
         owlVideo.src = (narrow && owlVideo.dataset.srcMobile) || owlVideo.dataset.src;
         owlVideo.load();
       }
@@ -647,6 +1268,14 @@
         if (!owlReady || !Number.isFinite(owlVideo.duration)) return;
         owlTarget = dwell(p, 0.45) * owlVideo.duration;
         if (!owlArmed) return;
+        // The seeked event can lag on paused videos (deferred frame
+        // decode, throttled tabs), which would pin the lock until the
+        // 4s backstop. When the film is buffered past the shown
+        // position a re-assignment is safe, so cap the wait instead.
+        if (owlSeeking && performance.now() - owlSeekAt > 240 &&
+            owlBuffered() + 0.05 >= owlShown) {
+          releaseOwlSeek();
+        }
         owlShown += (owlTarget - owlShown) * 0.18;
         if (Math.abs(owlVideo.currentTime - owlShown) < 0.06) {
           releaseOwlSeek();
@@ -654,6 +1283,7 @@
         }
         if (owlSeeking) return;
         owlSeeking = true;
+        owlSeekAt = performance.now();
         clearTimeout(owlSeekTimer);
         // A slow range can take longer than a short retry. Assigning
         // currentTime again aborts the seek that was about to land.
@@ -765,6 +1395,75 @@
       window.location.href = href;
       statusEl.textContent = "Your mail app should now open with the request drafted. It is not sent until you press send there.";
     });
+
+    // -----------------------------------------------------------------------
+    // Demo previews: native dialogs. Media loads only when a preview opens,
+    // and every close tears playback down so nothing keeps running behind.
+    // -----------------------------------------------------------------------
+    const demoDialogs = Array.from(document.querySelectorAll("dialog.one-modal"));
+    function closeDemo(dialog) {
+      if (!dialog || !dialog.open) return;
+      dialog.querySelectorAll("iframe[data-src]").forEach((frame) => frame.removeAttribute("src"));
+      dialog.querySelectorAll("video").forEach((video) => {
+        video.pause();
+        video.removeAttribute("src");
+        video.querySelectorAll("source").forEach((source) => source.removeAttribute("src"));
+        delete video.dataset.loaded;
+        video.load();
+      });
+      dialog.querySelectorAll("audio").forEach((audio) => { audio.pause(); audio.removeAttribute("src"); audio.load(); });
+      dialog.close();
+      document.documentElement.classList.remove("one-modal-open");
+    }
+    document.querySelectorAll("[data-modal]").forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const dialog = document.getElementById(link.dataset.modal);
+        if (!dialog || typeof dialog.showModal !== "function") return; // fall back to the link
+        event.preventDefault();
+        const frame = dialog.querySelector("iframe[data-src]");
+        if (frame && !frame.getAttribute("src")) frame.src = frame.dataset.src;
+        const video = dialog.querySelector("video");
+        if (video && !video.dataset.loaded) {
+          video.dataset.loaded = "true";
+          const sources = video.querySelectorAll("source[data-src]");
+          if (sources.length) {
+            sources.forEach((source) => { if (!source.getAttribute("src")) source.src = source.dataset.src; });
+          } else if (!video.getAttribute("src")) {
+            video.src = video.dataset.src;
+          }
+          video.load();
+          // Show an early frame rather than a black box until play.
+          const showFrame = () => { if (video.duration && !video.seeking) video.currentTime = Math.min(0.6, video.duration * 0.02); };
+          if (video.readyState >= 1) showFrame();
+          else video.addEventListener("loadedmetadata", showFrame, { once: true });
+        }
+        const audio = dialog.querySelector("audio[data-src]");
+        if (audio && !audio.getAttribute("src")) audio.src = audio.dataset.src;
+        dialog.showModal();
+        document.documentElement.classList.add("one-modal-open");
+      });
+    });
+    demoDialogs.forEach((dialog) => {
+      dialog.querySelector(".one-modal-close")?.addEventListener("click", () => closeDemo(dialog));
+      dialog.addEventListener("click", (event) => { if (event.target === dialog) closeDemo(dialog); });
+      dialog.addEventListener("cancel", (event) => { event.preventDefault(); closeDemo(dialog); });
+      dialog.addEventListener("close", () => document.documentElement.classList.remove("one-modal-open"));
+    });
+
+    // Constellation: hovering a point lights only its explicit connections.
+    const constellation = document.querySelector(".one-constellation-graph");
+    if (constellation) {
+      const edges = Array.from(constellation.querySelectorAll("[data-nodes]"));
+      const reset = () => { constellation.classList.remove("is-lit"); edges.forEach((edge) => edge.classList.remove("is-lit")); };
+      constellation.querySelectorAll("[data-node]").forEach((node) => {
+        node.addEventListener("pointerenter", () => {
+          constellation.classList.add("is-lit");
+          edges.forEach((edge) => edge.classList.toggle("is-lit", edge.dataset.nodes.split(" ").includes(node.dataset.node)));
+        });
+        node.addEventListener("pointerleave", reset);
+      });
+      constellation.addEventListener("pointerleave", reset);
+    }
   </script>
 </body>
 </html>

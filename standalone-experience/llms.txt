@@ -1,0 +1,19 @@
+# Acuity.One
+
+> Acuity.One is the forthcoming membership from the Acuity Institute. It brings five study and practice instruments — Acuity.Agent, Acuity.Search, Acuity.Codex, LumenNous and myAeon — together under one login, around a private, source-linked WisdomVault.
+
+## Status
+- In development. Invitation requests are open; no subscription is taken.
+- Pricing, launch timing and final allowances are to be confirmed before anyone is asked to subscribe.
+
+## The offering
+- Free tier: five AI tasks a month across the tools, one personal myAeon chart profile, the curated LumenNous practice library, Library bookmarks and reading progress, and one Acuity account.
+- Membership: unlimited AI use across the Acuity tools, WisdomVault, the full Codex suite (Spheres, The Lens and Studio), personal practice and reflective celestial readings, and everything in Free.
+
+## Key pages
+- [Home](https://one.acuity.institute/): the membership story and invitation request.
+- [The Library](https://acuity.institute/library): the Institute's open reading room, free to read and download.
+- [Acuity.Agent](https://agent.acuity.institute), [Acuity.Search](https://search.acuity.institute), [Acuity.Codex](https://codex.acuity.institute/codex), [LumenNous](https://lumennous.acuity.institute), [myAeon](https://myaeon.acuity.institute): the standalone tools.
+
+## Contact
+- Invitation requests and questions: hello@acuity.institute

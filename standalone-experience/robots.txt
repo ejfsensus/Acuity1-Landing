@@ -1,0 +1,11 @@
+# Acuity.One — https://one.acuity.institute/
+# One wildcard rule: search engines and AI search crawlers are welcome.
+# Search discovery (Googlebot, Bingbot, OAI-SearchBot, PerplexityBot,
+# Claude-SearchBot, meta-webindexer) inherits this rule deliberately;
+# training and user-triggered fetchers do too.
+
+User-agent: *
+Allow: /
+Disallow: /examples/
+
+Sitemap: https://one.acuity.institute/sitemap.xml
