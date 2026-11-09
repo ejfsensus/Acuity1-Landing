@@ -20,7 +20,8 @@
 .one-section-line span:last-child { color: #74717d; text-align: right; }
 .one-eyebrow { font: 10px/1.7 'IBM Plex Mono', monospace; letter-spacing: .19em; color: var(--one-gold); margin-bottom: 25px !important; }
 .one-screen-label { font: 9px/1.6 'IBM Plex Mono', monospace; letter-spacing: .13em; color: var(--one-gold); }
-.one-copy > p:not(.one-eyebrow):not(.one-lead):not(.one-aside) { color: var(--one-muted); max-width: 48ch; }
+.one-copy > p:not(.one-eyebrow):not(.one-lead):not(.one-aside):not(.one-definition) { color: var(--one-muted); max-width: 48ch; }
+.one-definition { max-width: 62ch; color: #d8d4dc; font-size: 15.5px; font-weight: 400; line-height: 1.7; margin: 0 0 22px !important; }
 .one-lead { font-size: 19px; font-weight: 300; line-height: 1.65; letter-spacing: -.015em; color: #d4d0d7; margin-bottom: 24px !important; }
 .one-text-link { display: inline-flex; align-items: center; gap: 25px; min-height: 44px; color: var(--one-light); font: 10px/1.5 'IBM Plex Mono', monospace; letter-spacing: .08em; text-transform: uppercase; margin-top: 12px; }
 .one-text-link > span { font-size: 18px; transition: transform .25s; }

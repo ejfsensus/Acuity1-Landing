@@ -5,11 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
   <title>Acuity.One — A membership for the enquiring life</title>
   <meta name="description" content="Follow a question. Study the sources. Bring understanding into practice. Discover the forthcoming Acuity.One membership and your personal WisdomVault." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="preload" href="assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
   <link rel="stylesheet" href="shared/brand.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,400;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <meta name="theme-color" content="#09090f">
   <link rel="canonical" href="https://one.acuity.institute/" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
@@ -22,14 +21,16 @@
   <meta property="og:title" content="Acuity.One — A membership for the enquiring life" />
   <meta property="og:description" content="Follow a question. Study the sources. Bring understanding into practice. Discover the forthcoming Acuity.One membership and your personal WisdomVault." />
   <meta property="og:url" content="https://one.acuity.institute/" />
-  <meta property="og:image" content="https://one.acuity.institute/assets/horizon-portal/poster.jpg" />
+  <meta property="og:image" content="https://one.acuity.institute/assets/brand/og-acuity-one.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1920" />
   <meta property="og:image:height" content="1080" />
-  <meta property="og:image:alt" content="A small gold portal on a misty horizon, flaring into light." />
+  <meta property="og:image:alt" content="Acuity.One, a membership for the enquiring life, beside a gold portal on a starlit horizon." />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Acuity.One — A membership for the enquiring life" />
   <meta name="twitter:description" content="Follow a question. Study the sources. Bring understanding into practice. Discover the forthcoming Acuity.One membership and your personal WisdomVault." />
-  <meta name="twitter:image" content="https://one.acuity.institute/assets/horizon-portal/poster.jpg" />
+  <meta name="twitter:image" content="https://one.acuity.institute/assets/brand/og-acuity-one.jpg" />
+  <meta name="twitter:image:alt" content="Acuity.One, a membership for the enquiring life, beside a gold portal on a starlit horizon." />
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -49,6 +50,7 @@
       "url": "https://one.acuity.institute/",
       "description": "Follow a question. Study the sources. Bring understanding into practice. Discover the forthcoming Acuity.One membership and your personal WisdomVault.",
       "inLanguage": "en-GB",
+      "dateModified": "2026-11-09",
       "publisher": {
         "@id": "https://acuity.institute/#organization"
       }
@@ -58,6 +60,7 @@
       "@id": "https://one.acuity.institute/#faq",
       "url": "https://one.acuity.institute/",
       "inLanguage": "en-GB",
+      "dateModified": "2026-11-09",
       "isPartOf": {
         "@id": "https://one.acuity.institute/#website"
       },
@@ -284,6 +287,18 @@
       text-wrap: balance;
       text-shadow: 0 1px 2px rgba(0,0,0,.45), 0 18px 60px rgba(0,0,0,.4);
     }
+    #copy-hero h1 .h1-entity {
+      display: block;
+      margin: 0 0 .7rem;
+      font-family: 'IBM Plex Mono', ui-monospace, monospace;
+      font-size: .63rem;
+      font-weight: 400;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: rgba(232,201,106,.88);
+      text-shadow: none;
+    }
+    #copy-hero h1 .h1-poem { display: block; }
     #copy-hero h1 em, #copy-lake .closing-title em {
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-style: italic;
@@ -573,14 +588,14 @@
         </div>
         <div class="media" id="media-hero">
           <img class="still" src="assets/horizon-portal/still.jpg" width="1920" height="1080" alt="" aria-hidden="true" />
-          <img class="poster" src="assets/horizon-portal/poster.jpg" width="1920" height="1080" alt="A small gold portal on a misty horizon flares, grows, and the camera passes between its pillars." />
+          <img class="poster" src="assets/horizon-portal/poster.jpg" width="1920" height="1080" alt="A small gold portal on a misty horizon flares, grows, and the camera passes between its pillars." fetchpriority="high" />
           <canvas id="canvas-hero" width="1920" height="1080" aria-hidden="true"></canvas>
         </div>
         <div class="copy-scrim" id="scrim-hero" aria-hidden="true"></div>
         <div class="loading" aria-hidden="true"><i id="bar-hero"></i></div>
         <div class="hero-copy" id="copy-hero">
-          <p class="eyebrow">Acuity.One · Coming soon</p>
-          <h1>An open invite to <em>wisdom</em></h1>
+          <p class="eyebrow">Coming soon</p>
+          <h1><span class="h1-entity">Acuity.One — </span><span class="h1-poem">An open invite to <em>wisdom</em></span></h1>
           <p class="sub">Five Acuity tools, one login. Begin on the Free tier with five AI tasks a month, or join the Membership for unlimited use across every app.</p>
           <div class="hero-actions">
             <a class="cta primary" href="#invitation">Request an invitation <svg class="cta-arrow" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M3.4 10.6 10.6 3.4M4.7 3.4h5.9v5.9" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
@@ -604,6 +619,7 @@
         <div class="one-copy">
           <p class="one-eyebrow">THE ACUITY.ONE MEMBERSHIP</p>
           <h2 id="intro-h">Let your inquiry<br>become <em>your path.</em></h2>
+          <p class="one-definition">Acuity.One is the Acuity Institute’s forthcoming membership that brings five study tools together around a private, source-linked WisdomVault. Acuity.Agent, Acuity.Search, Acuity.Codex, LumenNous and myAeon share one login. Invitation requests are open, and launch timing and pricing will be confirmed before anyone is asked to subscribe.</p>
           <p class="one-lead">Some questions deserve more than an answer.<br>They deserve a place to unfold.</p>
           <p>Follow an idea through the world’s wisdom traditions. Study the sources, gather your own understanding, and carry what resonates into reflection and daily practice.</p>
           <p>Acuity.One brings the Institute’s tools together around that journey. One membership. A personal thread through everything you explore.</p>
@@ -998,8 +1014,8 @@
           <span class="tagline">Creating Pathways to Wisdom</span>
         </div>
         <div class="media" id="media-lake">
-          <img class="still" src="assets/milky-way-lake/still.jpg" width="1920" height="1080" alt="" aria-hidden="true" />
-          <img class="poster" src="assets/milky-way-lake/poster.jpg" width="1920" height="1080" alt="Lakeshore figure under the Milky Way with glowing arch igniting and fireflies." />
+          <img class="still" src="assets/milky-way-lake/still.jpg" width="1920" height="1080" alt="" aria-hidden="true" loading="lazy" fetchpriority="low" />
+          <img class="poster" src="assets/milky-way-lake/poster.jpg" width="1920" height="1080" alt="Lakeshore figure under the Milky Way with glowing arch igniting and fireflies." loading="lazy" fetchpriority="low" />
           <canvas id="canvas-lake" width="1920" height="1080" aria-hidden="true"></canvas>
         </div>
         <div class="copy-scrim" id="scrim-lake" aria-hidden="true"></div>
@@ -1040,7 +1056,7 @@
           <li><a href="https://acuity.institute/privacy">Privacy</a></li>
         </ul></nav>
       </div>
-      <div class="base"><span>© 2026 Acuity Institute</span><span>Creating Pathways to Wisdom</span></div>
+      <div class="base"><span>© 2026 Acuity Institute</span><time datetime="2026-11-09">Updated 9 November 2026</time><span>Creating Pathways to Wisdom</span></div>
     </div>
   </footer>
 
@@ -1088,8 +1104,14 @@
 
       const framesFolder = isMobile ? `${assetDir}/frames-m` : `${assetDir}/frames`;
       const frames = new Array(FRAME_COUNT);
+      const inflight = new Set();
+      const failed = new Set();
+      const fillQueue = [];
+      const KEY_STEP = 8;
+      const MAX_IN_FLIGHT = 3;
       let arrived = 0;
       let currentFrame = 0;
+      let armed = false;
 
       function nearestFrame(index) {
         if (frames[index]) return frames[index];
@@ -1106,33 +1128,74 @@
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       }
 
-      function loadFrames() {
+      function noteArrival() {
+        arrived += 1;
+        if (bar) bar.style.width = `${Math.min(100, (arrived / FRAME_COUNT) * 100)}%`;
+      }
+
+      function pump() {
+        if (!armed) return;
+        while (inflight.size < MAX_IN_FLIGHT && fillQueue.length) {
+          const index = fillQueue.shift();
+          if (!frames[index] && !inflight.has(index) && !failed.has(index)) enqueue(index, "low");
+        }
+      }
+
+      function enqueue(index, priority, onDone) {
+        if (index < 0 || index >= FRAME_COUNT || frames[index] || inflight.has(index) || failed.has(index)) {
+          onDone?.();
+          return;
+        }
+        inflight.add(index);
+        const img = new Image();
+        img.decoding = "async";
+        if ("fetchPriority" in img) img.fetchPriority = priority;
+        const finish = (ok) => {
+          inflight.delete(index);
+          if (ok) frames[index] = img;
+          else failed.add(index);
+          noteArrival();
+          drawFrame(currentFrame);
+          onDone?.();
+          pump();
+        };
+        img.onload = () => finish(true);
+        img.onerror = () => finish(false);
+        img.src = `${framesFolder}/f-${pad(index + 1)}.jpg`;
+      }
+
+      function requestAround(index) {
+        if (!armed) return;
+        for (let delta = 0; delta <= 8; delta += 1) {
+          const candidates = delta === 0 ? [index] : [index + delta, index - Math.min(delta, 2)];
+          for (const candidate of candidates) {
+            if (candidate < 0 || candidate >= FRAME_COUNT || frames[candidate] || inflight.has(candidate) || failed.has(candidate)) continue;
+            if (!fillQueue.includes(candidate)) fillQueue.push(candidate);
+          }
+        }
+        pump();
+      }
+
+      function loadKeyframes() {
         if (reduced) {
           if (copy) copy.style.opacity = "1";
           return Promise.resolve();
         }
+        const keys = [];
+        for (let i = 0; i < FRAME_COUNT; i += KEY_STEP) keys.push(i);
+        if (keys[keys.length - 1] !== FRAME_COUNT - 1) keys.push(FRAME_COUNT - 1);
         return new Promise((resolve) => {
+          let pending = keys.length;
           let opened = false;
-          for (let i = 0; i < FRAME_COUNT; i += 1) {
-            const img = new Image();
-            img.decoding = "async";
-            img.onload = () => {
-              frames[i] = img;
-              arrived += 1;
-              if (bar) bar.style.width = `${(arrived / FRAME_COUNT) * 100}%`;
-              if (!opened) {
-                opened = true;
-                media?.classList.add("is-ready");
-                resolve();
-              }
-              drawFrame(currentFrame);
-            };
-            img.onerror = () => {
-              arrived += 1;
-              if (!opened && arrived === FRAME_COUNT) resolve();
-            };
-            img.src = `${framesFolder}/f-${pad(i + 1)}.jpg`;
-          }
+          const done = () => {
+            pending -= 1;
+            if (!opened && (frames[0] || pending === 0)) {
+              opened = true;
+              media?.classList.add("is-ready");
+              resolve();
+            }
+          };
+          keys.forEach((index, n) => enqueue(index, n === 0 ? "high" : "low", done));
         });
       }
 
@@ -1144,16 +1207,20 @@
           copy.style.opacity = String(Math.min(1, Math.max(0, (hold - 0.05) / 0.6)));
           copy.style.transform = `translateY(${(1 - hold) * 16}px)`;
         }
-        if (!arrived) return;
+        if (reduced) return;
         const scrub = Math.min(1, Math.max(0, p / scrubRange));
         currentFrame = Math.round(scrub * (FRAME_COUNT - 1));
-        drawFrame(currentFrame);
+        if (arrived) drawFrame(currentFrame);
+        if (armed) requestAround(currentFrame);
       });
 
       return {
         async init() {
-          await loadFrames();
+          await loadKeyframes();
+          if (reduced) return;
+          armed = true;
           drawFrame(currentFrame);
+          requestAround(currentFrame);
         }
       };
     }
