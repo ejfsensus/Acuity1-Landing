@@ -1,0 +1,406 @@
+/* Scroll studies. Motion is opt-in via html.is-motion so the page
+   stays readable with no JavaScript and under reduced motion. */
+@property --p {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+:root {
+  --bg: #09090f;
+  --gold: #d4a843;
+  --light: #e8c96a;
+  --text: #f2f0ea;
+  --muted: #a29fae;
+  --line: rgba(212, 168, 67, 0.22);
+  --font: "Inter", system-ui, sans-serif;
+  --serif: "Cormorant Garamond", Georgia, serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--bg); }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+button { font: inherit; }
+:focus-visible { outline: 2px solid var(--light); outline-offset: 3px; }
+::selection { background: rgba(232, 201, 106, 0.85); color: #14110c; }
+
+.skip {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 20;
+  background: var(--light);
+  color: #14110c;
+  padding: 0.55rem 0.9rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
+.skip:focus { top: 1rem; }
+
+.mast {
+  display: grid;
+  gap: 1.25rem;
+  padding: clamp(1.25rem, 3vw, 2rem) clamp(1.25rem, 4vw, 3.5rem) 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+.mast-row, .study-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.8rem 1.4rem;
+}
+.mark {
+  font-family: var(--mono);
+  letter-spacing: 0.16em;
+  font-size: 0.78rem;
+  text-decoration: none;
+  color: var(--text);
+}
+.mark span { color: var(--gold); }
+.mast-back {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--light);
+  text-decoration: none;
+}
+h1 {
+  margin: 0;
+  font-family: var(--font);
+  font-weight: 300;
+  font-size: clamp(2.4rem, 6vw, 4.6rem);
+  letter-spacing: -0.045em;
+  line-height: 0.96;
+}
+h1 em, h2 em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--light);
+}
+.mast p {
+  margin: 0.4rem 0 0;
+  max-width: 42rem;
+  color: var(--muted);
+}
+.study-nav a {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+}
+.study-nav a:hover { color: var(--light); }
+
+.study {
+  --p: 0;
+  position: relative;
+  background: var(--bg);
+}
+.stage {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  background: var(--bg);
+  display: grid;
+}
+html.is-motion .study { height: var(--span, 220vh); }
+html.is-motion .stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  min-height: 0;
+}
+
+.plate, .plate img, .plate video, .plate canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.plate img, .plate video {
+  object-fit: contain;
+  object-position: center 58%;
+}
+.plate video { opacity: 0; }
+html.is-motion .plate.is-live video { opacity: 1; }
+.plate canvas { display: block; }
+html.is-motion .poster { opacity: 1; }
+html.is-motion .is-live > .poster,
+html.is-motion .plate.is-live .poster { opacity: 0; }
+
+.veil {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+}
+.copy {
+  position: relative;
+  z-index: 3;
+  align-self: end;
+  max-width: 36rem;
+  padding: clamp(1.5rem, 4vw, 3.2rem);
+}
+.copy h2 {
+  margin: 0 0 0.6rem;
+  font-weight: 300;
+  font-size: clamp(2rem, 4.4vw, 4rem);
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+.copy p { margin: 0; color: #d5d0dc; max-width: 36ch; }
+.kicker {
+  margin: 0 0 0.7rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* Inquiry: three planes, text on the left */
+.study-inquiry .copy { align-self: center; max-width: 28rem; }
+.study-inquiry .veil {
+  inset: 0 auto 0 0;
+  width: min(46vw, 36rem);
+  background: linear-gradient(90deg, rgba(9, 9, 15, 0.88), rgba(9, 9, 15, 0.2) 80%, transparent);
+}
+.planes { position: absolute; inset: 0; }
+.planes .plane {
+  position: absolute;
+  left: 50%;
+  top: 54%;
+  width: min(980px, 92vw);
+  max-width: none;
+  height: auto;
+  translate: -50% -50%;
+}
+html.is-motion .planes .back {
+  width: min(1180px, 120vw);
+  filter: blur(8px) brightness(0.5);
+  translate: -50% calc(-50% + (var(--p) - 0.5) * -72px);
+}
+html.is-motion .planes .mid {
+  translate: -50% calc(-50% + (var(--p) - 0.5) * -26px);
+}
+html.is-motion .planes .glow {
+  mix-blend-mode: screen;
+  opacity: calc(var(--p) * 0.72);
+  translate: -50% calc(-50% + (var(--p) - 0.5) * -40px);
+}
+.planes .glow { opacity: 0; }
+.orbit {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: min(640px, 70vw);
+  height: auto;
+  translate: -50% -50%;
+  pointer-events: none;
+}
+html.is-motion .orbit {
+  translate: -50% calc(-50% + (var(--p) - 0.5) * 36px);
+  rotate: calc(var(--p) * 28deg);
+}
+
+/* Library */
+.study-library .copy { align-self: end; }
+.study-library .veil {
+  inset: auto 0 0 0;
+  height: 48%;
+  background: linear-gradient(180deg, transparent, rgba(9, 9, 15, 0.9));
+}
+.study-library .late { opacity: 1; }
+html.is-motion .study-library .late { opacity: var(--p); }
+.mask { display: block; overflow: hidden; padding-bottom: 0.08em; }
+html.is-motion .line {
+  --enter: clamp(0, (var(--p) - var(--a, 0)) / 0.14, 1);
+  opacity: var(--enter);
+  translate: 0 calc((1 - var(--enter)) * 18px);
+}
+
+.cue { margin-top: 0.35rem; }
+html.is-motion .cue {
+  --enter: clamp(0, (var(--p) - var(--a, 0)) / 0.12, 1);
+  --leave: clamp(0, (var(--b, 1.2) - var(--p)) / 0.12, 1);
+  opacity: min(var(--enter), var(--leave));
+  translate: 0 calc((1 - var(--enter)) * 12px);
+}
+
+/* Vault: copy on the right, the long hold */
+.study-vault .copy { justify-self: end; align-self: end; text-align: right; }
+.study-vault .copy p { margin-left: auto; }
+.study-vault .veil {
+  inset: auto 0 0 0;
+  height: 46%;
+  background: linear-gradient(180deg, transparent, rgba(9, 9, 15, 0.82));
+}
+
+/* Search iris */
+.study-search .copy { align-self: start; padding-top: clamp(4.5rem, 12vh, 7rem); }
+.study-search .veil {
+  inset: 0 auto auto 0;
+  width: min(42vw, 34rem);
+  height: 46%;
+  background: linear-gradient(180deg, rgba(9, 9, 15, 0.78), transparent);
+}
+html.is-motion .iris {
+  clip-path: circle(calc(var(--p) * 78%) at 58% 52%);
+}
+
+/* Pan */
+.study-forms .stage { display: block; }
+.rail-clip {
+  height: 100%;
+  min-height: 100svh;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  display: grid;
+  align-items: center;
+}
+html.is-motion .rail-clip { overflow: hidden; scroll-snap-type: none; }
+.rail {
+  display: flex;
+  gap: clamp(0.8rem, 1.6vw, 1.3rem);
+  width: max-content;
+  padding: 0 clamp(1.25rem, 4vw, 3.5rem);
+}
+html.is-motion .rail { translate: calc(var(--p) * var(--travel, 0) * -1px) 0; }
+.card {
+  scroll-snap-align: start;
+  flex: none;
+  width: clamp(16rem, 32vw, 26rem);
+  min-height: 28rem;
+  padding: 0.85rem 0.85rem 1.15rem;
+  background: #100f16;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 2px;
+}
+.card-title {
+  width: clamp(20rem, 46vw, 36rem);
+  display: grid;
+  align-content: end;
+  background: transparent;
+  border: 0;
+  padding: 0 1rem 0 0;
+}
+.card h2, .card h3 {
+  margin: 0.85rem 0 0.35rem;
+  font-weight: 300;
+  letter-spacing: -0.03em;
+}
+.card h2 { font-size: clamp(2.2rem, 4vw, 3.6rem); }
+.card h3 { font-size: 1.35rem; }
+.card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+.card img { width: 100%; height: 15rem; object-fit: cover; object-position: center 40%; background: #09090f; }
+.card-inner { transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transform-style: preserve-3d; }
+html.is-motion .card:not(.card-title) {
+  opacity: clamp(0.55, (var(--p) * 1.15 - var(--i, 0)) / 0.22, 1);
+}
+
+/* Apollo */
+.study-apollo .copy { align-self: start; padding-top: clamp(4rem, 10vh, 6rem); }
+.study-apollo .veil {
+  inset: 0 0 auto 0;
+  height: 38%;
+  background: linear-gradient(180deg, rgba(9, 9, 15, 0.72), transparent);
+}
+.plate canvas { background: transparent; }
+
+/* Agent */
+.study-agent .stage { cursor: crosshair; }
+.study-agent .copy { align-self: end; }
+.study-agent .veil {
+  inset: auto 0 0 0;
+  height: 42%;
+  background: linear-gradient(180deg, transparent, rgba(9, 9, 15, 0.88));
+}
+.spot {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 46%), rgba(232, 201, 106, 0.22), transparent 28%);
+  opacity: 0;
+}
+html.is-motion .spot { opacity: 1; }
+.agent-orbit {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  width: min(520px, 70vw);
+  z-index: 2;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+html.is-motion .agent-orbit { rotate: calc(var(--p) * 240deg); }
+
+/* Codex close holds */
+.study-codex .copy { align-self: end; }
+.study-codex .veil {
+  inset: auto 0 0 0;
+  height: 42%;
+  background: linear-gradient(180deg, transparent, rgba(9, 9, 15, 0.9));
+}
+
+@media (max-width: 720px) {
+  html.is-motion .study { height: calc(var(--span, 220vh) * 0.72); }
+  .copy, .study-vault .copy, .study-inquiry .copy, .study-search .copy, .study-apollo .copy {
+    align-self: end;
+    justify-self: start;
+    text-align: left;
+    max-width: none;
+    padding: 1.2rem 1.15rem 1.5rem;
+  }
+  .study-vault .copy p { margin-left: 0; }
+  .study-inquiry .veil,
+  .study-search .veil,
+  .study-apollo .veil,
+  .study-library .veil,
+  .study-vault .veil,
+  .study-agent .veil,
+  .study-codex .veil {
+    inset: auto 0 0 0;
+    width: auto;
+    height: 52%;
+    background: linear-gradient(180deg, transparent, rgba(9, 9, 15, 0.92));
+  }
+  .card { width: 78vw; min-height: 0; }
+  .card-title { width: 78vw; }
+  .card img { height: 11.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.is-motion .line,
+  html.is-motion .cue,
+  html.is-motion .rail,
+  html.is-motion .orbit,
+  html.is-motion .agent-orbit,
+  html.is-motion .planes .plane {
+    translate: none;
+    rotate: none;
+    opacity: 1;
+  }
+}
+
+@media (scripting: none) {
+  .late, .iris, .glow { opacity: 1; }
+  .iris { clip-path: none; }
+}
