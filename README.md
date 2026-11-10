@@ -30,9 +30,9 @@ Before a public launch, confirm:
 2. Launch date and invitation process.
 3. What counts as a task, fair-use terms and specialist audio/media allowances.
 4. Final Free and Membership entitlements, and cross-tool parity.
-5. Production signup endpoint and consent/privacy copy.
+5. Subscription signup, billing, and consent/privacy copy. Invitation requests are separate from a membership account.
 
-The invitation form remains an explicitly disclosed mailto draft. It does not send, store, subscribe or bill. The form's name-field access is corrected so it reads the input rather than the HTML form's own name property. Plan buttons preselect the requested tier.
+The invitation form posts a schema 1.0 enquiry to the existing Acuity Institute capture workflow. The page sends it to `/api/invitation`, and the server forwards that body to the n8n webhook. It does not subscribe or bill. The form's name-field access reads the input rather than the HTML form's own name property. Plan buttons preselect the requested tier.
 
 ## Delivery checks
 

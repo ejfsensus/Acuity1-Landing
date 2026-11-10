@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
+  <meta name="text-scale" content="scale" />
   <title>Acuity.One — A membership for the enquiring life</title>
   <meta name="description" content="Follow a question. Study the sources. Bring understanding into practice. Discover the forthcoming Acuity.One membership and your personal WisdomVault." />
   <link rel="preload" href="assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
@@ -50,7 +51,7 @@
       "url": "https://one.acuity.institute/",
       "description": "Follow a question. Study the sources. Bring understanding into practice. Discover the forthcoming Acuity.One membership and your personal WisdomVault.",
       "inLanguage": "en-GB",
-      "dateModified": "2026-11-09",
+      "dateModified": "2026-11-10",
       "publisher": {
         "@id": "https://acuity.institute/#organization"
       }
@@ -60,7 +61,7 @@
       "@id": "https://one.acuity.institute/#faq",
       "url": "https://one.acuity.institute/",
       "inLanguage": "en-GB",
-      "dateModified": "2026-11-09",
+      "dateModified": "2026-11-10",
       "isPartOf": {
         "@id": "https://one.acuity.institute/#website"
       },
@@ -184,7 +185,7 @@
     .cta { font-family: var(--font-display); font-weight: 600; transition: background .2s, border-color .2s, transform .15s; }
     .cta:hover { transform: translateY(-1px); } .cta:active { transform: translateY(0); }
     .topnav { pointer-events: auto; display: flex; gap: 1.4rem; }
-    .topnav a { font-family: var(--font-display); font-size: .72rem !important; letter-spacing: .14em !important; text-transform: uppercase; }
+    .topnav a { font-family: var(--font-display); font-size: .8125rem !important; letter-spacing: .08em !important; text-transform: uppercase; }
     @media (max-width: 720px) { .topnav a:not(.keep) { display: none; } }
 
     .wrap { position: relative; z-index: 1; width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 0 var(--pad); }
@@ -193,18 +194,18 @@
     /* Invitation form (closing film) */
     .invite-anchor { position: absolute; left: 0; top: 240vh; height: 1px; width: 1px; }
     .invite { width: 100%; max-width: 560px; margin-top: .4rem; text-align: left; background: rgba(3,3,5,.72); border: 1px solid var(--hair); padding: 1.2rem; display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
-    .invite label { display: grid; gap: .3rem; font-size: .72rem; letter-spacing: .06em; color: var(--ink-soft); font-family: var(--font-display); font-weight: 600; }
+    .invite label { display: grid; gap: .3rem; font-size: .75rem; letter-spacing: .06em; color: var(--ink-soft); font-family: var(--font-display); font-weight: 600; }
     .invite .full { grid-column: 1 / -1; }
     .invite input, .invite select { width: 100%; background: rgba(255,255,255,.04); border: 1px solid var(--hair-soft); color: #fff; font: 400 .92rem var(--font-ui); padding: .6rem .7rem; border-radius: 2px; }
     .invite select option { background: #0b0f1a; }
     .invite input:focus, .invite select:focus { outline: 2px solid var(--gold-bright); outline-offset: 1px; }
-    .invite button { grid-column: 1 / -1; min-height: 2.8rem; background: var(--gold-bright); color: #030305; border: 0; border-radius: 2px; font: 600 .78rem var(--font-display); letter-spacing: .14em; text-transform: uppercase; transition: background .2s, transform .15s; }
+    .invite button { grid-column: 1 / -1; min-height: 2.8rem; background: var(--gold-bright); color: #030305; border: 0; border-radius: 2px; font: 600 .8125rem var(--font-display); letter-spacing: .08em; text-transform: uppercase; transition: background .2s, transform .15s; }
     .invite button:hover { background: #fff1a8; transform: translateY(-1px); }
     .invite .note { grid-column: 1 / -1; font-size: .76rem; color: var(--ink-soft); margin: 0; font-family: var(--font-ui); }
     .invite .note a { color: var(--gold-bright); text-decoration: underline; text-underline-offset: 3px; }
     #invite-status { grid-column: 1 / -1; font-size: .8rem; color: var(--gold-bright); margin: 0; min-height: 0; }
     .pos-top .hero-copy { padding-top: clamp(5rem, 11vh, 8rem); }
-    .tagline { font-family: var(--font-display); font-weight: 600; font-size: .72rem; letter-spacing: .38em; text-transform: uppercase; color: var(--gold); }
+    .tagline { font-family: var(--font-display); font-weight: 600; font-size: .75rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
 
     footer.site { background: var(--navy-deep); border-top: 1px solid var(--hair); padding: 3rem 0 2.5rem; font-size: .86rem; color: var(--muted); }
     footer.site .cols { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2rem; }
@@ -231,7 +232,7 @@
       footer.site .cols { grid-template-columns: 1fr; }
       .app-foot { flex-wrap: wrap; }
     }
-    @media (max-width: 720px) and (max-height: 760px) { .pos-top .hero-copy { padding-top: 4rem; } .pos-top .hero-copy h1 { font-size: 1.7rem; } .pos-top .hero-copy .sub { display: none; } .pos-top .hero-copy .eyebrow { margin-bottom: .5rem; } .invite .note { font-size: .7rem; } }
+    @media (max-width: 720px) and (max-height: 760px) { .pos-top .hero-copy { padding-top: 4rem; } .pos-top .hero-copy h1 { font-size: 1.7rem; } .pos-top .hero-copy .sub { display: none; } .invite .note { font-size: .8125rem; } }
     /* Reduced Motion (original) */
     /* Reduced Motion */
     @media (prefers-reduced-motion: reduce) {
@@ -256,9 +257,9 @@
       gap: .85rem;
       margin: 0 0 1.5rem;
       font-family: 'IBM Plex Mono', ui-monospace, monospace;
-      font-size: .63rem;
+      font-size: .75rem;
       font-weight: 400;
-      letter-spacing: .32em;
+      letter-spacing: .12em;
       text-transform: uppercase;
       color: rgba(232,201,106,.88);
     }
@@ -291,9 +292,9 @@
       display: block;
       margin: 0 0 .7rem;
       font-family: 'IBM Plex Mono', ui-monospace, monospace;
-      font-size: .63rem;
+      font-size: .75rem;
       font-weight: 400;
-      letter-spacing: .32em;
+      letter-spacing: .12em;
       text-transform: uppercase;
       color: rgba(232,201,106,.88);
       text-shadow: none;
@@ -306,7 +307,7 @@
       font-size: 1.16em;
       letter-spacing: -.02em;
       color: #edcf82;
-      text-shadow: 0 1px 2px rgba(0,0,0,.4), 0 0 34px rgba(232,201,106,.28);
+      text-shadow: 0 1px 2px rgba(0,0,0,.45);
     }
 
     #copy-hero .sub, #copy-lake .sub {
@@ -331,10 +332,10 @@
       padding: 0 1.75rem;
       border-radius: 3px;
       font-family: 'IBM Plex Mono', ui-monospace, monospace;
-      font-size: .68rem;
+      font-size: .75rem;
       font-weight: 500;
-      line-height: 1;
-      letter-spacing: .17em;
+      line-height: 1.3;
+      letter-spacing: .08em;
       text-transform: uppercase;
       cursor: pointer;
       transition: transform .35s var(--ease-out), box-shadow .35s ease,
@@ -350,7 +351,7 @@
         inset 0 1px 0 rgba(255,255,255,.55),
         inset 0 -1px 0 rgba(112,80,16,.4),
         0 1px 0 rgba(0,0,0,.35),
-        0 16px 40px -14px rgba(233,197,106,.45);
+        0 16px 40px -14px rgba(0,0,0,.55);
       text-shadow: 0 1px 0 rgba(255,255,255,.25);
     }
     #copy-hero .cta.primary::after, #copy-lake .invite button::after {
@@ -372,7 +373,7 @@
         inset 0 1px 0 rgba(255,255,255,.6),
         inset 0 -1px 0 rgba(112,80,16,.4),
         0 2px 0 rgba(0,0,0,.3),
-        0 22px 48px -16px rgba(240,208,110,.6);
+        0 22px 48px -16px rgba(0,0,0,.55);
     }
     #copy-hero .cta.primary:hover::after, #copy-lake .invite button:hover::after {
       transform: translateX(420%) rotate(16deg);
@@ -394,7 +395,7 @@
       color: #fff4d2;
       border-color: rgba(235,205,120,.72);
       background: rgba(235,205,120,.09);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 14px 34px -18px rgba(240,208,110,.45);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 14px 34px -18px rgba(0,0,0,.55);
     }
     .cta-arrow {
       width: 11px;
@@ -434,17 +435,16 @@
       right: 16%;
       height: 1px;
       background: linear-gradient(90deg, transparent, rgba(240,210,120,.8), transparent);
-      box-shadow: 0 0 24px rgba(240,210,120,.4);
     }
     #copy-lake .invite label {
       display: grid;
       gap: .45rem;
       font-family: 'IBM Plex Mono', ui-monospace, monospace;
-      font-size: .58rem;
+      font-size: .75rem;
       font-weight: 400;
-      letter-spacing: .18em;
+      letter-spacing: .08em;
       text-transform: uppercase;
-      color: rgba(240,226,190,.55);
+      color: rgba(240,226,190,.82);
     }
     #copy-lake .invite input, #copy-lake .invite select {
       width: 100%;
@@ -462,10 +462,11 @@
       border-color: rgba(255,255,255,.2);
     }
     #copy-lake .invite input:focus, #copy-lake .invite select:focus {
-      outline: none;
+      outline: 2px solid rgba(232,201,106,.85);
+      outline-offset: 2px;
       border-color: rgba(232,201,106,.7);
       background: rgba(255,255,255,.055);
-      box-shadow: inset 0 1px 3px rgba(0,0,0,.3), 0 0 0 3px rgba(232,201,106,.13);
+      box-shadow: inset 0 1px 3px rgba(0,0,0,.3);
     }
     #copy-lake .invite select {
       appearance: none;
@@ -482,23 +483,23 @@
       margin-top: .15rem;
     }
     #copy-lake .invite .note {
-      font-size: .68rem;
+      font-size: .8125rem;
       line-height: 1.75;
-      color: rgba(255,255,255,.42);
+      color: rgba(255,255,255,.78);
       letter-spacing: .01em;
     }
     #copy-lake .invite .note a {
       color: rgba(240,210,120,.85);
       text-decoration-color: rgba(240,210,120,.4);
     }
-    #invite-status { font-size: .72rem; color: var(--gold-bright); }
+    #invite-status { font-size: .8125rem; color: var(--gold-bright); }
 
     /* Topbar: quieter links, a hairline chip for the invitation */
     .topbar { padding: 1.35rem clamp(1.25rem, 4vw, 2.5rem); }
-    .topbar .brand-mark { letter-spacing: .46em; color: #fdf7e3; text-shadow: 0 1px 14px rgba(0,0,0,.5); }
+    .topbar .brand-mark { font-size: .8125rem; letter-spacing: .22em; color: #fdf7e3; text-shadow: 0 1px 14px rgba(0,0,0,.5); }
     .topnav a {
-      font-size: .62rem !important;
-      letter-spacing: .19em !important;
+      font-size: .8125rem !important;
+      letter-spacing: .08em !important;
       color: rgba(255,255,255,.62);
       transition: color .25s ease;
     }
@@ -521,17 +522,23 @@
       #copy-lake .invite { grid-template-columns: 1fr; padding: 1.2rem; gap: .7rem; }
       #copy-hero h1, #copy-lake .closing-title { font-size: clamp(2.3rem, 9.5vw, 3.1rem); }
       #copy-lake .invite button {
-        font-size: .6rem;
-        letter-spacing: .12em;
+        font-size: .75rem;
+        letter-spacing: .06em;
         padding: 0 1rem;
         gap: .55rem;
-        white-space: nowrap;
       }
       #track-lake .tagline { display: none; }
     }
+    @media (max-width: 720px) {
+      .topbar { flex-wrap: wrap; align-items: center; row-gap: .55rem; }
+      .topnav { flex: 0 0 auto; flex-wrap: nowrap; justify-content: flex-end; gap: .7rem; margin-left: auto; }
+      .topnav a { white-space: nowrap; letter-spacing: .05em !important; }
+      .topbar .brand-mark { letter-spacing: .12em; }
+      .topnav a[href="#invitation"] { letter-spacing: .02em !important; }
+    }
     @media (max-width: 480px) {
       .topnav { gap: .55rem; }
-      .topnav a[href="#invitation"] { padding: .42rem .6rem; font-size: .54rem !important; letter-spacing: .12em !important; }
+      .topnav a[href="#invitation"] { padding: .4rem .55rem; font-size: .75rem !important; letter-spacing: .02em !important; }
     }
     @media (max-height: 760px) {
       #copy-lake .invite { padding: 1.1rem 1.15rem; gap: .6rem; }
@@ -594,8 +601,7 @@
         <div class="copy-scrim" id="scrim-hero" aria-hidden="true"></div>
         <div class="loading" aria-hidden="true"><i id="bar-hero"></i></div>
         <div class="hero-copy" id="copy-hero">
-          <p class="eyebrow">Coming soon</p>
-          <h1><span class="h1-entity">Acuity.One — </span><span class="h1-poem">An open invite to <em>wisdom</em></span></h1>
+          <h1><span class="h1-entity">Acuity.One</span><span class="h1-poem">An open invite to <em>wisdom</em></span></h1>
           <p class="sub">Five Acuity tools, one login. Begin on the Free tier with five AI tasks a month, or join the Membership for unlimited use across every app.</p>
           <div class="hero-actions">
             <a class="cta primary" href="#invitation">Request an invitation <svg class="cta-arrow" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M3.4 10.6 10.6 3.4M4.7 3.4h5.9v5.9" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
@@ -1021,7 +1027,6 @@
         <div class="copy-scrim" id="scrim-lake" aria-hidden="true"></div>
         <div class="loading" aria-hidden="true"><i id="bar-lake"></i></div>
         <div class="hero-copy" id="copy-lake">
-          <p class="eyebrow">Acuity.One · Coming soon</p>
           <h2 class="closing-title">An open invite to <em>wisdom</em></h2>
           <p class="sub">Request an invitation and we will write when Acuity.One opens.</p>
           <form class="invite" id="invite-form" novalidate aria-describedby="invite-note">
@@ -1030,8 +1035,8 @@
             <label class="full">Interested in
               <select name="plan"><option>Not sure yet</option><option>Acuity.One Free</option><option>Acuity.One Membership</option></select>
             </label>
-            <button type="submit">Write my invitation request <svg class="cta-arrow" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M3.4 10.6 10.6 3.4M4.7 3.4h5.9v5.9" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-            <p class="note" id="invite-note">This opens a pre-written email in your own mail app. Nothing is sent until you send it. Or <a href="mailto:hello@acuity.institute?subject=Acuity.One%20invitation%20request">Email invitation request</a> directly.</p>
+            <button type="submit">Request my invitation <svg class="cta-arrow" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M3.4 10.6 10.6 3.4M4.7 3.4h5.9v5.9" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <p class="note" id="invite-note">Your request is sent securely to the Institute. We will write when Acuity.One opens. Or <a href="mailto:hello@acuity.institute?subject=Acuity.One%20invitation%20request">email us</a> directly.</p>
             <p id="invite-status" role="status" aria-live="polite"></p>
           </form>
         </div>
@@ -1056,7 +1061,7 @@
           <li><a href="https://acuity.institute/privacy">Privacy</a></li>
         </ul></nav>
       </div>
-      <div class="base"><span>© 2026 Acuity Institute</span><time datetime="2026-11-09">Updated 9 November 2026</time><span>Creating Pathways to Wisdom</span></div>
+      <div class="base"><span>© 2026 Acuity Institute</span><time datetime="2026-11-10">Updated 10 November 2026</time><span>Creating Pathways to Wisdom</span></div>
     </div>
   </footer>
 
@@ -1447,20 +1452,94 @@
     const spokes = document.getElementById("spokes");
     if (spokes) for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6; const l = document.createElementNS("http://www.w3.org/2000/svg", "line"); l.setAttribute("x1", 110 + 84 * Math.cos(a)); l.setAttribute("y1", 110 + 84 * Math.sin(a)); l.setAttribute("x2", 110 + 104 * Math.cos(a)); l.setAttribute("y2", 110 + 104 * Math.sin(a)); spokes.appendChild(l); }
 
-    // Honest invitation request: compose an email draft in the visitor's own mail app. Nothing is sent from this page.
+    // Invitation request: schema 1.0 enquiry for the Acuity Institute n8n workflow
+    // (acuity.institute contact and Acuity.Agent waitlist use the same capture path).
+    // The page posts to this site, which forwards the payload. The webhook only
+    // allows https://acuity.institute as a browser origin, so a direct fetch from
+    // one.acuity.institute is rejected before the workflow runs.
+    // page_url stays on the accepted domain; the real page is in the message.
     const form = document.getElementById("invite-form");
     const statusEl = document.getElementById("invite-status");
-    form.addEventListener("submit", (e) => {
+    const submitBtn = form.querySelector('button[type="submit"]');
+    let pendingSubmissionId = "";
+
+    function newSubmissionId() {
+      if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") return crypto.randomUUID();
+      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+        const r = (Math.random() * 16) | 0;
+        const v = c === "x" ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      });
+    }
+
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const email = form.email.value.trim();
-      if (!form.email.checkValidity() || !email) { statusEl.textContent = "Please enter a valid email address."; form.email.focus(); return; }
-      const name = form.elements.namedItem("name").value.trim();
-      const plan = form.plan.value;
-      const body = `Hello Acuity Institute,\n\nI would like an invitation to Acuity.One when it opens.\n\nName: ${name || "(not given)"}\nEmail: ${email}\nInterested in: ${plan}\n\nThank you.`;
-      const href = "mailto:hello@acuity.institute?subject=" + encodeURIComponent("Acuity.One invitation request") + "&body=" + encodeURIComponent(body);
-      form.dataset.mailto = href;
-      window.location.href = href;
-      statusEl.textContent = "Your mail app should now open with the request drafted. It is not sent until you press send there.";
+      if (!form.email.checkValidity() || !email || email.length > 254) {
+        statusEl.textContent = "Please enter a valid email address.";
+        form.email.focus();
+        return;
+      }
+      const name = (form.elements.namedItem("name")?.value || "").trim().slice(0, 100);
+      const plan = form.plan.value || "Not sure yet";
+
+      const message = [
+        "[Acuity.One Invitation Request]",
+        (name || "Someone") + " would like an invitation to Acuity.One when it opens.",
+        "",
+        "Interested in: " + plan,
+        "Source page: " + window.location.href,
+        "",
+        "Submitted from the Acuity.One landing invitation form."
+      ].join("\n");
+
+      if (!pendingSubmissionId) pendingSubmissionId = newSubmissionId();
+      const payload = {
+        schema_version: "1.0",
+        submission_id: pendingSubmissionId,
+        submission_type: "enquiry",
+        name: name || "Acuity.One invite",
+        email: email,
+        message: message,
+        updates_opt_in: false,
+        submitted_at: new Date().toISOString(),
+        page_url: "https://acuity.institute",
+        subject: "Acuity.One Invitation Request",
+        registration_type: "acuity-one-invitation",
+        interest_plan: plan
+      };
+
+      const original = submitBtn ? submitBtn.innerHTML : "";
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Sending…";
+      }
+      statusEl.textContent = "Sending your invitation request…";
+
+      try {
+        const res = await fetch("/api/invitation", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const body = await res.json().catch(() => null);
+        if (res.status === 201 || res.status === 200) {
+          pendingSubmissionId = "";
+          statusEl.textContent = "Thank you. Your invitation request has been received. We will write when Acuity.One opens.";
+          form.reset();
+        } else if (res.status === 400) {
+          statusEl.textContent = (body && body.errors && body.errors.join(" ")) || "Please check the form and try again.";
+        } else {
+          statusEl.textContent = (body && body.message) || "Something went wrong. Please retry, or email hello@acuity.institute.";
+        }
+      } catch (err) {
+        statusEl.textContent = "Could not reach the form service. Please retry, or email hello@acuity.institute.";
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = original;
+        }
+      }
     });
 
     // -----------------------------------------------------------------------

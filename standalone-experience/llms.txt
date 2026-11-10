@@ -3,9 +3,9 @@
 > Acuity.One is the forthcoming membership from the Acuity Institute. It brings five study and practice instruments — Acuity.Agent, Acuity.Search, Acuity.Codex, LumenNous and myAeon — together under one login, around a private, source-linked WisdomVault.
 
 ## Status
-- In development. Invitation requests are open; no subscription is taken.
+- In development. Invitation requests are open. The page form sends them to the Institute, and no subscription is taken.
 - Pricing, launch timing and final allowances are to be confirmed before anyone is asked to subscribe.
-- Updated 9 November 2026. A price sheet will be published at /pricing.md once the terms are confirmed.
+- Updated 10 November 2026. A price sheet will be published at /pricing.md once the terms are confirmed.
 
 ## The offering
 - Free tier: five AI tasks a month across the tools, one personal myAeon chart profile, the curated LumenNous practice library, Library bookmarks and reading progress, and one Acuity account.

@@ -47,6 +47,85 @@ const SECURITY = {
   "Content-Security-Policy": "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src 'self' https:; media-src 'self'; object-src 'none'; frame-src 'self' https:; base-uri 'self'",
 };
 
+const INVITE_WEBHOOK = "https://n8n-production-f93d.up.railway.app/webhook/acuity-contact";
+const INVITE_MAX_BODY = 12000;
+
+function readLimited(req, limit) {
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    let size = 0;
+    let settled = false;
+    const fail = (err) => {
+      if (settled) return;
+      settled = true;
+      reject(err);
+    };
+    req.on("data", (chunk) => {
+      if (settled) return;
+      size += chunk.length;
+      if (size > limit) {
+        fail(Object.assign(new Error("too_large"), { code: "too_large" }));
+        return;
+      }
+      chunks.push(chunk);
+    });
+    req.on("end", () => {
+      if (!settled) {
+        settled = true;
+        resolve(Buffer.concat(chunks));
+      }
+    });
+    req.on("error", fail);
+  });
+}
+
+async function handleInvitation(req, res) {
+  if (req.method !== "POST") {
+    res.writeHead(405, { ...SECURITY, Allow: "POST", "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" }).end(JSON.stringify({ ok: false, message: "Use POST." }));
+    return;
+  }
+  let raw;
+  try {
+    raw = await readLimited(req, INVITE_MAX_BODY);
+  } catch (err) {
+    const tooLarge = err && err.code === "too_large";
+    if (!res.headersSent) {
+      const message = tooLarge ? "The request is too large." : "The request could not be read.";
+      res.writeHead(tooLarge ? 413 : 400, { ...SECURITY, "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" });
+      res.end(JSON.stringify({ ok: false, message }), () => req.destroy());
+    } else {
+      req.destroy();
+    }
+    return;
+  }
+  let payload;
+  try {
+    payload = JSON.parse(raw.toString("utf8"));
+  } catch {
+    res.writeHead(400, { ...SECURITY, "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" }).end(JSON.stringify({ ok: false, status: "invalid", errors: ["Expected a JSON object."] }));
+    return;
+  }
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+    res.writeHead(400, { ...SECURITY, "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" }).end(JSON.stringify({ ok: false, status: "invalid", errors: ["Expected a JSON object."] }));
+    return;
+  }
+
+  const upstream = await fetch(INVITE_WEBHOOK, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify(payload),
+    redirect: "error",
+    signal: AbortSignal.timeout(20000),
+  }).catch(() => null);
+
+  if (!upstream) {
+    res.writeHead(502, { ...SECURITY, "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" }).end(JSON.stringify({ ok: false, message: "The enquiry could not be confirmed. Please retry with the same submission_id." }));
+    return;
+  }
+  const text = await upstream.text();
+  res.writeHead(upstream.status, { ...SECURITY, "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" }).end(text || JSON.stringify({ ok: false, message: "Empty response from the form service." }));
+}
+
 function cacheControl(ext) {
   if (ext === ".html") return "public, max-age=0, must-revalidate";
   if (ext === ".xml" || ext === ".txt" || ext === ".md") return "public, max-age=3600";
@@ -69,6 +148,10 @@ function negotiate(ext, header) {
 const server = http.createServer(async (req, res) => {
   try {
     const urlPath = decodeURIComponent(new URL(req.url, "http://localhost").pathname);
+    if (urlPath === "/api/invitation") {
+      await handleInvitation(req, res);
+      return;
+    }
     let filePath = path.normalize(path.join(ROOT, urlPath));
     if (!filePath.startsWith(ROOT)) {
       res.writeHead(403, SECURITY).end("Forbidden");
