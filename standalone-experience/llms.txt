@@ -13,6 +13,7 @@
 
 ## Key pages
 - [Home](https://one.acuity.institute/): the membership story and invitation request.
+- [Privacy](https://one.acuity.institute/privacy/): how an invitation request is handled. Questions about that record go to data@acuity.institute.
 - [The Library](https://acuity.institute/library): the Institute's open reading room, free to read and download.
 - [Acuity.Agent](https://agent.acuity.institute), [Acuity.Search](https://search.acuity.institute), [Acuity.Codex](https://codex.acuity.institute/codex), [LumenNous](https://lumennous.acuity.institute), [myAeon](https://myaeon.acuity.institute): the standalone tools.
 

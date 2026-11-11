@@ -152,6 +152,10 @@ const server = http.createServer(async (req, res) => {
       await handleInvitation(req, res);
       return;
     }
+    if (urlPath === "/privacy") {
+      res.writeHead(308, { ...SECURITY, Location: "/privacy/", "Cache-Control": "public, max-age=3600" }).end();
+      return;
+    }
     let filePath = path.normalize(path.join(ROOT, urlPath));
     if (!filePath.startsWith(ROOT)) {
       res.writeHead(403, SECURITY).end("Forbidden");
