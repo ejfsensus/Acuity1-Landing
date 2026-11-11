@@ -551,7 +551,7 @@
       #copy-hero .cta.primary::after, #copy-lake .invite button::after { display: none; }
     }
 
-    /* First-visit scroll cue. Visual only: the page underneath still scrolls. */
+    /* First-visit scroll cue. The veil does not block the page. */
     .scroll-cue {
       position: fixed;
       inset: 0;
@@ -559,57 +559,102 @@
       display: grid;
       align-items: end;
       justify-items: center;
-      padding: 0 1.5rem clamp(2.4rem, 9vh, 5.5rem);
-      background: rgba(5, 6, 14, 0.62);
+      align-content: end;
+      padding: 0 1.5rem clamp(2.6rem, 8vh, 5rem);
+      background: rgba(5, 6, 14, 0.5);
       pointer-events: none;
       opacity: 1;
       transition: opacity 0.55s ease;
     }
     .scroll-cue.is-leaving { opacity: 0; }
+    .scroll-cue-stack { display: grid; justify-items: center; }
     .scroll-cue-mark {
+      position: relative;
       display: grid;
       justify-items: center;
-      gap: 0.85rem;
-      color: #e8c96a;
+      gap: 0.7rem;
+      color: #FADB5F;
+      filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.55));
+    }
+    .scroll-cue-mark::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 42%;
+      width: 9.5rem;
+      height: 12rem;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(5, 6, 14, 0.72) 0%, rgba(5, 6, 14, 0.28) 48%, transparent 72%);
+      z-index: -1;
     }
     .scroll-cue-mouse {
-      width: 26px;
-      height: 42px;
-      border: 1.5px solid rgba(232, 201, 106, 0.92);
-      border-radius: 14px;
+      width: 52px;
+      height: 84px;
+      border: 2px solid #FADB5F;
+      border-radius: 28px;
       position: relative;
+      background: rgba(5, 6, 14, 0.35);
     }
     .scroll-cue-mouse i {
       position: absolute;
       left: 50%;
-      top: 8px;
-      width: 3px;
-      height: 7px;
-      margin-left: -1.5px;
-      border-radius: 2px;
-      background: #FADB5F;
+      top: 14px;
+      width: 6px;
+      height: 14px;
+      margin-left: -3px;
+      border-radius: 4px;
+      background: #fff6d0;
+    }
+    .scroll-cue-chevrons {
+      display: grid;
+      justify-items: center;
+      height: 2.6rem;
+    }
+    .scroll-cue-chevrons svg {
+      width: 42px;
+      height: 22px;
+      margin-top: -0.7rem;
     }
     .scroll-cue-label {
       font-family: "IBM Plex Mono", ui-monospace, monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.22em;
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.32em;
       text-transform: uppercase;
+      color: #fff6d0;
     }
+    .scroll-cue-hide {
+      pointer-events: auto;
+      margin-top: 0.35rem;
+      min-height: 44px;
+      padding: 0.4rem 0.9rem;
+      border: 0;
+      background: transparent;
+      color: rgba(255, 246, 208, 0.78);
+      font: 500 0.75rem/1 "IBM Plex Mono", ui-monospace, monospace;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .scroll-cue-hide:hover { color: #fff; }
     @media (prefers-reduced-motion: no-preference) {
-      .scroll-cue-mark { animation: scroll-cue-float 2.2s cubic-bezier(.16, 1, .3, 1) 2; }
-      .scroll-cue-mouse i { animation: scroll-cue-wheel 2.2s cubic-bezier(.16, 1, .3, 1) 2; }
+      .scroll-cue-mouse i { animation: scroll-cue-wheel 1.5s cubic-bezier(.45, 0, .55, 1) infinite; }
+      .scroll-cue-chevrons svg { animation: scroll-cue-chevron 1.5s cubic-bezier(.45, 0, .55, 1) infinite; }
+      .scroll-cue-chevrons svg:nth-child(2) { animation-delay: 0.22s; }
     }
     @media (prefers-reduced-motion: reduce) {
       .scroll-cue { transition: none; }
     }
-    @keyframes scroll-cue-float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(8px); }
-    }
     @keyframes scroll-cue-wheel {
       0% { transform: translateY(0); opacity: 1; }
-      70% { transform: translateY(12px); opacity: 0; }
+      75% { transform: translateY(28px); opacity: 0; }
       100% { transform: translateY(0); opacity: 0; }
+    }
+    @keyframes scroll-cue-chevron {
+      0% { transform: translateY(-6px); opacity: 0.15; }
+      35% { opacity: 1; }
+      100% { transform: translateY(14px); opacity: 0; }
     }
   </style>
   <link rel="stylesheet" href="shared/membership.css">
@@ -633,10 +678,17 @@
 </head>
 <body>
   <a class="skip" href="#intro">Skip to content</a>
-  <div class="scroll-cue" id="scroll-cue" aria-hidden="true">
-    <div class="scroll-cue-mark">
+  <div class="scroll-cue" id="scroll-cue">
+    <div class="scroll-cue-stack">
+    <div class="scroll-cue-mark" aria-hidden="true">
       <span class="scroll-cue-mouse"><i></i></span>
+      <span class="scroll-cue-chevrons">
+        <svg viewBox="0 0 42 22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3.5 21 18 39 3.5"/></svg>
+        <svg viewBox="0 0 42 22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3.5 21 18 39 3.5"/></svg>
+      </span>
       <span class="scroll-cue-label">Scroll</span>
+    </div>
+    <button type="button" class="scroll-cue-hide">Hide</button>
     </div>
   </div>
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -1156,6 +1208,7 @@
         window.setTimeout(removeCue, 700);
       };
       const onCueScroll = () => { if (window.scrollY > 2) dismissCue(); };
+      scrollCue.querySelector(".scroll-cue-hide")?.addEventListener("click", dismissCue);
       if (window.scrollY > 2) removeCue();
       else {
         window.addEventListener("scroll", onCueScroll, { passive: true });
